@@ -16,9 +16,14 @@
       <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
       <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
     </ItemGroup>
+    
+    <Target Name="Tailwindcss" BeforeTargets="Build">
+        <Exec Command="npm run build" />
+    </Target>
 
     <ItemGroup>
-      <None Include="wwwroot\Templates\Home.liquid" />
+      <None Include="Pages\home.liquid" />
+      <None Include="Pages\index.liquid" />
     </ItemGroup>
 
 </Project>

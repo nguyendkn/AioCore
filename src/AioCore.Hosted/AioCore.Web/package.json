@@ -1,0 +1,9 @@
+{
+  "name": "aiocore.web",
+  "scripts": {
+    "build": "npx tailwindcss -i wwwroot/css/app.css -o wwwroot/app.css --minify"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.0.23"
+  }
+}

@@ -1,7 +1,15 @@
-var builder = WebApplication.CreateBuilder(args);
+using Shared.Extensions;
 
-builder.Services.AddRazorPages();
-builder.Services.AddServerSideBlazor();
+var builder = WebApplication.CreateBuilder(args);
+var services = builder.Services;
+var environment = builder.Environment;
+
+if (environment.IsDevelopment())
+    Path.Combine(environment.WebRootPath, nameof(Program))
+        .WriteFile(Guid.NewGuid().ToString());
+
+services.AddRazorPages();
+services.AddServerSideBlazor();
 var app = builder.Build();
 app.UseStaticFiles();
 app.UseRouting();

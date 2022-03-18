@@ -1,5 +1,8 @@
 module.exports = {
-  content: ["**/**/*.razor"],
+  content: [
+    "**/**/*.razor",
+    "../../../../AioCore.Plugins/"
+  ],
   theme: {
     extend: {},
   },

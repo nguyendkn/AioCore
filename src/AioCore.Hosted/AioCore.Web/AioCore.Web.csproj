@@ -5,5 +5,9 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
+    
+    <Target Name="Tailwindcss" BeforeTargets="build">
+        <Exec Command="npx tailwindcss -c wwwroot/libs/tailwindcss.js -i wwwroot/css/app.css -o wwwroot/app.css" />
+    </Target>
 
 </Project>

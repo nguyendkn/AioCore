@@ -5,8 +5,7 @@ var services = builder.Services;
 var environment = builder.Environment;
 
 if (environment.IsDevelopment())
-    Path.Combine(environment.WebRootPath, nameof(Program))
-        .WriteFile(Guid.NewGuid().ToString());
+    "Assembly.cs".WriteFile("// " + Guid.NewGuid());
 
 services.AddRazorPages();
 services.AddServerSideBlazor();

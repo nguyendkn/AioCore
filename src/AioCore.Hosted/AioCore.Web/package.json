@@ -1,6 +1,0 @@
-{
-  "name": "aiocore.web",
-  "devDependencies": {
-    "tailwindcss": "^3.0.23"
-  }
-}

@@ -11,13 +11,5 @@
       <ProjectReference Include="..\..\AioCore.Plugins\_AioCore.Plugins\_AioCore.Plugins.csproj" />
       <ProjectReference Include="..\..\AioCore.Shared\Shared.Extensions\Shared.Extensions.csproj" />
     </ItemGroup>
-    
-    <Target Name="Tailwindcss" BeforeTargets="build">
-        <Exec Command="npx tailwindcss -c wwwroot/libs/tailwindcss.js -i wwwroot/css/app.css -o wwwroot/app.css" />
-    </Target>
-
-    <Target Name="Tailwindcss" BeforeTargets="publish">
-        <Exec Command="npx tailwindcss -c wwwroot/libs/tailwindcss.js -i wwwroot/css/app.css -o wwwroot/app.css --minify" />
-    </Target>
 
 </Project>

@@ -1,0 +1,26 @@
+﻿using AioCore.Web.Domain;
+using AioCore.Web.Domain.AggregateModels.PageAggregate;
+using MediatR;
+
+namespace AioCore.Web.Application.Queries;
+
+public class GetPageQuery : IRequest<Page>
+{
+    public Guid Id { get; set; }
+
+    internal class Handler : IRequestHandler<GetPageQuery, Page>
+    {
+        private readonly AioCoreContext _context;
+
+        public Handler(AioCoreContext context)
+        {
+            _context = context;
+        }
+
+        public async Task<Page> Handle(GetPageQuery request, CancellationToken cancellationToken)
+        {
+            await _context.Pages.FindAsync(x => x.Id.Equals(request.Id));
+            return default!;
+        }
+    }
+}

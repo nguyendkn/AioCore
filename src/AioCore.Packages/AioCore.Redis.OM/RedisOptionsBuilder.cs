@@ -2,5 +2,5 @@
 
 public class RedisOptionsBuilder
 {
-    public string Connection { get; set; } = default!;
+    public string ConnectionString { get; set; } = default!;
 }

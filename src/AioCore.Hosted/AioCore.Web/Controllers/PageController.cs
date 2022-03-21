@@ -1,0 +1,32 @@
+﻿using AioCore.Redis.OM;
+using AioCore.Web.Application.Commands;
+using AioCore.Web.Application.Queries;
+using AioCore.Web.Domain;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+
+namespace AioCore.Web.Controllers;
+
+[ApiController]
+[Route("api/[controller]/[action]")]
+public class PageController : ControllerBase
+{
+    private readonly IMediator _mediator;
+
+    public PageController(IMediator mediator)
+    {
+        _mediator = mediator;
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Index([FromQuery] GetPageQuery query)
+    {
+        return Ok(await _mediator.Send(query));
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Create(CreatePageCommand command)
+    {
+        return Ok(await _mediator.Send(command));
+    }
+}

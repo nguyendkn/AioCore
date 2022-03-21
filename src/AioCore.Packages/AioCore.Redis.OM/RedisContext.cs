@@ -4,13 +4,16 @@ namespace AioCore.Redis.OM;
 
 public class RedisContext
 {
-    private readonly Lazy<ConnectionMultiplexer> _lazyConnection;
+    private readonly IRedisContextOptionsBuilder _optionsBuilder;
+    public static List<RedisDatabase> Database = new();
 
-    private ConnectionMultiplexer Connection => _lazyConnection.Value;
-
-    public RedisContext(RedisOptionsBuilder optionsBuilder)
+    public RedisContext(IRedisContextOptionsBuilder optionsBuilder)
     {
-        _lazyConnection = new Lazy<ConnectionMultiplexer>(() =>
-            ConnectionMultiplexer.Connect(optionsBuilder.Connection));
+        _optionsBuilder = optionsBuilder;
+        optionsBuilder.Configure(this, this.OnConfiguring);
+    }
+
+    protected virtual void OnConfiguring()
+    {
     }
 }

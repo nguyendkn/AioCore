@@ -15,9 +15,11 @@ public class CreatePageCommand : IRequest<string>
     internal class Handler : IRequestHandler<CreatePageCommand, string>
     {
         private readonly IRedisCollection<Page> _collection;
+        private readonly AioCoreContext _context;
 
-        public Handler(RedisConnectionProvider provider)
+        public Handler(RedisConnectionProvider provider, AioCoreContext context)
         {
+            _context = context;
             _collection = provider.RedisCollection<Page>();
         }
 

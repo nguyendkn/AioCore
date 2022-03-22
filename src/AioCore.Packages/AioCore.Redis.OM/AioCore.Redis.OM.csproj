@@ -5,7 +5,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <PackageId>AioCore.Redis.OM</PackageId>
-        <Version>1.0.0</Version>
+        <Version>1.1.2</Version>
         <Authors>Dao Khoi Nguyen</Authors>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
@@ -14,6 +14,7 @@
         <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
         <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
         <PackageReference Include="StackExchange.Redis" Version="2.5.43" />
     </ItemGroup>
 

@@ -1,12 +1,12 @@
 using AioCore.Redis.OM;
-using AioCore.Web.Domain;
+using AioCore.Web.Domain.AggregateModels.PageAggregate;
 using MediatR;
 using Shared.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
-var environment = builder.Environment;
 var configuration = builder.Configuration;
+var environment = builder.Environment;
 
 if (environment.IsDevelopment())
     "Assembly.cs".WriteFile("// " + Guid.NewGuid());
@@ -17,10 +17,12 @@ services.AddControllers();
 services.AddSwaggerGen();
 services.AddRazorPages();
 services.AddServerSideBlazor();
-services.AddRedisContext<AioCoreContext>(options =>
+services.AddSingleton(_ =>
 {
     var connectionString = configuration.GetConnectionString("DefaultConnection");
-    options.ConnectionString = connectionString;
+    var redisProvider = new RedisConnectionProvider(connectionString);
+    redisProvider.Connection.CreateIndex(typeof(Page));
+    return redisProvider;
 });
 var app = builder.Build();
 app.UseSwagger();

@@ -34,6 +34,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "_AioCore.Shared", "src\AioC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Components", "src\AioCore.Shared\Shared.Components\Shared.Components.csproj", "{D0FD3B9C-2615-4449-9646-659330A192E1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AioCore.Mongo.OM", "src\AioCore.Packages\AioCore.Mongo.OM\AioCore.Mongo.OM.csproj", "{F316F011-C0B5-4376-ABA6-51600659AFCC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,6 +58,7 @@ Global
 		{6FB2AB5A-A294-4856-8808-8D5E64B60C27} = {A0C119B7-4D7C-4C69-89DE-97BE76C0996A}
 		{33A9B47C-C337-4C75-9AB3-F11B61DE2ADF} = {224AE308-6175-42C3-A687-81E6AB0F0845}
 		{D0FD3B9C-2615-4449-9646-659330A192E1} = {224AE308-6175-42C3-A687-81E6AB0F0845}
+		{F316F011-C0B5-4376-ABA6-51600659AFCC} = {A01001EC-36A3-4885-8161-9B307B57EFF9}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{8E70204E-E473-4B9B-A142-0C41B728BC4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -106,5 +109,9 @@ Global
 		{D0FD3B9C-2615-4449-9646-659330A192E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0FD3B9C-2615-4449-9646-659330A192E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0FD3B9C-2615-4449-9646-659330A192E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F316F011-C0B5-4376-ABA6-51600659AFCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F316F011-C0B5-4376-ABA6-51600659AFCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F316F011-C0B5-4376-ABA6-51600659AFCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F316F011-C0B5-4376-ABA6-51600659AFCC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

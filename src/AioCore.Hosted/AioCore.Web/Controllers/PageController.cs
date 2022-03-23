@@ -1,7 +1,5 @@
-﻿using AioCore.Redis.OM;
-using AioCore.Web.Application.Commands;
+﻿using AioCore.Web.Application.Commands;
 using AioCore.Web.Application.Queries;
-using AioCore.Web.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

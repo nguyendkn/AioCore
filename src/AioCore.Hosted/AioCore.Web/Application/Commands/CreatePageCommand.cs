@@ -1,6 +1,4 @@
-﻿using AioCore.Redis.OM;
-using AioCore.Redis.OM.Searching;
-using AioCore.Web.Domain;
+﻿using AioCore.Web.Domain;
 using AioCore.Web.Domain.AggregateModels.PageAggregate;
 using MediatR;
 

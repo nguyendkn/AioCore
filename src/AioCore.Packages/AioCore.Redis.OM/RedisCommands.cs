@@ -67,8 +67,8 @@ namespace AioCore.Redis.OM
         }
 
 
-        public static async Task<bool> JsonSetAsync(this IRedisConnection connection, string key, string path,
-            object obj)
+        private static async Task<bool> JsonSetAsync(this IRedisConnection connection, 
+            string key, string path, object obj)
         {
             var json = JsonSerializer.Serialize(obj, Options);
             var result = await connection.ExecuteAsync("JSON.SET", key, path, json);
@@ -76,7 +76,7 @@ namespace AioCore.Redis.OM
         }
 
 
-        public static int HSet(this IRedisConnection connection, string key,
+        private static int HSet(this IRedisConnection connection, string key,
             params KeyValuePair<string, string>[] fieldValues)
         {
             var args = new List<string> {key};

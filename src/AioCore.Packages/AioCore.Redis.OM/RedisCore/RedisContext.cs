@@ -4,12 +4,12 @@ namespace AioCore.Redis.OM.RedisCore;
 
 public class RedisContext
 {
-    public RedisContext(RedisConnectionProvider provider)
+    protected RedisContext(RedisConnectionProvider provider)
     {
-        Configure(this);
+        Configure(this, provider);
     }
 
-    private void Configure(RedisContext context)
+    private static void Configure(RedisContext context, RedisConnectionProvider provider)
     {
         var contextProperties = context.GetType().GetRuntimeProperties()
             .Where(
@@ -29,7 +29,7 @@ public class RedisContext
         foreach (var (name, type) in contextProperties)
         {
             var dbSetType = typeof(RedisSet<>).MakeGenericType(type);
-            var dbSet = Activator.CreateInstance(dbSetType, this, context);
+            var dbSet = Activator.CreateInstance(dbSetType, provider);
 
             context.GetType().GetProperty(name)?.SetValue(context, dbSet);
         }

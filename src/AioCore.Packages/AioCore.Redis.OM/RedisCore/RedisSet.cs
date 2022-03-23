@@ -1,27 +1,51 @@
 ﻿using System.Collections;
 using System.Linq.Expressions;
+using AioCore.Redis.OM.Aggregation;
+using AioCore.Redis.OM.RedisCore.Abstracts;
 using AioCore.Redis.OM.Searching;
 
 namespace AioCore.Redis.OM.RedisCore;
 
-public abstract class RedisSet<TEntity> : IQueryable<TEntity>
+public class RedisSet<TEntity> : IQueryable<TEntity>, IRedisSet<TEntity> where TEntity : notnull
 {
-    protected RedisSet(IRedisCollection<TEntity> collection, RedisContext context)
+    private readonly IRedisCollection<TEntity> _collection;
+    private readonly RedisAggregationSet<TEntity> _aggregationSet;
+
+    public RedisSet(RedisConnectionProvider provider)
     {
+        _collection = provider.RedisCollection<TEntity>();
+        _aggregationSet = provider.AggregationSet<TEntity>();
     }
 
     IEnumerator<TEntity> IEnumerable<TEntity>.GetEnumerator()
-        => throw new NotSupportedException();
+        => _collection.GetEnumerator();
 
     IEnumerator IEnumerable.GetEnumerator()
-        => throw new NotSupportedException();
+        => _collection.GetEnumerator();
 
     Type IQueryable.ElementType
-        => throw new NotSupportedException();
+        => _collection.ElementType;
 
     Expression IQueryable.Expression
-        => throw new NotSupportedException();
+        => _collection.Expression;
 
     IQueryProvider IQueryable.Provider
-        => throw new NotSupportedException();
+        => _collection.Provider;
+
+    public async Task<TEntity> FindAsync(object key)
+    {
+        var keyString = $"{typeof(TEntity).FullName}:{key}";
+        return await _collection.FindByIdAsync(keyString);
+    }
+
+    public async Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> expression)
+    {
+        return await _collection.FirstOrDefaultAsync(expression);
+    }
+
+    public async Task<TEntity> AddAsync(TEntity entity)
+    {
+        entity = await _collection.InsertAsync(entity);
+        return entity;
+    }
 }

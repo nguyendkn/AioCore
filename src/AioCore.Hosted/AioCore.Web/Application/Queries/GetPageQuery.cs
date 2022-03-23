@@ -1,6 +1,4 @@
-﻿using AioCore.Redis.OM;
-using AioCore.Redis.OM.Aggregation;
-using AioCore.Redis.OM.Searching;
+﻿using AioCore.Web.Domain;
 using AioCore.Web.Domain.AggregateModels.PageAggregate;
 using MediatR;
 
@@ -12,18 +10,16 @@ public class GetPageQuery : IRequest<Page>
 
     internal class Handler : IRequestHandler<GetPageQuery, Page>
     {
-        private readonly IRedisCollection<Page> _collection;
-        private readonly RedisConnectionProvider _provider;
+        private readonly AioCoreContext _context;
 
-        public Handler(RedisConnectionProvider provider)
+        public Handler(AioCoreContext context)
         {
-            _provider = provider;
-            _collection = provider.RedisCollection<Page>();
+            _context = context;
         }
 
         public async Task<Page> Handle(GetPageQuery request, CancellationToken cancellationToken)
         {
-            return await _collection.FindByIdAsync(request.Id);
+            return await _context.Pages.FindAsync(request.Id);
         }
     }
 }

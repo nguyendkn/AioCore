@@ -1,6 +1,6 @@
 ﻿namespace AioCore.Redis.OM.Modeling
 {
-    public class RedisIdFieldAttribute : Attribute
+    public class RedisKeyAttribute : Attribute
     {
     }
 }

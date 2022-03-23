@@ -24,6 +24,12 @@ public class PageController : ControllerBase
         return Ok(await _mediator.Send(query));
     }
 
+    [HttpGet]
+    public async Task<IActionResult> List([FromQuery] ListPageQuery query)
+    {
+        return Ok(await _mediator.Send(query));
+    }
+
     [HttpPost]
     public async Task<IActionResult> Create(CreatePageCommand command)
     {

@@ -39,16 +39,12 @@ namespace AioCore.Redis.OM
                 return obj;
             }
 
-            var attr = Attribute.GetCustomAttribute(typeof(T), typeof(DocumentAttribute)) as DocumentAttribute;
-            string asJson;
-            if (attr != null && attr.StorageType == StorageType.Json)
+            var asJson = Attribute.GetCustomAttribute(typeof(T), typeof(DocumentAttribute)) is DocumentAttribute
             {
-                asJson = hash["$"];
+                StorageType: StorageType.Json
             }
-            else
-            {
-                asJson = SendToJson(hash, typeof(T));
-            }
+                ? hash["$"]
+                : SendToJson(hash, typeof(T));
 
             return JsonSerializer.Deserialize<T>(asJson, JsonSerializerOptions) ??
                    throw new Exception("Deserialization fail");
@@ -66,7 +62,7 @@ namespace AioCore.Redis.OM
         {
             var type = obj.GetType();
             var idProperty = type.GetProperties()
-                .FirstOrDefault(x => Attribute.GetCustomAttribute(x, typeof(RedisIdFieldAttribute)) != null);
+                .FirstOrDefault(x => Attribute.GetCustomAttribute(x, typeof(RedisKeyAttribute)) != null);
             if (idProperty != null)
             {
                 return idProperty.GetValue(obj)?.ToString() ?? string.Empty;
@@ -113,7 +109,7 @@ namespace AioCore.Redis.OM
             var type = obj.GetType();
             var attr = Attribute.GetCustomAttribute(type, typeof(DocumentAttribute)) as DocumentAttribute;
             var idProperty = type.GetProperties()
-                .FirstOrDefault(x => Attribute.GetCustomAttribute(x, typeof(RedisIdFieldAttribute)) != null);
+                .FirstOrDefault(x => Attribute.GetCustomAttribute(x, typeof(RedisKeyAttribute)) != null);
             if (attr == null)
             {
                 throw new MissingMemberException("Missing Document Attribute decoration");
@@ -343,7 +339,7 @@ namespace AioCore.Redis.OM
                 {
                     var entries = hash.Where(x => x.Key.StartsWith($"{propertyName}."))
                         .Select(x =>
-                            new KeyValuePair<string, string>(x.Key.Substring($"{propertyName}.".Length), x.Value))
+                            new KeyValuePair<string, string>(x.Key[$"{propertyName}.".Length..], x.Value))
                         .ToDictionary(x => x.Key, x => x.Value);
                     if (!entries.Any()) continue;
                     ret += $"\"{propertyName}\":";

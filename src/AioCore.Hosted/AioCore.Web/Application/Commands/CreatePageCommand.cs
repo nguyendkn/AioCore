@@ -6,24 +6,24 @@ using MediatR;
 
 namespace AioCore.Web.Application.Commands;
 
-public class CreatePageCommand : IRequest<string>
+public class CreatePageCommand : IRequest<Page>
 {
     public string Name { get; set; } = default!;
 
     public string? Description { get; set; }
 
-    internal class Handler : IRequestHandler<CreatePageCommand, string>
+    internal class Handler : IRequestHandler<CreatePageCommand, Page>
     {
-        private readonly IRedisCollection<Page> _collection;
+        private readonly AioCoreContext _context;
 
-        public Handler(RedisConnectionProvider provider)
+        public Handler(AioCoreContext context)
         {
-            _collection = provider.RedisCollection<Page>();
+            _context = context;
         }
 
-        public async Task<string> Handle(CreatePageCommand request, CancellationToken cancellationToken)
+        public async Task<Page> Handle(CreatePageCommand request, CancellationToken cancellationToken)
         {
-            return await _collection.InsertAsync(new Page(request.Name, request.Description)).ConfigureAwait(false);
+            return await _context.Pages.AddAsync(new Page(request.Name, request.Description));
         }
     }
 }

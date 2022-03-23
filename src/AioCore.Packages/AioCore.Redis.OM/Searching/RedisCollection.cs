@@ -154,9 +154,16 @@ namespace AioCore.Redis.OM.Searching
         }
 
 
-        public async Task<string> InsertAsync(T item)
+        public async Task<T> InsertAsync(T item)
         {
-            return await ((RedisQueryProvider) Provider).Connection.SetAsync(item);
+            return await ((RedisQueryProvider) Provider).Connection.SetAsync<T>(item);
+        }
+
+        public async Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> expression)
+        {
+            var provider = (RedisQueryProvider) Provider;
+            var res = provider.ExecuteQuery<T>(expression);
+            return await Task.FromResult(res.Documents.Values.FirstOrDefault() ?? default!);
         }
 
 

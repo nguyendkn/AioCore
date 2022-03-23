@@ -15,7 +15,9 @@ namespace AioCore.Redis.OM.Searching
 
         string Insert(T item);
 
-        Task<string> InsertAsync(T item);
+        Task<T> InsertAsync(T item);
+
+        Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> expression);
 
         Task<T> FindByIdAsync(string id);
 
@@ -23,7 +25,7 @@ namespace AioCore.Redis.OM.Searching
 
 
         bool Any(Expression<Func<T, bool>> expression);
-        
+
         Task Update(T item);
 
         Task Delete(T item);

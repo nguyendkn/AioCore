@@ -5,7 +5,7 @@ namespace AioCore.Web.Domain.AggregateModels.PageAggregate;
 [Document(StorageType = StorageType.Json)]
 public class Page
 {
-    [RedisIdField] public string Id { get; set; } = default!;
+    [RedisKey] public Guid Id { get; set; }
 
     [Searchable(Sortable = true)] public string Name { get; set; }
 

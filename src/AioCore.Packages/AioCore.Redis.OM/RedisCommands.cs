@@ -2,6 +2,8 @@
 using System.Text.Json.Serialization;
 using AioCore.Redis.OM.Contracts;
 using AioCore.Redis.OM.Modeling;
+using Newtonsoft.Json;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace AioCore.Redis.OM
 {
@@ -18,7 +20,7 @@ namespace AioCore.Redis.OM
         }
 
 
-        public static async Task<string> SetAsync(this IRedisConnection connection, object obj)
+        public static async Task<T> SetAsync<T>(this IRedisConnection connection, object obj)
         {
             var id = obj.SetId();
             var type = obj.GetType();
@@ -39,7 +41,7 @@ namespace AioCore.Redis.OM
                 await connection.JsonSetAsync(id, ".", obj);
             }
 
-            return id;
+            return JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(obj)) ?? default!;
         }
 
 

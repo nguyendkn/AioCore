@@ -1,15 +1,11 @@
+using AioCore.Mongo.OM.MongoCore;
 using AioCore.Redis.OM.RedisCore;
 using AioCore.Web.Domain;
 using MediatR;
-using Shared.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 var configuration = builder.Configuration;
-var environment = builder.Environment;
-
-if (environment.IsDevelopment())
-    "Assembly.cs".WriteFile("// " + Guid.NewGuid());
 
 var connectionString = configuration.GetConnectionString("DefaultConnection");
 services.AddMediatR(typeof(Program).Assembly);
@@ -18,7 +14,7 @@ services.AddControllers();
 services.AddSwaggerGen();
 services.AddRazorPages();
 services.AddServerSideBlazor();
-services.AddRedisContext<AioCoreContext>(connectionString);
+services.AddMongoContext<AioCoreContext>(connectionString, "aiocore");
 var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();

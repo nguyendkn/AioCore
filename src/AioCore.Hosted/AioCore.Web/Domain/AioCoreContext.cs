@@ -1,9 +1,9 @@
-﻿using AioCore.Redis.OM.RedisCore;
+﻿using AioCore.Mongo.OM.MongoCore;
 using AioCore.Web.Domain.AggregateModels.PageAggregate;
 
 namespace AioCore.Web.Domain;
 
-public class AioCoreContext : RedisContext
+public class AioCoreContext : MongoContext
 {
-    public RedisSet<Page> Pages { get; set; } = default!;
+    public MongoSet<Page> Pages { get; set; } = default!;
 }

@@ -7,6 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\AioCore.Mongo.OM\AioCore.Mongo.OM.csproj" />
       <ProjectReference Include="..\AioCore.Redis.OM\AioCore.Redis.OM.csproj" />
     </ItemGroup>
 

@@ -1,7 +1,8 @@
-﻿using AioCore.Web.Domain;
+﻿using AioCore.Mongo.OM.MongoCore;
+using AioCore.Web.Domain;
 using MediatR;
 using AioCore.Web.Domain.AggregateModels.PageAggregate;
-using Shared.Extensions;
+using MongoDB.Driver;
 
 namespace AioCore.Web.Application.Queries;
 
@@ -22,9 +23,9 @@ public class ListPageQuery : IRequest<List<Page>>
 
         public async Task<List<Page>> Handle(ListPageQuery request, CancellationToken cancellationToken)
         {
-            return await _context.Pages.Where(x => x.Name.Contains("string1")).Skip(request.Page)
+            return await _context.Pages.Where(x => true).Skip(request.Page)
                 .Take(request.PageSize)
-                .ToListAsync();
+                .ToListAsync(cancellationToken);
         }
     }
 }

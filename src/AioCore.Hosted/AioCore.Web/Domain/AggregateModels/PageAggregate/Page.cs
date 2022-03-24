@@ -1,19 +1,10 @@
-﻿using AioCore.Redis.OM.Modeling;
+﻿using AioCore.Mongo.OM.MongoCore;
 
 namespace AioCore.Web.Domain.AggregateModels.PageAggregate;
 
-[Document(StorageType = StorageType.Json)]
-public class Page
+public class Page : MongoDocument
 {
-    [RedisKey] public Guid Id { get; set; }
+    public string Name { get; set; } = default!;
 
-    [Searchable(Sortable = true)] public string Name { get; set; }
-
-    [Indexed] public string? Description { get; set; }
-
-    public Page(string name, string? description)
-    {
-        Name = name;
-        Description = description;
-    }
+    public string? Description { get; set; }
 }

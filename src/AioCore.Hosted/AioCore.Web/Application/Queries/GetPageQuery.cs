@@ -6,7 +6,7 @@ namespace AioCore.Web.Application.Queries;
 
 public class GetPageQuery : IRequest<Page>
 {
-    public string Id { get; set; } = default!;
+    public Guid Id { get; set; } = default!;
 
     internal class Handler : IRequestHandler<GetPageQuery, Page>
     {

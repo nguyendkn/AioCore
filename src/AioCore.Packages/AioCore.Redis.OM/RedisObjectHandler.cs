@@ -111,9 +111,7 @@ namespace AioCore.Redis.OM
             var idProperty = type.GetProperties()
                 .FirstOrDefault(x => Attribute.GetCustomAttribute(x, typeof(RedisKeyAttribute)) != null);
             if (attr == null)
-            {
                 throw new MissingMemberException("Missing Document Attribute decoration");
-            }
 
             var id = attr.IdGenerationStrategy.GenerateId();
             if (idProperty == null)

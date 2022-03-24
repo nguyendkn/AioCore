@@ -21,7 +21,11 @@ public class CreatePageCommand : IRequest<Page>
 
         public async Task<Page> Handle(CreatePageCommand request, CancellationToken cancellationToken)
         {
-            return await _context.Pages.AddAsync(new Page(request.Name, request.Description));
+            return await _context.Pages.AddAsync(new Page
+            {
+                Name = request.Name,
+                Description = request.Description
+            });
         }
     }
 }

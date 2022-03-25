@@ -10,4 +10,13 @@
       <ProjectReference Include="..\..\AioCore.Packages\AioCore.Mongo.OM\AioCore.Mongo.OM.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="MediatrRequests\Queries" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MediatR" Version="10.0.1" />
+      <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="6.0.0" />
+    </ItemGroup>
+
 </Project>

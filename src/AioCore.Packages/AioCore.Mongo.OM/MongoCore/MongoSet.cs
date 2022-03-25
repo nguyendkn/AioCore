@@ -40,6 +40,12 @@ public class MongoSet<TEntity> : IQueryable<TEntity>, IMongoSet<TEntity>
         return deleteResult.IsAcknowledged;
     }
 
+    public async Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> expression)
+    {
+        var document = await _collection.FindAsync(expression);
+        return await document.FirstOrDefaultAsync();
+    }
+
     public async Task<TEntity> FindAsync(object key)
     {
         if (key.Equals(Guid.Empty)) return new TEntity();

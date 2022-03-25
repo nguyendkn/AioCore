@@ -1,5 +1,5 @@
 using AioCore.Mongo.OM.MongoCore;
-using AioCore.Redis.OM.RedisCore;
+using AioCore.Web;
 using MediatR;
 using Shared.Objects;
 
@@ -8,7 +8,7 @@ var services = builder.Services;
 var configuration = builder.Configuration;
 
 var connectionString = configuration.GetConnectionString("DefaultConnection");
-services.AddMediatR(typeof(Program).Assembly);
+services.AddMediatR(Assemblies.Load.ToArray());
 services.AddEndpointsApiExplorer();
 services.AddControllers();
 services.AddSwaggerGen();

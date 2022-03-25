@@ -19,8 +19,4 @@
       <ProjectReference Include="..\..\AioCore.Shared\Shared.Objects\Shared.Objects.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <_ContentIncludedByDefault Remove="Components\PageDetail.razor" />
-    </ItemGroup>
-
 </Project>

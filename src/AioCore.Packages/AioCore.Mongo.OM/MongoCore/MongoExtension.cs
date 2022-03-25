@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Linq.Expressions;
+using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver;
 
@@ -38,5 +39,22 @@ public static class MongoExtension
         services.AddSingleton(mongoClient);
         services.AddSingleton(mongoContext);
         return services;
+    }
+
+    public static IFindFluent<TEntity, TEntity> Take<TEntity>(this IFindFluent<TEntity, TEntity> fluent, int? limit)
+    {
+        return fluent.Limit(limit);
+    }
+
+    public static IFindFluent<TEntity, TEntity> OrderBy<TEntity>(this IFindFluent<TEntity, TEntity> fluent,
+        Expression<Func<TEntity, object>> expression)
+    {
+        return fluent.SortBy(expression);
+    }
+
+    public static IFindFluent<TEntity, TEntity> OrderByDescending<TEntity>(this IFindFluent<TEntity, TEntity> fluent,
+        Expression<Func<TEntity, object>> expression)
+    {
+        return fluent.SortByDescending(expression);
     }
 }

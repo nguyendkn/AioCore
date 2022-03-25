@@ -16,6 +16,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\AioCore.Shared\Shared.Components\Shared.Components.csproj" />
+      <ProjectReference Include="..\..\AioCore.Shared\Shared.Objects\Shared.Objects.csproj" />
     </ItemGroup>
 
     <ItemGroup>

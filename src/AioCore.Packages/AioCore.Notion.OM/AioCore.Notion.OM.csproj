@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\AioCore.Packages\AioCore.Mongo.OM\AioCore.Mongo.OM.csproj" />
+      <PackageReference Include="Notion.Net" Version="2.2.3" />
     </ItemGroup>
 
 </Project>

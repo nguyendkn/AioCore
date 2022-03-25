@@ -1,7 +1,7 @@
 using AioCore.Mongo.OM.MongoCore;
 using AioCore.Redis.OM.RedisCore;
-using AioCore.Web.Domain;
 using MediatR;
+using Shared.Objects;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;

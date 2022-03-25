@@ -1,7 +1,7 @@
 ﻿using AioCore.Mongo.OM.MongoCore;
-using AioCore.Web.Domain.AggregateModels.PageAggregate;
+using Shared.Objects.AggregateModels.PageAggregate;
 
-namespace AioCore.Web.Domain;
+namespace Shared.Objects;
 
 public class AioCoreContext : MongoContext
 {

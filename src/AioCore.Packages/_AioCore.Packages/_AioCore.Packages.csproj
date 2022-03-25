@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\AioCore.Mongo.OM\AioCore.Mongo.OM.csproj" />
+      <ProjectReference Include="..\AioCore.Notion.OM\AioCore.Notion.OM.csproj" />
       <ProjectReference Include="..\AioCore.Redis.OM\AioCore.Redis.OM.csproj" />
     </ItemGroup>
 

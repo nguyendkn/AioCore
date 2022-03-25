@@ -10,7 +10,7 @@ public partial class App
     {
         _assemblies.AddRange(new[]
         {
-            typeof(Plugin.Pages.Assembly).Assembly
+            typeof(Feature.Pages.Assembly).Assembly
         });
         base.OnInitialized();
     }

@@ -7,9 +7,9 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\AioCore.Features\_AioCore.Features\_AioCore.Features.csproj" />
       <ProjectReference Include="..\..\AioCore.Packages\AioCore.Mongo.OM\AioCore.Mongo.OM.csproj" />
       <ProjectReference Include="..\..\AioCore.Packages\_AioCore.Packages\_AioCore.Packages.csproj" />
-      <ProjectReference Include="..\..\AioCore.Plugins\_AioCore.Plugins\_AioCore.Plugins.csproj" />
       <ProjectReference Include="..\..\AioCore.Shared\Shared.Extensions\Shared.Extensions.csproj" />
       <ProjectReference Include="..\..\AioCore.Shared\Shared.Objects\Shared.Objects.csproj" />
     </ItemGroup>

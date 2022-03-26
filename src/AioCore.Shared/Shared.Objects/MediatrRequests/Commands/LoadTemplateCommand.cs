@@ -7,48 +7,34 @@ namespace Shared.Objects.MediatrRequests.Commands;
 
 public class LoadTemplateCommand : IRequest<string>
 {
-    public string? TemplateUrl { get; set; }
+    public string TemplateSlug { get; set; }
 
-    public LoadTemplateCommand(string? templateUrl)
+    public LoadTemplateCommand(string? templateSlug)
     {
-        TemplateUrl = templateUrl ?? "/";
+        TemplateSlug = templateSlug ?? "/";
     }
 
     internal class Handler : IRequestHandler<LoadTemplateCommand, string>
     {
         private readonly IMemoryCache _memoryCache;
         private readonly AioCoreContext _context;
-        private readonly FluidCoreParser _fluidCoreParser;
+        private readonly IFluidCoreService _fluidCoreService;
 
         public Handler(IMemoryCache memoryCache, AioCoreContext context,
-            FluidCoreParser fluidCoreParser)
+            IFluidCoreService fluidCoreService)
         {
             _memoryCache = memoryCache;
             _context = context;
-            _fluidCoreParser = fluidCoreParser;
+            _fluidCoreService = fluidCoreService;
         }
 
         public async Task<string> Handle(LoadTemplateCommand request, CancellationToken cancellationToken)
         {
-            var template = _memoryCache.Get<string>(request.TemplateUrl);
-            if (!string.IsNullOrEmpty(template)) return await RenderFluid(template);
-
-            var templateEntity = await _context.Pages.FirstOrDefaultAsync(x => x.Slug.Equals(request.TemplateUrl));
-            if (string.IsNullOrEmpty(templateEntity?.Template)) return NotFoundTemplate;
-
-            var httpClient = new HttpClient();
-            template = await httpClient.GetStringAsync(templateEntity.Template, cancellationToken);
-            _memoryCache.Set(request.TemplateUrl, template);
-
-            return await RenderFluid(template);
+            var templateHtml = _memoryCache.Get<string>(request.TemplateSlug);
+            if (!string.IsNullOrEmpty(templateHtml))
+                return await _fluidCoreService.RenderAsync(request.TemplateSlug, templateHtml);
+            var templateEntity = await _context.Pages.FirstOrDefaultAsync(x => x.Slug.Equals(request.TemplateSlug));
+            return await _fluidCoreService.RenderAsync(request.TemplateSlug, templateEntity?.TemplateUrl, true);
         }
-
-        private async Task<string> RenderFluid(string fluidTemplate)
-        {
-            var result = _fluidCoreParser.TryParse(fluidTemplate, out var template, out var error);
-            return result ? await template.RenderAsync() : NotFoundTemplate;
-        }
-
-        private static string NotFoundTemplate => "<html></html>";
     }
 }

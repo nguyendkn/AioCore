@@ -10,7 +10,7 @@ public class Page : MongoDocument
 
     public string Slug { get; set; } = default!;
 
-    public string? Template { get; set; }
+    public string? TemplateUrl { get; set; }
 
     public string? Description { get; set; }
 

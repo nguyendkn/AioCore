@@ -11,7 +11,6 @@ var configuration = builder.Configuration;
 var connectionString = configuration.GetConnectionString("DefaultConnection");
 
 services.AddHttpClient();
-services.AddMemoryCache();
 services.AddMediatR(Assemblies.Load.ToArray());
 services.AddFluidCore();
 services.AddMongoContext<AioCoreContext>(connectionString, "aiocore");

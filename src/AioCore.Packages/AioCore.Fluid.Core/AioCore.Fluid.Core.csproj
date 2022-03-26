@@ -4,14 +4,22 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <PackageId>AioCore.Fluid.Core</PackageId>
+        <AssemblyVersion>1.0.0</AssemblyVersion>
+        <Version>1.0.0</Version>
+        <FileVersion>1.0.0</FileVersion>
+        <PackageVersion>1.0.0</PackageVersion>
+        <Authors>Dao Khoi Nguyen</Authors>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <RepositoryUrl>https://github.com/nguyendkn/AioCore/tree/main/src/AioCore.Packages/AioCore.Fluid.Core</RepositoryUrl>
     </PropertyGroup>
 
     <ItemGroup>
+        <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    </ItemGroup>
+
+    <ItemGroup>
       <PackageReference Include="Fluid.Core" Version="2.2.14" />
-      <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
-      <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.1" />
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
-      <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
       <PackageReference Include="Scriban" Version="5.4.1" />
     </ItemGroup>
 

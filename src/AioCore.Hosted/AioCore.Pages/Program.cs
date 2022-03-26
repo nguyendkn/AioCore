@@ -19,13 +19,17 @@ var app = builder.Build();
 app.MapGet("/", async (string? slug, IMediator mediator) =>
 {
     var template = await mediator.Send(new LoadTemplateCommand(slug));
-    return Results.Content(template, "text/html");
+    return !string.IsNullOrEmpty(template.Error)
+        ? Results.BadRequest(template.Error)
+        : Results.Content(template.Rendered, "text/html");
 });
 
 app.MapGet("/{slug}", async (string? slug, IMediator mediator) =>
 {
     var template = await mediator.Send(new LoadTemplateCommand(slug));
-    return Results.Content(template, "text/html");
+    return !string.IsNullOrEmpty(template.Error)
+        ? Results.BadRequest(template.Error)
+        : Results.Content(template.Rendered, "text/html");
 });
 
 app.Run();

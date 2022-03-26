@@ -1,11 +1,10 @@
 ﻿using AioCore.Fluid.Core;
-using Fluid;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace Shared.Objects.MediatrRequests.Commands;
 
-public class LoadTemplateCommand : IRequest<string>
+public class LoadTemplateCommand : IRequest<FluidCoreRendered>
 {
     public string TemplateSlug { get; set; }
 
@@ -14,7 +13,7 @@ public class LoadTemplateCommand : IRequest<string>
         TemplateSlug = templateSlug ?? "/";
     }
 
-    internal class Handler : IRequestHandler<LoadTemplateCommand, string>
+    internal class Handler : IRequestHandler<LoadTemplateCommand, FluidCoreRendered>
     {
         private readonly IMemoryCache _memoryCache;
         private readonly AioCoreContext _context;
@@ -28,7 +27,7 @@ public class LoadTemplateCommand : IRequest<string>
             _fluidCoreService = fluidCoreService;
         }
 
-        public async Task<string> Handle(LoadTemplateCommand request, CancellationToken cancellationToken)
+        public async Task<FluidCoreRendered> Handle(LoadTemplateCommand request, CancellationToken cancellationToken)
         {
             var templateHtml = _memoryCache.Get<string>(request.TemplateSlug);
             if (!string.IsNullOrEmpty(templateHtml))

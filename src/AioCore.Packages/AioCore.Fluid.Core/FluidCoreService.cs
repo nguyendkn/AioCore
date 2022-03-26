@@ -7,7 +7,7 @@ public interface IFluidCoreService
 {
     string NotFoundTemplate();
 
-    Task<string> RenderAsync(string slug, string? template, bool? online = false);
+    Task<FluidCoreRendered> RenderAsync(string slug, string? template, bool? online = false);
 }
 
 public class FluidCoreService : IFluidCoreService
@@ -21,10 +21,10 @@ public class FluidCoreService : IFluidCoreService
         _fluidCoreParser = fluidCoreParser;
     }
 
-    public async Task<string> RenderAsync(string slug, string? template, bool? online = false)
+    public async Task<FluidCoreRendered> RenderAsync(string slug, string? template, bool? online = false)
     {
         if (string.IsNullOrEmpty(template))
-            return NotFoundTemplate();
+            return new FluidCoreRendered {Rendered = NotFoundTemplate()};
 
         if (online == true)
         {
@@ -38,10 +38,14 @@ public class FluidCoreService : IFluidCoreService
         return await RenderFluid(template);
     }
 
-    private async Task<string> RenderFluid(string? fluidTemplate)
+    private async Task<FluidCoreRendered> RenderFluid(string? fluidTemplate)
     {
         var result = _fluidCoreParser.TryParse(fluidTemplate, out var template, out var error);
-        return result ? await template.RenderAsync() : NotFoundTemplate();
+        return new FluidCoreRendered
+        {
+            Rendered = result ? await template.RenderAsync() : NotFoundTemplate(),
+            Error = error
+        };
     }
 
     public string NotFoundTemplate() => "<html></html>";

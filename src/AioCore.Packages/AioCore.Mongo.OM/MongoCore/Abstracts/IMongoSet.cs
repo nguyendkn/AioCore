@@ -1,4 +1,6 @@
-﻿namespace AioCore.Mongo.OM.MongoCore.Abstracts;
+﻿using System.Linq.Expressions;
+
+namespace AioCore.Mongo.OM.MongoCore.Abstracts;
 
 public interface IMongoSet<TEntity>
 {
@@ -9,4 +11,6 @@ public interface IMongoSet<TEntity>
     Task<bool> UpdateAsync(object id, TEntity entity);
 
     Task<bool> RemoveAsync(object id);
+
+    Task<TEntity?> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> expression);
 }

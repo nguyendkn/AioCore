@@ -9,5 +9,7 @@ public static class FluidConstants
     public static readonly string RenderBody = nameof(RenderBody).ToLower();
     public static readonly string Section = nameof(Section).ToLower();
     public static readonly string Layout = nameof(Layout).ToLower();
-    public static readonly string TemplateUrl = nameof(TemplateUrl).ToLower();
+    public static readonly string ComponentUrl = nameof(ComponentUrl).ToLower();
+    public static readonly string StylesUrl = nameof(StylesUrl).ToLower();
+    public static readonly string Math = nameof(Math).ToLower();
 }

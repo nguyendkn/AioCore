@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\AioCore.Packages\AioCore.Mongo.OM\AioCore.Mongo.OM.csproj" />
+      <ProjectReference Include="..\..\AioCore.Packages\_AioCore.Packages\_AioCore.Packages.csproj" />
     </ItemGroup>
 
     <ItemGroup>

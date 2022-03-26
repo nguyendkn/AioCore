@@ -7,7 +7,7 @@ using MongoDB.Driver;
 namespace AioCore.Mongo.OM.MongoCore;
 
 public class MongoSet<TEntity> : IQueryable<TEntity>, IMongoSet<TEntity>
-    where TEntity : MongoDocument, new()
+    where TEntity : MongoDocument
 {
     private readonly IMongoCollection<TEntity> _collection;
 
@@ -40,7 +40,7 @@ public class MongoSet<TEntity> : IQueryable<TEntity>, IMongoSet<TEntity>
         return deleteResult.IsAcknowledged;
     }
 
-    public async Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> expression)
+    public async Task<TEntity?> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> expression)
     {
         var document = await _collection.FindAsync(expression);
         return await document.FirstOrDefaultAsync();
@@ -48,7 +48,7 @@ public class MongoSet<TEntity> : IQueryable<TEntity>, IMongoSet<TEntity>
 
     public async Task<TEntity> FindAsync(object key)
     {
-        if (key.Equals(Guid.Empty)) return new TEntity();
+        if (key.Equals(Guid.Empty)) return default!;
         var document = await _collection.FindAsync(x => x!.Id.Equals(key));
         return await document.FirstOrDefaultAsync();
     }

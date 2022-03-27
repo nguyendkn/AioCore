@@ -77,11 +77,6 @@ public class MongoSet<TEntity> : IQueryable<TEntity>, IMongoSet<TEntity>
         return _collection.Aggregate().Lookup(targetCollection, localField, foreignField, localFieldProperty?.Name);
     }
 
-    // public IAggregateFluent<BsonDocument>? Include(Expression<Func<TEntity>> expression)
-    // {
-    //     return _collection.Aggregate().Lookup("foreginCollection", "", "", "");
-    // }
-
     IEnumerator<TEntity> IEnumerable<TEntity>.GetEnumerator()
         => _collection.AsQueryable().GetEnumerator();
 

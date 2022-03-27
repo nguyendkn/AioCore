@@ -1,13 +1,14 @@
 ﻿using System.Linq.Expressions;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace AioCore.Mongo.OM.MongoCore;
 
 public static class MongoExtension
 {
-    public static IServiceCollection AddMongoContext<TMongoContext>(this IServiceCollection services,
+    public static void AddMongoContext<TMongoContext>(this IServiceCollection services,
         string connectionString, string database) where TMongoContext : MongoContext, new()
     {
         var mongoContext = new TMongoContext();
@@ -38,7 +39,11 @@ public static class MongoExtension
 
         services.AddSingleton(mongoClient);
         services.AddSingleton(mongoContext);
-        return services;
+    }
+
+    public static IAggregateFluent<BsonDocument>? Take(this IAggregateFluent<BsonDocument> aggregateFluent, int take)
+    {
+        return aggregateFluent.Limit(take);
     }
 
     public static IFindFluent<TEntity, TEntity> Take<TEntity>(this IFindFluent<TEntity, TEntity> fluent, int? limit)

@@ -1,3 +1,4 @@
+using AioCore.Fluid.Core;
 using AioCore.Mongo.OM.MongoCore;
 using AioCore.Web;
 using MediatR;
@@ -9,6 +10,7 @@ var configuration = builder.Configuration;
 
 var connectionString = configuration.GetConnectionString("DefaultConnection");
 services.AddMediatR(Assemblies.Load.ToArray());
+services.AddFluidCore();
 services.AddRazorPages();
 services.AddServerSideBlazor();
 services.AddMongoContext<AioCoreContext>(connectionString, "aiocore");

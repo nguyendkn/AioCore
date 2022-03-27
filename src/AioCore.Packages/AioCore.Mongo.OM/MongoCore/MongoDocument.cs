@@ -1,6 +1,8 @@
-﻿namespace AioCore.Mongo.OM.MongoCore;
+﻿using AioCore.Mongo.OM.Attributes;
+
+namespace AioCore.Mongo.OM.MongoCore;
 
 public class MongoDocument
 {
-    public Guid Id { get; set; }
+    [MongoKey] public Guid Id { get; set; }
 }

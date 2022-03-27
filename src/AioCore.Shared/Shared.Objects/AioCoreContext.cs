@@ -6,4 +6,5 @@ namespace Shared.Objects;
 public class AioCoreContext : MongoContext
 {
     public MongoSet<Page> Pages { get; set; } = default!;
+
 }

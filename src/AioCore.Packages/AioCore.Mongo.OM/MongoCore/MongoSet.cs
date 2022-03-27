@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Linq.Expressions;
+using System.Reflection;
+using AioCore.Mongo.OM.Attributes;
 using AioCore.Mongo.OM.MongoCore.Abstracts;
 using Humanizer;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace AioCore.Mongo.OM.MongoCore;
@@ -59,6 +62,25 @@ public class MongoSet<TEntity> : IQueryable<TEntity>, IMongoSet<TEntity>
         var fluent = _collection.Find(filter);
         return fluent;
     }
+
+    public IAggregateFluent<BsonDocument> Include<TProperty>(Expression<Func<TEntity, TProperty>> expression)
+    {
+        var targetProperty = typeof(TProperty).Name;
+        var targetCollection = targetProperty.Pluralize();
+        var localFieldProperty = typeof(TEntity).GetProperties()
+            .FirstOrDefault(x =>
+                x.GetCustomAttribute<MongoLocalFieldAttribute>() != null);
+        var localField = localFieldProperty?.GetCustomAttribute<MongoLocalFieldAttribute>()?.LocalField;
+        var foreignField = typeof(TProperty).GetProperties()
+            .FirstOrDefault(x =>
+                x.GetCustomAttribute<MongoKeyAttribute>() != null)?.Name;
+        return _collection.Aggregate().Lookup(targetCollection, localField, foreignField, localFieldProperty?.Name);
+    }
+
+    // public IAggregateFluent<BsonDocument>? Include(Expression<Func<TEntity>> expression)
+    // {
+    //     return _collection.Aggregate().Lookup("foreginCollection", "", "", "");
+    // }
 
     IEnumerator<TEntity> IEnumerable<TEntity>.GetEnumerator()
         => _collection.AsQueryable().GetEnumerator();

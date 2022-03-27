@@ -5,10 +5,10 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <PackageId>AioCore.Mongo.OM</PackageId>
-        <AssemblyVersion>1.0.1</AssemblyVersion>
-        <Version>1.0.1</Version>
-        <FileVersion>1.0.1</FileVersion>
-        <PackageVersion>1.0.1</PackageVersion>
+        <AssemblyVersion>1.0.2</AssemblyVersion>
+        <Version>1.0.2</Version>
+        <FileVersion>1.0.2</FileVersion>
+        <PackageVersion>1.0.2</PackageVersion>
         <Authors>Dao Khoi Nguyen</Authors>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <RepositoryUrl>https://github.com/nguyendkn/AioCore/tree/main/src/AioCore.Packages/AioCore.Mongo.OM</RepositoryUrl>

@@ -1,4 +1,4 @@
-﻿using AioCore.Mongo.OM.MongoCore;
+﻿using AioCore.Mongo.Driver.MongoCore;
 
 namespace Shared.Objects.AggregateModels.PageAggregate;
 

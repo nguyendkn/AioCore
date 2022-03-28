@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\AioCore.Packages\AioCore.Mongo.OM\AioCore.Mongo.OM.csproj" />
+      <ProjectReference Include="..\..\AioCore.Packages\AioCore.Mongo.Driver\AioCore.Mongo.Driver.csproj" />
       <ProjectReference Include="..\..\AioCore.Packages\_AioCore.Packages\_AioCore.Packages.csproj" />
     </ItemGroup>
 

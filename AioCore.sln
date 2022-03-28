@@ -30,7 +30,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "_AioCore.Shared", "src\AioC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Components", "src\AioCore.Shared\Shared.Components\Shared.Components.csproj", "{D0FD3B9C-2615-4449-9646-659330A192E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AioCore.Mongo.OM", "src\AioCore.Packages\AioCore.Mongo.OM\AioCore.Mongo.OM.csproj", "{F316F011-C0B5-4376-ABA6-51600659AFCC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AioCore.Mongo.Driver", "src\AioCore.Packages\AioCore.Mongo.Driver\AioCore.Mongo.Driver.csproj", "{F316F011-C0B5-4376-ABA6-51600659AFCC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AioCore.Notion.OM", "src\AioCore.Packages\AioCore.Notion.OM\AioCore.Notion.OM.csproj", "{2AAE500D-DDA3-418A-868B-E13B0ADC5799}"
 EndProject

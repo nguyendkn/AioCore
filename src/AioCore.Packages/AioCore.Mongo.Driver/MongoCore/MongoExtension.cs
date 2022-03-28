@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
-namespace AioCore.Mongo.OM.MongoCore;
+namespace AioCore.Mongo.Driver.MongoCore;
 
 public static class MongoExtension
 {

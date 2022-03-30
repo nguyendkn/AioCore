@@ -3,18 +3,19 @@ using MongoDB.Driver;
 
 namespace AioCore.Mongo.Driver.MongoCore;
 
-public class MongoContext : IMongoContext
+public class MongoContext
 {
-    private readonly IMongoContextBuilder _builder;
-    public IMongoDatabase Database => _builder.Database;
+    protected readonly IMongoContextBuilder ModelBuilder;
+    public IMongoDatabase Database => ModelBuilder.Database;
 
-    protected MongoContext(IMongoContextBuilder builder)
+    protected MongoContext(IMongoContextBuilder modelBuilder)
     {
-        _builder = builder;
-        builder.OnConfiguring(this);
+        ModelBuilder = modelBuilder;
+        modelBuilder.OnConfiguring(this);
+        modelBuilder.OnModelCreating(OnModelCreating);
     }
 
-    public virtual void OnModelCreating()
+    protected virtual void OnModelCreating()
     {
     }
 }

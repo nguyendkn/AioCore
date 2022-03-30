@@ -62,6 +62,15 @@ public class MongoSet<TEntity> : IQueryable<TEntity>, IMongoSet<TEntity>
         var fluent = _collection.Find(filter);
         return fluent;
     }
+    
+    public IFindFluent<TEntity, TEntity> Where(Expression<Func<TEntity, bool>> expression, string keyword)
+    {
+        var builder = Builders<TEntity>.Filter;
+        if (!string.IsNullOrEmpty(keyword)) builder.Text(keyword);
+        var filter = builder.Where(expression);
+        var fluent = _collection.Find(filter);
+        return fluent;
+    }
 
     public IAggregateFluent<BsonDocument> Include<TProperty>(Expression<Func<TEntity, TProperty>> expression)
     {

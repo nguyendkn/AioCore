@@ -9,9 +9,21 @@ public class MongoContextBuilder : IMongoContextBuilder
     public IMongoDatabase Database { get; }
     private bool IsConfigured { get; set; }
 
+    private readonly IDictionary<Type, object> _entityToBuilderMap =
+        new Dictionary<Type, object>();
+
     public MongoContextBuilder(IMongoDatabase database)
     {
         Database = database;
+    }
+
+    public void Entity<TEntity>(Action<EntityTypeBuilder<TEntity>> action) where TEntity : class
+    {
+        var builder = _entityToBuilderMap.ContainsKey(typeof(TEntity))
+            ? _entityToBuilderMap[typeof(TEntity)] as EntityTypeBuilder<TEntity>
+            : new EntityTypeBuilder<TEntity>(Database);
+        action.Invoke(builder ?? throw new ArgumentException(typeof(TEntity).Name));
+        _entityToBuilderMap[typeof(TEntity)] = builder;
     }
 
     public void OnConfiguring(MongoContext context)
@@ -43,7 +55,21 @@ public class MongoContextBuilder : IMongoContextBuilder
         IsConfigured = true;
     }
 
-    public void OnModelCreating()
+    public void OnModelCreating(Action action)
     {
+        action.Invoke();
+    }
+
+    private void InvokeEntityBuildersMethod(string methodName)
+    {
+        foreach (var (key, _) in _entityToBuilderMap)
+        {
+            var builderType = typeof(EntityTypeBuilder<>).MakeGenericType(key);
+            var builder = _entityToBuilderMap[key];
+
+            builderType.InvokeMember(methodName,
+                BindingFlags.InvokeMethod | BindingFlags.Instance | BindingFlags.NonPublic,
+                Type.DefaultBinder, builder, null);
+        }
     }
 }

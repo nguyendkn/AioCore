@@ -6,6 +6,11 @@ namespace AioCore.Mongo.Driver.MongoCore.Extensions;
 
 public static class QueryExtension
 {
+    public static IAggregateFluent<BsonDocument>? Search(this IAggregateFluent<BsonDocument> aggregateFluent, int take)
+    {
+        return aggregateFluent.Limit(take);
+    }
+
     public static IAggregateFluent<BsonDocument>? Take(this IAggregateFluent<BsonDocument> aggregateFluent, int take)
     {
         return aggregateFluent.Limit(take);

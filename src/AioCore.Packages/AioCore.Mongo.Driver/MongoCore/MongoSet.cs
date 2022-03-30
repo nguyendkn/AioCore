@@ -3,7 +3,9 @@ using System.Linq.Expressions;
 using System.Reflection;
 using AioCore.Mongo.Driver.Attributes;
 using AioCore.Mongo.Driver.MongoCore.Abstracts;
+using AioCore.Mongo.Driver.MongoCore.Extensions;
 using Humanizer;
+using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
@@ -14,7 +16,7 @@ public class MongoSet<TEntity> : IQueryable<TEntity>, IMongoSet<TEntity>
 {
     private readonly IMongoCollection<TEntity> _collection;
 
-    public MongoSet(IMongoDatabase database)
+    public MongoSet(IMongoDatabase database, ILogger<MongoSet<TEntity>> logger)
     {
         var connectionName = typeof(TEntity).Name.Pluralize();
         _collection = database.GetCollection<TEntity>(connectionName);
@@ -62,11 +64,12 @@ public class MongoSet<TEntity> : IQueryable<TEntity>, IMongoSet<TEntity>
         var fluent = _collection.Find(filter);
         return fluent;
     }
-    
+
     public IFindFluent<TEntity, TEntity> Where(Expression<Func<TEntity, bool>> expression, string? keyword)
     {
         var builder = Builders<TEntity>.Filter;
-        if (!string.IsNullOrEmpty(keyword)) builder.Text(keyword);
+        if (!string.IsNullOrEmpty(keyword))
+            builder.Text(keyword);
         var filter = builder.Where(expression);
         var fluent = _collection.Find(filter);
         return fluent;

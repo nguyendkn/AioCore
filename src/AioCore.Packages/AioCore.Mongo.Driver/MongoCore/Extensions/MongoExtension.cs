@@ -30,7 +30,7 @@ public static class MongoExtension
         services.AddSingleton<TMongoContext>();
     }
     
-    public static BsonDocument ToJsonQuery<T>(this FilterDefinition<T> filter)
+    public static BsonDocument ToBsonQuery<T>(this FilterDefinition<T> filter)
     {
         var serializerRegistry = BsonSerializer.SerializerRegistry;
         var documentSerializer = serializerRegistry.GetSerializer<T>();

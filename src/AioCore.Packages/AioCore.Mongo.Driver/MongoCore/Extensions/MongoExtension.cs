@@ -2,6 +2,8 @@
 using AioCore.Mongo.Driver.MongoCore.Abstracts;
 using AioCore.Mongo.Driver.MongoCore.Metadata;
 using Microsoft.Extensions.DependencyInjection;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 
 namespace AioCore.Mongo.Driver.MongoCore.Extensions;
@@ -26,5 +28,12 @@ public static class MongoExtension
             return new MongoContextBuilder(requiredService);
         });
         services.AddSingleton<TMongoContext>();
+    }
+    
+    public static BsonDocument ToJsonQuery<T>(this FilterDefinition<T> filter)
+    {
+        var serializerRegistry = BsonSerializer.SerializerRegistry;
+        var documentSerializer = serializerRegistry.GetSerializer<T>();
+        return filter.Render(documentSerializer, serializerRegistry);
     }
 }

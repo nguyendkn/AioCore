@@ -2,7 +2,6 @@
 @using Shared.Objects
 @using MongoDB.Driver
 @using Shared.Objects.AggregateModels.PageAggregate
-@using AioCore.Mongo.Driver.MongoCore.Extensions
 
 @inject AioCoreContext _context
 
@@ -161,7 +160,7 @@
 
     private async Task<List<Page>> Fetch()
     {
-        return await _context.Pages.Where(x => true).OrderBy(x => x.Timestamp).ToListAsync();
+        return await _context.Pages.Where(x => true, null).ToListAsync();
     }
 
 }

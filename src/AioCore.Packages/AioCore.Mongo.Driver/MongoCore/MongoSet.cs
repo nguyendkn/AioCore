@@ -63,7 +63,7 @@ public class MongoSet<TEntity> : IQueryable<TEntity>, IMongoSet<TEntity>
         return fluent;
     }
     
-    public IFindFluent<TEntity, TEntity> Where(Expression<Func<TEntity, bool>> expression, string keyword)
+    public IFindFluent<TEntity, TEntity> Where(Expression<Func<TEntity, bool>> expression, string? keyword)
     {
         var builder = Builders<TEntity>.Filter;
         if (!string.IsNullOrEmpty(keyword)) builder.Text(keyword);

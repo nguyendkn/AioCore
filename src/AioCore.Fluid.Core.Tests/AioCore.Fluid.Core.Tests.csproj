@@ -8,7 +8,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Faker.Net" Version="2.0.154" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
         <PackageReference Include="xunit" Version="2.4.1" />
         <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
@@ -19,11 +18,6 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\..\AioCore.Packages\AioCore.Mongo.Driver\AioCore.Mongo.Driver.csproj" />
-      <ProjectReference Include="..\..\AioCore.Shared\Shared.Extensions\Shared.Extensions.csproj" />
     </ItemGroup>
 
 </Project>

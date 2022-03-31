@@ -5,5 +5,5 @@ namespace AioCore.Mongo.Driver;
 
 public class MongoDocument
 {
-    [BsonId] [MongoKey] public Guid Id { get; set; }
+    [BsonId] [MongoKey] public Guid Id { get; set; } = Guid.NewGuid();
 }

@@ -8,7 +8,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Shared.Extensions\Shared.Extensions.csproj" />
-      <ProjectReference Include="..\Shared.Objects\Shared.Objects.csproj" />
     </ItemGroup>
 
 </Project>

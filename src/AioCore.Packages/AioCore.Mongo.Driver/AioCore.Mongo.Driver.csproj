@@ -5,10 +5,10 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <PackageId>AioCore.Mongo.Driver</PackageId>
-        <AssemblyVersion>1.1.9</AssemblyVersion>
-        <Version>1.1.9</Version>
-        <FileVersion>1.1.9</FileVersion>
-        <PackageVersion>1.1.9</PackageVersion>
+        <AssemblyVersion>1.2.0</AssemblyVersion>
+        <Version>1.2.0</Version>
+        <FileVersion>1.2.0</FileVersion>
+        <PackageVersion>1.2.0</PackageVersion>
         <Authors>Dao Khoi Nguyen</Authors>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <RepositoryUrl>https://github.com/nguyendkn/AioCore/tree/main/src/AioCore.Packages/AioCore.Mongo.Driver</RepositoryUrl>

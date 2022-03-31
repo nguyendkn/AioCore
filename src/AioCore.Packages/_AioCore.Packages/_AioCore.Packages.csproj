@@ -7,6 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\AioCore.Elasticsearch\AioCore.Elasticsearch.csproj" />
       <ProjectReference Include="..\AioCore.Fluid.Core\AioCore.Fluid.Core.csproj" />
       <ProjectReference Include="..\AioCore.Mongo.Driver\AioCore.Mongo.Driver.csproj" />
       <ProjectReference Include="..\AioCore.Notion.OM\AioCore.Notion.OM.csproj" />

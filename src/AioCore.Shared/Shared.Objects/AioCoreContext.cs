@@ -1,5 +1,5 @@
-﻿using AioCore.Mongo.Driver.MongoCore;
-using AioCore.Mongo.Driver.MongoCore.Abstracts;
+﻿using AioCore.Mongo.Driver;
+using AioCore.Mongo.Driver.Abstracts;
 using MongoDB.Driver;
 using Shared.Objects.AggregateModels.CategoryAggregate;
 using Shared.Objects.AggregateModels.PageAggregate;

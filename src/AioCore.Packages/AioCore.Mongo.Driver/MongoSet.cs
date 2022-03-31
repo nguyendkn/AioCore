@@ -1,13 +1,13 @@
 ﻿using System.Collections;
 using System.Linq.Expressions;
 using System.Reflection;
+using AioCore.Mongo.Driver.Abstracts;
 using AioCore.Mongo.Driver.Attributes;
-using AioCore.Mongo.Driver.MongoCore.Abstracts;
 using Humanizer;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
-namespace AioCore.Mongo.Driver.MongoCore;
+namespace AioCore.Mongo.Driver;
 
 public class MongoSet<TEntity> : IQueryable<TEntity>, IMongoSet<TEntity>
     where TEntity : MongoDocument

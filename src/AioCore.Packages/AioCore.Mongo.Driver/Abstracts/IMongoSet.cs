@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace AioCore.Mongo.Driver.MongoCore.Abstracts;
+namespace AioCore.Mongo.Driver.Abstracts;
 
 public interface IMongoSet<TEntity>
 {

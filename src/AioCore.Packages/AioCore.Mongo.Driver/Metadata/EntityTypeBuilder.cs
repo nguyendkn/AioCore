@@ -3,7 +3,7 @@ using Humanizer;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 
-namespace AioCore.Mongo.Driver.MongoCore.Metadata;
+namespace AioCore.Mongo.Driver.Metadata;
 
 public class EntityTypeBuilder<TEntity>
 {

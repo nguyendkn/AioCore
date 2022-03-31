@@ -1,7 +1,7 @@
-﻿using AioCore.Mongo.Driver.MongoCore.Metadata;
+﻿using AioCore.Mongo.Driver.Metadata;
 using MongoDB.Driver;
 
-namespace AioCore.Mongo.Driver.MongoCore.Abstracts;
+namespace AioCore.Mongo.Driver.Abstracts;
 
 public interface IMongoContextBuilder
 {

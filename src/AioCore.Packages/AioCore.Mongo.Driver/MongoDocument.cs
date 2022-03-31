@@ -1,7 +1,7 @@
 ﻿using AioCore.Mongo.Driver.Attributes;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace AioCore.Mongo.Driver.MongoCore;
+namespace AioCore.Mongo.Driver;
 
 public class MongoDocument
 {

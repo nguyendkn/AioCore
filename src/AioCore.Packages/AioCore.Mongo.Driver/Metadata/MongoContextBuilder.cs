@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
-using AioCore.Mongo.Driver.MongoCore.Abstracts;
+using AioCore.Mongo.Driver.Abstracts;
 using MongoDB.Driver;
 
-namespace AioCore.Mongo.Driver.MongoCore.Metadata;
+namespace AioCore.Mongo.Driver.Metadata;
 
 public class MongoContextBuilder : IMongoContextBuilder
 {

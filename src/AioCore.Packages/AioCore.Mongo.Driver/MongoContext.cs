@@ -1,7 +1,7 @@
-﻿using AioCore.Mongo.Driver.MongoCore.Abstracts;
+﻿using AioCore.Mongo.Driver.Abstracts;
 using MongoDB.Driver;
 
-namespace AioCore.Mongo.Driver.MongoCore;
+namespace AioCore.Mongo.Driver;
 
 public class MongoContext
 {

@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using AioCore.Elasticsearch.Abstracts;
+using AioCore.Elasticsearch.Metadata;
+using Microsoft.Extensions.DependencyInjection;
 using Nest;
 
 namespace AioCore.Elasticsearch;
@@ -6,14 +8,24 @@ namespace AioCore.Elasticsearch;
 public static class Register
 {
     public static void AddElasticsearchContext<TElasticsearchContext>(
-        this IServiceCollection services, string connectionString)
+        this IServiceCollection services, EsConfigs esConfigs)
         where TElasticsearchContext : EsContext
     {
         services.AddSingleton<IElasticClient>(_ =>
         {
-            var node = new Uri(connectionString);
+            var node = new Uri(esConfigs.Url);
             var settings = new ConnectionSettings(node);
+            if (string.IsNullOrEmpty(esConfigs.UserName)) return new ElasticClient(settings);
+            settings.BasicAuthentication(esConfigs.UserName, esConfigs.Password);
+            settings.ServerCertificateValidationCallback((sender, cert, chain, errors) => true);
+
             return new ElasticClient(settings);
         });
+        services.AddSingleton<IEsContextBuilder>(provider =>
+        {
+            var requiredService = provider.GetRequiredService<IElasticClient>();
+            return new EsContextBuilder(requiredService);
+        });
+        services.AddSingleton<TElasticsearchContext>();
     }
 }

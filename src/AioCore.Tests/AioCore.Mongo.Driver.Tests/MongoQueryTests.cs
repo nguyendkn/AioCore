@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver;
-using Shared.Extensions;
 using Xunit;
 using Xunit.Abstractions;
 

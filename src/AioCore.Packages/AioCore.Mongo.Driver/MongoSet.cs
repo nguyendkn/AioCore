@@ -20,6 +20,21 @@ public class MongoSet<TEntity> : IQueryable<TEntity>, IMongoSet<TEntity>
         _collection = database.GetCollection<TEntity>(connectionName);
     }
 
+    IEnumerator<TEntity> IEnumerable<TEntity>.GetEnumerator()
+        => _collection.AsQueryable().GetEnumerator();
+
+    IEnumerator IEnumerable.GetEnumerator()
+        => _collection.AsQueryable().GetEnumerator();
+
+    Type IQueryable.ElementType
+        => _collection.AsQueryable().ElementType;
+
+    Expression IQueryable.Expression
+        => _collection.AsQueryable().Expression;
+
+    IQueryProvider IQueryable.Provider
+        => _collection.AsQueryable().Provider;
+
     public async Task<TEntity> AddAsync(TEntity entity)
     {
         await _collection.InsertOneAsync(entity);
@@ -49,6 +64,11 @@ public class MongoSet<TEntity> : IQueryable<TEntity>, IMongoSet<TEntity>
         return await document.FirstOrDefaultAsync();
     }
 
+    public async Task<long> CountAsync(Expression<Func<TEntity, bool>> expression, CountOptions? options = null)
+    {
+        return await _collection.CountDocumentsAsync(expression, options);
+    }
+
     public async Task<TEntity> FindAsync(object key)
     {
         if (key.Equals(Guid.Empty)) return default!;
@@ -63,11 +83,11 @@ public class MongoSet<TEntity> : IQueryable<TEntity>, IMongoSet<TEntity>
 
     public IFindFluent<TEntity, TEntity> Where(Expression<Func<TEntity, bool>> expression, string? keyword)
     {
-        var @builder = Builders<TEntity>.Filter;
-        var @text = Builders<TEntity>.Filter.Text(keyword ?? string.Empty);
-        var @where = Builders<TEntity>.Filter.Where(expression);
-        if (string.IsNullOrEmpty(keyword)) return _collection.Find(@where);
-        var filters = @builder.And(@text, @where);
+        var builder = Builders<TEntity>.Filter;
+        var text = Builders<TEntity>.Filter.Text(keyword ?? string.Empty);
+        var where = Builders<TEntity>.Filter.Where(expression);
+        if (string.IsNullOrEmpty(keyword)) return _collection.Find(where);
+        var filters = builder.And(text, where);
         var fluent = _collection.Find(filters);
         return fluent;
     }
@@ -85,19 +105,4 @@ public class MongoSet<TEntity> : IQueryable<TEntity>, IMongoSet<TEntity>
                 x.GetCustomAttribute<MongoKeyAttribute>() != null)?.Name;
         return _collection.Aggregate().Lookup(targetCollection, localField, foreignField, localFieldProperty?.Name);
     }
-
-    IEnumerator<TEntity> IEnumerable<TEntity>.GetEnumerator()
-        => _collection.AsQueryable().GetEnumerator();
-
-    IEnumerator IEnumerable.GetEnumerator()
-        => _collection.AsQueryable().GetEnumerator();
-
-    Type IQueryable.ElementType
-        => _collection.AsQueryable().ElementType;
-
-    Expression IQueryable.Expression
-        => _collection.AsQueryable().Expression;
-
-    IQueryProvider IQueryable.Provider
-        => _collection.AsQueryable().Provider;
 }

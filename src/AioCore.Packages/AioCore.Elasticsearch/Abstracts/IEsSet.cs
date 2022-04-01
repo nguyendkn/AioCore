@@ -1,9 +1,8 @@
 ﻿using System.Linq.Expressions;
-using MongoDB.Driver;
 
-namespace AioCore.Mongo.Driver.Abstracts;
+namespace AioCore.Elasticsearch.Abstracts;
 
-public interface IMongoSet<TEntity>
+public interface IEsSet<TEntity>
 {
     Task<TEntity> AddAsync(TEntity entity);
 
@@ -15,5 +14,5 @@ public interface IMongoSet<TEntity>
 
     Task<TEntity?> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> expression);
 
-    Task<long> CountAsync(Expression<Func<TEntity, bool>> expression, CountOptions? options = null);
+    Task<long> CountAsync(Expression<Func<TEntity, bool>> expression);
 }

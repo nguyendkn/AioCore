@@ -12,12 +12,15 @@ namespace AioCore.Mongo.Driver;
 public class MongoSet<TEntity> : IQueryable<TEntity>, IMongoSet<TEntity>
     where TEntity : MongoDocument
 {
+    private readonly IMongoDatabase _database;
+    private readonly string _collectionName;
     private readonly IMongoCollection<TEntity> _collection;
 
     public MongoSet(IMongoDatabase database)
     {
-        var connectionName = typeof(TEntity).Name.Pluralize();
-        _collection = database.GetCollection<TEntity>(connectionName);
+        _database = database;
+        _collectionName = typeof(TEntity).Name.Pluralize();
+        _collection = database.GetCollection<TEntity>(_collectionName);
     }
 
     IEnumerator<TEntity> IEnumerable<TEntity>.GetEnumerator()
@@ -34,6 +37,13 @@ public class MongoSet<TEntity> : IQueryable<TEntity>, IMongoSet<TEntity>
 
     IQueryProvider IQueryable.Provider
         => _collection.AsQueryable().Provider;
+
+    public IMongoCollection<TEntity> Collection(string connectionString, string database)
+    {
+        var settings = MongoClientSettings.FromConnectionString(connectionString);
+        var client = new MongoClient(settings);
+        return client.GetDatabase(database).GetCollection<TEntity>(_collectionName);
+    }
 
     public async Task<TEntity> AddAsync(TEntity entity)
     {
@@ -67,6 +77,11 @@ public class MongoSet<TEntity> : IQueryable<TEntity>, IMongoSet<TEntity>
     public async Task<long> CountAsync(Expression<Func<TEntity, bool>> expression, CountOptions? options = null)
     {
         return await _collection.CountDocumentsAsync(expression, options);
+    }
+
+    public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> expression)
+    {
+        return (await CountAsync(expression) > 0);
     }
 
     public async Task<TEntity> FindAsync(object key)

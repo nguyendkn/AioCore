@@ -16,8 +16,8 @@ public static class Register
             var node = new Uri(esConfigs.Url);
             var settings = new ConnectionSettings(node);
             if (string.IsNullOrEmpty(esConfigs.UserName)) return new ElasticClient(settings);
+            settings.DefaultIndex(esConfigs.Index);
             settings.BasicAuthentication(esConfigs.UserName, esConfigs.Password);
-            settings.ServerCertificateValidationCallback((sender, cert, chain, errors) => true);
 
             return new ElasticClient(settings);
         });

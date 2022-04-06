@@ -13,9 +13,7 @@ public class ElasticsearchFixture
         serviceCollection.AddElasticsearchContext<AioCoreContext>(new EsConfigs
         {
             Url = "https://localhost:9200",
-            Index = "test",
-            UserName = "elastic",
-            Password = "lOsxTsJlHJNdviyIPEEu"
+            Index = "test"
         });
 
         ServiceProvider = serviceCollection.BuildServiceProvider();

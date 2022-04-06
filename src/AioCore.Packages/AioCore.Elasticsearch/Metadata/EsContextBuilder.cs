@@ -40,7 +40,7 @@ public class EsContextBuilder : IEsContextBuilder
 
         foreach (var (name, type) in contextProperties)
         {
-            var existed = ElasticClient.Indices.Exists(name);
+            var existed = ElasticClient.Indices.Create(name);
             var esSet = typeof(EsSet<>).MakeGenericType(type);
             var dbSet = Activator.CreateInstance(esSet, ElasticClient);
             context.GetType().GetProperty(name)?.SetValue(context, dbSet);

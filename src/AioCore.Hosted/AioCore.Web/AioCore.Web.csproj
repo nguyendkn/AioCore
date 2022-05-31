@@ -21,4 +21,11 @@
       <_ContentIncludedByDefault Remove="wwwroot\css\site.css" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\AioCore.Packages\_Package.Targets\_Package.Targets.csproj" />
+      <ProjectReference Include="..\..\AioCore.Plugins\_Plugin.Targets\_Plugin.Targets.csproj" />
+      <ProjectReference Include="..\..\AioCore.Shared\_Shared.Targets\_Shared.Targets.csproj" />
+      <ProjectReference Include="..\..\AioCore.Themes\_Theme.Targets\_Theme.Targets.csproj" />
+    </ItemGroup>
+
 </Project>

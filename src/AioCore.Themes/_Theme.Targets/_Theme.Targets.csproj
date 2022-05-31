@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Theme.Dark\Theme.Dark.csproj" />
+      <ProjectReference Include="..\Theme.Default\Theme.Default.csproj" />
+    </ItemGroup>
+
+</Project>

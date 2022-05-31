@@ -1,0 +1,1 @@
+global using Shared.Core.Extensions;

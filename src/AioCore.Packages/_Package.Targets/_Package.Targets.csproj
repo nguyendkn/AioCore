@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Package.ElasticSearch\Package.ElasticSearch.csproj" />
+      <ProjectReference Include="..\Package.MediatR\Package.MediatR.csproj" />
+      <ProjectReference Include="..\Package.Mongo\Package.Mongo.csproj" />
+      <ProjectReference Include="..\Package.RedisServer\Package.RedisServer.csproj" />
+      <ProjectReference Include="..\Package.Scriban\Package.Scriban.csproj" />
+    </ItemGroup>
+
+</Project>

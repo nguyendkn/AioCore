@@ -1,4 +1,4 @@
-namespace Plugin.Slug;
+namespace Settings.Slug;
 
 public class Assembly
 {

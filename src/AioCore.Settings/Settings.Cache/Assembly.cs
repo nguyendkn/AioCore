@@ -1,4 +1,4 @@
-namespace Plugin.Layout;
+namespace Settings.Cache;
 
 public class Assembly
 {

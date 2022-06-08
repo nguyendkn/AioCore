@@ -1,4 +1,4 @@
-namespace Plugin.Setup;
+namespace Settings.Seo;
 
 public class Assembly
 {

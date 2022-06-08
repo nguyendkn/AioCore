@@ -6,4 +6,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\AioCore.Shared\_Shared.Targets\_Shared.Targets.csproj" />
+    </ItemGroup>
+
 </Project>

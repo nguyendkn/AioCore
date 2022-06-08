@@ -6,7 +6,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. AioCore.Hosted", "1. Aio
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. AioCore.Packages", "2. AioCore.Packages", "{ECD73E0F-E94E-4996-8F83-6849F37AF65B}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. AioCore.Plugins", "3. AioCore.Plugins", "{6D221E97-5556-4CE0-A840-516BB07D5D79}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. AioCore.Settings", "3. AioCore.Settings", "{6D221E97-5556-4CE0-A840-516BB07D5D79}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. AioCore.Themes", "4. AioCore.Themes", "{948784C6-312F-49E2-9036-E158FB9A885C}"
 EndProject
@@ -30,21 +30,21 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Theme.Default", "src\AioCor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Theme.Dark", "src\AioCore.Themes\Theme.Dark\Theme.Dark.csproj", "{94D3FE5F-4272-4829-AF28-75E2F7724E1E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.Seo", "src\AioCore.Plugins\Plugin.Seo\Plugin.Seo.csproj", "{48C4F0D4-1E5F-4B1B-86A3-0A5E30EAE697}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Settings.Seo", "src\AioCore.Settings\Settings.Seo\Settings.Seo.csproj", "{48C4F0D4-1E5F-4B1B-86A3-0A5E30EAE697}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.Cache", "src\AioCore.Plugins\Plugin.Cache\Plugin.Cache.csproj", "{3EEDBD8B-A8FC-4055-BD3A-D98647300AD4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Settings.Cache", "src\AioCore.Settings\Settings.Cache\Settings.Cache.csproj", "{3EEDBD8B-A8FC-4055-BD3A-D98647300AD4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.Slug", "src\AioCore.Plugins\Plugin.Slug\Plugin.Slug.csproj", "{98F0F445-0ACB-4DF0-88E6-D1A3D51327C0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Settings.Slug", "src\AioCore.Settings\Settings.Slug\Settings.Slug.csproj", "{98F0F445-0ACB-4DF0-88E6-D1A3D51327C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.Layout", "src\AioCore.Plugins\Plugin.Layout\Plugin.Layout.csproj", "{95309D80-C9F6-4C84-AD69-793CE5BF80B6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Settings.Layout", "src\AioCore.Settings\Settings.Layout\Settings.Layout.csproj", "{95309D80-C9F6-4C84-AD69-793CE5BF80B6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Core", "src\AioCore.Shared\Shared.Core\Shared.Core.csproj", "{217CFE04-E070-4C16-9A56-FD7C5109CFD9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Types", "src\AioCore.Themes\Shared.Types\Shared.Types.csproj", "{6B6062D5-7829-4B75-B645-2906B771F9F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.Setup", "src\AioCore.Plugins\Plugin.Setup\Plugin.Setup.csproj", "{68B38485-7523-4E31-84BB-AF4BDA69D9A2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Settings.Setup", "src\AioCore.Settings\Settings.Setup\Settings.Setup.csproj", "{68B38485-7523-4E31-84BB-AF4BDA69D9A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "_Plugin.Targets", "src\AioCore.Plugins\_Plugin.Targets\_Plugin.Targets.csproj", "{A0FC9216-587E-423D-92D8-F0DF51A6E05C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "_Settings.Targets", "src\AioCore.Settings\_Settings.Targets\_Settings.Targets.csproj", "{A0FC9216-587E-423D-92D8-F0DF51A6E05C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "_Package.Targets", "src\AioCore.Packages\_Package.Targets\_Package.Targets.csproj", "{5964873A-526A-42BC-AA78-EA2EBD65CD60}"
 EndProject

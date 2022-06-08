@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>_Settings.Targets</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Settings.Cache\Settings.Cache.csproj" />
+      <ProjectReference Include="..\Settings.Layout\Settings.Layout.csproj" />
+      <ProjectReference Include="..\Settings.Seo\Settings.Seo.csproj" />
+      <ProjectReference Include="..\Settings.Setup\Settings.Setup.csproj" />
+      <ProjectReference Include="..\Settings.Slug\Settings.Slug.csproj" />
+    </ItemGroup>
+
+</Project>

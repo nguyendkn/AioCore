@@ -5,8 +5,10 @@ namespace Settings.Layout;
 
 public class LayoutContext : MongoContext
 {
+    public const string DatabaseName = "Layout.Settings";
+
     public LayoutContext(AppSettings appSettings) :
-        base(appSettings.ConnectionStrings.DefaultConnection, "Layout.Settings")
+        base(appSettings.ConnectionStrings.DefaultConnection, DatabaseName)
     {
     }
 }

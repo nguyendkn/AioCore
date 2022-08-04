@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{93C490A8-F255-4C3A-875F-9B0426637FA4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{FD5A9308-0B39-4078-B29B-8417F2E3E8C6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{1355FD66-4D38-4CE6-8848-9E930D6286C1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{6E301CDA-C2E7-4B01-8DAA-EABC6F5102B8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1BF7B5A3-9406-4E24-98BD-FC62EF10E766}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{736859E9-D4E6-487C-B3EE-2FDD05933A7E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frameworks", "Frameworks", "{1EFEEF26-9A38-4607-9F5B-B7084BD9A312}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AioCore", "src\Frameworks\AioCore\AioCore.csproj", "{C42906E4-2D6C-40C2-BFE1-C240222C9CA3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{736859E9-D4E6-487C-B3EE-2FDD05933A7E} = {1BF7B5A3-9406-4E24-98BD-FC62EF10E766}
+		{1EFEEF26-9A38-4607-9F5B-B7084BD9A312} = {1BF7B5A3-9406-4E24-98BD-FC62EF10E766}
+		{C42906E4-2D6C-40C2-BFE1-C240222C9CA3} = {1EFEEF26-9A38-4607-9F5B-B7084BD9A312}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C42906E4-2D6C-40C2-BFE1-C240222C9CA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C42906E4-2D6C-40C2-BFE1-C240222C9CA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C42906E4-2D6C-40C2-BFE1-C240222C9CA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C42906E4-2D6C-40C2-BFE1-C240222C9CA3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

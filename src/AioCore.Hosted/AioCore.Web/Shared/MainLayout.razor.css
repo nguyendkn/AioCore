@@ -1,0 +1,8 @@
+::deep .header {
+    height: 50px;
+}
+
+::deep .header i {
+    margin-left: 25px;
+    margin-right: 25px;
+}

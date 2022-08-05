@@ -1,0 +1,51 @@
+﻿body {
+    background: #FAFAFA !important;
+}
+
+#components-layout-demo-custom-trigger .trigger {
+    font-size: 18px;
+    line-height: 64px;
+    padding: 0 24px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+#components-layout-demo-custom-trigger .trigger:hover {
+    color: #1890ff;
+}
+
+#components-layout-demo-custom-trigger .logo {
+    height: 32px;
+    background: rgba(255, 255, 255, 0.2);
+    margin: 16px;
+}
+
+.site-layout .site-layout-background {
+    background: #fff;
+}
+
+/*Reuse class*/
+.text-white {
+    color: white;
+}
+.d-flex {
+    display: flex;
+}
+.m-auto {
+    margin: auto;
+}
+.mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+}
+.my-auto {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.ml-auto {
+    margin-left: auto;
+}
+.mr-auto {
+    margin-right: auto;
+}
+/*Reuse class*/

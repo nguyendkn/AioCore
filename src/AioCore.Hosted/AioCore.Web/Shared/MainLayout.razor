@@ -1,55 +1,34 @@
 ﻿@inherits LayoutComponentBase
 
-@code
-{
-    bool _collapsed;
-
-    void Toggle()
-    {
-        _collapsed = !_collapsed;
-    }
-}
-
 <Layout>
-    <Sider Collapsible Collapsed=@_collapsed NoTrigger OnCollapse="OnCollapse">
-        <div class="logo"></div>
-        <Menu Theme="MenuTheme.Dark" Mode="MenuMode.Inline" DefaultSelectedKeys=@(new[]{"1"})>
-            <MenuItem Key="1">
-                <Icon Type="user" Theme="outline" />
-                <span>nav 1</span>
-            </MenuItem>
-            <MenuItem Key="2">
-                <Icon Type="video-camera" Theme="outline" />
-                <span>nav 2</span>
-            </MenuItem>
-            <MenuItem Key="3">
-                <Icon Type="upload" Theme="outline" />
-                <span>nav 3</span>
-            </MenuItem>
-        </Menu>
-    </Sider>
-    <Layout Class="site-layout">
-        <Header Class="site-layout-background" Style="padding: 0;">
-            @if (_collapsed)
-            {
-                <Icon Type="menu-unfold" Theme="outline" Class="trigger" OnClick="Toggle" />
-            }
-            else
-            {
-                <Icon Type="menu-fold" Theme="outline" Class="trigger" OnClick="Toggle" />
-            }
+    <div class="wrapper-header">
+        <Header Class="header d-flex" Style="padding: 0;">
+            <i class="fa-solid fa-bars my-auto text-white"></i>
         </Header>
+    </div>
+    <Layout Class="site-layout">
+        <Sider Collapsible Collapsed="true">
+            <div class="logo"></div>
+            <Menu Theme="MenuTheme.Dark" Mode="MenuMode.Inline" DefaultSelectedKeys=@(new[] { "1" })>
+                <MenuItem Key="pages">
+                    <i class="fa-solid fa-memo"></i>
+                    <span>Giao diện</span>
+                </MenuItem>
+                <MenuItem Key="2">
+                    <Icon Type="video-camera" Theme="outline"/>
+                    <span>nav 2</span>
+                </MenuItem>
+                <MenuItem Key="3">
+                    <Icon Type="upload" Theme="outline"/>
+                    <span>nav 3</span>
+                </MenuItem>
+            </Menu>
+        </Sider>
         <Content Class="site-layout-background" Style="margin: 24px 16px;padding: 24px;min-height: 280px;">
             @Body
         </Content>
     </Layout>
 </Layout>
-
-@code{
-
-    void OnCollapse(bool isCollapsed)
-    {
-        Console.WriteLine($"Collapsed: {isCollapsed}");
-    }
-
+@{
+    RenderFragment faMemo = @<i class="fa-solid fa-memo"></i>;
 }

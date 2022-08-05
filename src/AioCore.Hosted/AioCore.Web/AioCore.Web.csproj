@@ -7,6 +7,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <None Update="Pages/*.razor.css" CssScope="aioc" />
+    </ItemGroup>
+
+    <ItemGroup>
         <PackageReference Include="AntDesign" Version="0.11.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.7" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.7">
@@ -19,6 +23,11 @@
       <ProjectReference Include="..\..\AioCore.MediatR\AioCore.Read\AioCore.Read.csproj" />
       <ProjectReference Include="..\..\AioCore.MediatR\AioCore.Write\AioCore.Write.csproj" />
       <ProjectReference Include="..\..\AioCore.Migrations\AioCore.Migrations.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Pages\DynamicPages" />
+      <Folder Include="Shared\Components" />
     </ItemGroup>
 
 </Project>

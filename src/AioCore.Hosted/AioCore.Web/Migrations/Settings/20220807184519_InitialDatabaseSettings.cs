@@ -3,14 +3,18 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace AioCore.Web.Migrations
+namespace AioCore.Web.Migrations.Settings
 {
     public partial class InitialDatabaseSettings : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "Settings");
+
             migrationBuilder.CreateTable(
                 name: "Entities",
+                schema: "Settings",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -25,6 +29,7 @@ namespace AioCore.Web.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Features",
+                schema: "Settings",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -42,10 +47,12 @@ namespace AioCore.Web.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Entities");
+                name: "Entities",
+                schema: "Settings");
 
             migrationBuilder.DropTable(
-                name: "Features");
+                name: "Features",
+                schema: "Settings");
         }
     }
 }

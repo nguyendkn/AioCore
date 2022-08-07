@@ -1,0 +1,43 @@
+﻿::deep .header {
+    height: 50px;
+}
+
+::deep .header i {
+    margin-left: 25px;
+    margin-right: 25px;
+}
+
+.space-grow {
+    flex-grow: 1;
+}
+
+.submenu {
+    padding: 4px 8px;
+    display: flex;
+    height: 75px;
+    text-decoration: none;
+}
+
+.submenu:hover {
+    border-radius: 5px;
+    background-color: hsla(0, 0%, 96%, .7);
+    cursor: pointer;
+}
+
+.submenu .submenu-title {
+    font-size: 14px;
+    color: #222;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.submenu .submenu-description {
+    max-width: 250px;
+    color: #4f4f4f;
+    font-size: 13px;
+}
+
+.main {
+    border-radius: 5px;
+    height: calc(100% - 30px);
+}

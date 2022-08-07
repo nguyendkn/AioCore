@@ -1,0 +1,40 @@
+﻿.img-holder {
+    width: 550px;
+    background-color: #4a90e2;
+}
+
+.form-content .page-links a.active:after {
+    background-color: #4a90e2;
+}
+
+.form-content .page-links a:hover:after,
+.form-content .page-links a:focus:after {
+    background-color: #4a90e2;
+}
+
+.form-content input[type=checkbox]:checked + label:after,
+.form-content input[type=checkbox]:not(:checked) + label:after {
+    color: #4a90e2;
+}
+
+.form-content input[type=radio]:checked + label:after,
+.form-content input[type=radio]:not(:checked) + label:after {
+    background-color: #4a90e2;
+}
+
+.form-content .custom-options input[type=checkbox]:checked + label,
+.form-content .custom-options input[type=radio]:checked + label {
+    background-color: #4a90e2;
+    -webkit-box-shadow: 0 3px 8px rgba(74, 144, 226, 0.35);
+    box-shadow: 0 3px 8px rgba(74, 144, 226, 0.35);
+}
+
+.form-content .form-button .ibtn {
+    background-color: #4a90e2;
+    box-shadow: 0 0 0 rgba(74, 144, 226, 0.3);
+}
+
+.form-content .form-button .ibtn:hover,
+.form-content .form-button .ibtn:focus {
+    box-shadow: 0 5px 6px rgba(74, 144, 226, 0.3);
+}

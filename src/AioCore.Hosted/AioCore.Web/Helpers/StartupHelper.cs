@@ -17,6 +17,7 @@ public static class StartupHelper
         {
             options.UseSqlServer(configuration.ConnectionStrings.DefaultConnection, b =>
             {
+                b.MigrationsHistoryTable("__EFMigrationsHistory", SettingsContext.Schema);
                 b.MigrationsAssembly(Assembly.Name);
                 b.EnableRetryOnFailure(15, TimeSpan.FromSeconds(30), null);
             });
@@ -33,6 +34,7 @@ public static class StartupHelper
         {
             options.UseSqlServer(configuration.ConnectionStrings.DefaultConnection, b =>
             {
+                b.MigrationsHistoryTable("__EFMigrationsHistory", IdentityContext.Schema);
                 b.MigrationsAssembly(Assembly.Name);
                 b.EnableRetryOnFailure(15, TimeSpan.FromSeconds(30), null);
             });

@@ -28,6 +28,7 @@
     <ItemGroup>
       <Folder Include="Factories" />
       <Folder Include="Shared\Components" />
+      <Folder Include="wwwroot\images" />
     </ItemGroup>
 
 </Project>

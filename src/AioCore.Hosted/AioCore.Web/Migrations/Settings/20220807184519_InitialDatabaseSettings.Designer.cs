@@ -9,16 +9,17 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace AioCore.Web.Migrations
+namespace AioCore.Web.Migrations.Settings
 {
     [DbContext(typeof(SettingsContext))]
-    [Migration("20220807181724_InitialDatabaseSettings")]
+    [Migration("20220807184519_InitialDatabaseSettings")]
     partial class InitialDatabaseSettings
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasDefaultSchema("Settings")
                 .HasAnnotation("ProductVersion", "6.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
@@ -42,7 +43,7 @@ namespace AioCore.Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Entities");
+                    b.ToTable("Entities", "Settings");
                 });
 
             modelBuilder.Entity("AioCore.Domain.SettingAggregate.SettingFeature", b =>
@@ -68,7 +69,7 @@ namespace AioCore.Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Features");
+                    b.ToTable("Features", "Settings");
                 });
 #pragma warning restore 612, 618
         }

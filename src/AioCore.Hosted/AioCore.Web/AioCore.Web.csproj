@@ -26,7 +26,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Pages\DynamicPages" />
       <Folder Include="Shared\Components" />
     </ItemGroup>
 

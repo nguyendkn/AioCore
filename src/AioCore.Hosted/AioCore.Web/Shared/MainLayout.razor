@@ -6,29 +6,61 @@
             <i class="fa-solid fa-bars my-auto text-white"></i>
         </Header>
     </div>
-    <Layout Class="site-layout">
-        <Sider Collapsible Collapsed="true">
+    <Layout>
+        <Sider>
             <div class="logo"></div>
-            <Menu Theme="MenuTheme.Dark" Mode="MenuMode.Inline" DefaultSelectedKeys=@(new[] { "1" })>
-                <MenuItem Key="pages">
-                    <i class="fa-solid fa-memo"></i>
-                    <span>Giao diện</span>
-                </MenuItem>
-                <MenuItem Key="2">
-                    <Icon Type="video-camera" Theme="outline"/>
-                    <span>nav 2</span>
-                </MenuItem>
-                <MenuItem Key="3">
-                    <Icon Type="upload" Theme="outline"/>
-                    <span>nav 3</span>
-                </MenuItem>
+            <Menu Theme="MenuTheme.Dark" Mode="MenuMode.Inline" Class="wrapper-sider">
+                <Tooltip Placement="@Placement.Right" Title="@("Trang chủ")">
+                    <MenuItem Key="Home">
+                        <i class="fa-light fa-house"></i>
+                    </MenuItem>
+                </Tooltip>
+                <div class="space-grow"></div>
+                <Popover ContentTemplate="@_settingsMenu" Placement="@Placement.Right" Trigger="@(new[] { Trigger.Hover })">
+                    <MenuItem Key="Features">
+                        <i class="fa-light fa-gear"></i>
+                    </MenuItem>
+                </Popover>
             </Menu>
         </Sider>
-        <Content Class="site-layout-background" Style="margin: 24px 16px;padding: 24px;min-height: 280px;">
-            @Body
+        <Content>
+            <div class="m-3 bg-white main">
+                @Body
+            </div>
         </Content>
     </Layout>
 </Layout>
-@{
-    RenderFragment faMemo = @<i class="fa-solid fa-memo"></i>;
+
+@code {
+
+    private readonly RenderFragment _settingsMenu =
+        @<div class="row">
+            <div class="col-6">
+                <a href="#" class="submenu">
+                    <div class="p-1 d-flex">
+                        <i class="fa-light fa-users fs-5 text-orange"></i>
+                        <div>
+                            <div class="p-0 px-3">
+                                <h4 class="submenu-title">Người dùng</h4>
+                                <div class="submenu-description">Tương tác với danh sách dữ liệu người dùng trong hệ thống</div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-6">
+                <a href="#" class="submenu">
+                    <div class="p-1 d-flex">
+                        <i class="fa-light fa-square-list fs-5 text-green"></i>
+                        <div>
+                            <div class="p-0 px-3">
+                                <h4 class="submenu-title">Chức năng</h4>
+                                <div class="submenu-description">Tùy chỉnh hiển thị cây chức năng của hệ thống</div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>;
+
 }

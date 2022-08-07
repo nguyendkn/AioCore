@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using AioCore.Domain;
+using AioCore.Domain.DatabaseContexts;
 using AioCore.Shared.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,7 +9,7 @@ public static class StartupHelper
 {
     public static IServiceCollection AddAioContext(this IServiceCollection services, AppSettings configuration)
     {
-        services.AddDbContext<AioContext>(options =>
+        services.AddDbContext<SettingsContext>(options =>
         {
             options.UseSqlServer(configuration.ConnectionStrings.DefaultConnection, b =>
             {

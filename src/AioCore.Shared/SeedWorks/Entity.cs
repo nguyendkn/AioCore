@@ -1,13 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AioCore.Domain;
+namespace AioCore.Shared.SeedWorks;
 
-public class SystemEntity
+public class Entity
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public Guid Id { get; set; } = Guid.NewGuid();
-    
-    public string Name { get; set; } = default!;
 }

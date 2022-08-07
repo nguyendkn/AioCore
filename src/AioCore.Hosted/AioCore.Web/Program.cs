@@ -13,6 +13,7 @@ services.AddServerSideBlazor();
 services.AddAntDesign();
 services.AddAioContext(appSettings);
 var app = builder.Build();
+app.UseAioCore();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();

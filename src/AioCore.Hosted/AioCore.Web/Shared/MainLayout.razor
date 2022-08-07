@@ -34,32 +34,49 @@
 @code {
 
     private readonly RenderFragment _settingsMenu =
-        @<div class="row">
-            <div class="col-6">
-                <a href="#" class="submenu">
-                    <div class="p-1 d-flex">
-                        <i class="fa-light fa-users fs-5 text-orange"></i>
-                        <div>
-                            <div class="p-0 px-3">
-                                <h4 class="submenu-title">Người dùng</h4>
-                                <div class="submenu-description">Tương tác với danh sách dữ liệu người dùng trong hệ thống</div>
+        @<div>
+            <div class="row">
+                <div class="col-6">
+                    <a href="#" class="submenu">
+                        <div class="p-1 d-flex">
+                            <i class="fa-light fa-users fs-5 text-orange"></i>
+                            <div>
+                                <div class="p-0 px-3">
+                                    <h4 class="submenu-title">Người dùng</h4>
+                                    <div class="submenu-description">Tương tác với danh sách dữ liệu người dùng trong hệ thống</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </a>
+                    </a>
+                </div>
+                <div class="col-6">
+                    <a href="#" class="submenu">
+                        <div class="p-1 d-flex">
+                            <i class="fa-light fa-square-list fs-5 text-green"></i>
+                            <div>
+                                <div class="p-0 px-3">
+                                    <h4 class="submenu-title">Chức năng</h4>
+                                    <div class="submenu-description">Tùy chỉnh hiển thị cây chức năng của hệ thống</div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
             </div>
-            <div class="col-6">
-                <a href="#" class="submenu">
-                    <div class="p-1 d-flex">
-                        <i class="fa-light fa-square-list fs-5 text-green"></i>
-                        <div>
-                            <div class="p-0 px-3">
-                                <h4 class="submenu-title">Chức năng</h4>
-                                <div class="submenu-description">Tùy chỉnh hiển thị cây chức năng của hệ thống</div>
+            <div class="row">
+                <div class="col-6">
+                    <a href="#" class="submenu">
+                        <div class="p-1 d-flex">
+                            <i class="fa-light fa-database fs-5 text-red"></i>
+                            <div>
+                                <div class="p-0 px-3">
+                                    <h4 class="submenu-title">Đối tượng</h4>
+                                    <div class="submenu-description">Quản lý và khởi tạo đối tượng tùy chỉnh của hệ thống</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </a>
+                    </a>
+                </div>
             </div>
         </div>;
 

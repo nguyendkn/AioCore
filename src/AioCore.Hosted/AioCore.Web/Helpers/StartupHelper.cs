@@ -1,10 +1,8 @@
-﻿using System.Reflection;
-using AioCore.Domain.DatabaseContexts;
+﻿using AioCore.Domain.DatabaseContexts;
 using AioCore.Domain.DatabaseDataSeeds;
 using AioCore.Domain.IdentityAggregate;
 using AioCore.Shared.Extensions;
 using AioCore.Shared.ValueObjects;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace AioCore.Web.Helpers;
@@ -47,6 +45,7 @@ public static class StartupHelper
                 options.Password.RequireUppercase = false;
                 options.Password.RequiredLength = 6;
             })
+            .AddRoles<Role>()
             .AddEntityFrameworkStores<IdentityContext>();
         return services;
     }

@@ -68,7 +68,10 @@
 }
 
 .form-holder {
-    margin-left: 550px;
+    margin-left: auto;
+    width: fit-content;
+    display: flex;
+    margin-right: auto;
 }
 
 .form-holder .form-content ::-webkit-input-placeholder {

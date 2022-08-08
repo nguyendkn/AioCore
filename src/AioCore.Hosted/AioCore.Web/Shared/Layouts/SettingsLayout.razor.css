@@ -7,6 +7,11 @@
     margin-right: 25px;
 }
 
+.logo img {
+    width: 35px;
+    height: 35px;
+}
+
 .space-grow {
     flex-grow: 1;
 }

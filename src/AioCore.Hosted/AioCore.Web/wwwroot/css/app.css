@@ -8,6 +8,10 @@
     flex-direction: column;
 }
 
+.cursor-pointer {
+    cursor: pointer !important;
+}
+
 .text-red {
     color: red;
 }

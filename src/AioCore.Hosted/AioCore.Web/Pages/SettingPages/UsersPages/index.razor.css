@@ -1,0 +1,13 @@
+.user-group {
+    border-right: 1px solid rgba(9,30,66,.12);
+}
+
+::deep .user-group .create-user {
+    width: calc(100% - 15px);
+    margin: 0.5rem !important;
+}
+
+::deep .user-group .groups {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}

@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AioCore.Domain.IdentityAggregate;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace AioCore.Domain.DatabaseContexts;
 
-public class IdentityContext : IdentityDbContext<IdentityUser<Guid>, IdentityRole<Guid>, Guid>
+public class IdentityContext : IdentityDbContext<User, Role, Guid>
 {
     public const string Schema = "Identity";
     

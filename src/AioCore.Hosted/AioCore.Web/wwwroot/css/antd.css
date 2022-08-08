@@ -2,8 +2,28 @@
     height: 100%;
 }
 
+.ant-layout-header {
+    background: white;
+}
+
 .ant-layout-sider {
     max-width: 63px !important;
     min-width: 63px !important;
     width: 63px !important;
+}
+
+.ant-menu {
+    height: 100%;
+}
+
+.ant-tree-switcher {
+    line-height: 16px;
+}
+
+.ant-empty {
+    display: unset;
+}
+
+.ant-empty .ant-empty-image .ant-empty-img-default {
+    width: 100%;
 }

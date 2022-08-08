@@ -1,4 +1,6 @@
-﻿namespace AioCore.Domain.IdentityAggregate;
+﻿using System.ComponentModel;
+
+namespace AioCore.Domain.IdentityAggregate;
 
 public class RoleResponse
 {
@@ -8,10 +10,6 @@ public class RoleResponse
     
     public string Name { get; set; } = default!;
 
-    public string Href { get; set; } = default!;
-
-    public string Icon { get; set; } = default!;
-    
     public Guid? ParentId { get; set; }
 
     public List<RoleResponse> Children { get; set; } = default!;

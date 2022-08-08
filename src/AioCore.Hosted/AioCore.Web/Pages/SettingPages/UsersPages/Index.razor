@@ -36,12 +36,12 @@
        Visible="@_modalUserDetailVisible"
        OnOk="@OnSubmitUserDetail"
        OnCancel="@OnToggleModalUserDetail">
-    <RoleDetail/>
+    <RoleDetail OnFireSubmitEvent="OnSubmitUserDetail"/>
 </Modal>
 
 <Modal Title="@("Thông tin vai trò")"
        Visible="@_modalRoleDetailVisible"
        OnOk="@OnSubmitRoleDetail"
        OnCancel="@OnToggleModalRoleDetail">
-    <RoleDetail/>
+    <RoleDetail Role="@_role" />
 </Modal>

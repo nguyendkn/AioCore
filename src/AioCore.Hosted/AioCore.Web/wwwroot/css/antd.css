@@ -27,3 +27,11 @@
 .ant-empty .ant-empty-image .ant-empty-img-default {
     width: 100%;
 }
+
+.ant-modal-body {
+    padding: 16px;
+}
+
+.ant-form-item {
+    margin-bottom: 10px;
+}

@@ -38,8 +38,6 @@ public class ListRoleQuery : IRequest<Response<List<RoleResponse>>>
                 Id = feature.Id,
                 Name = feature.Name,
                 Index = feature.Index,
-                Icon = feature.Icon,
-                Href = feature.Href,
                 ParentId = feature.ParentId,
                 Children = BuildTree(feature.Id, source)
             }).ToList();

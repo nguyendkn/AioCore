@@ -15,7 +15,7 @@ public class MappingProfile : Profile
         CreateMap<Role, CreateRoleCommand>();
         CreateMap<RoleResponse, CreateRoleCommand>();
         CreateMap<CreateRoleCommand, RoleResponse>();
-        
+
         CreateMap<User, UserResponse>();
         CreateMap<UserResponse, User>();
         CreateMap<CreateUserCommand, User>();

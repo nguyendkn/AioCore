@@ -18,20 +18,24 @@
                 </Suffix>
             </AntDesign.Input>
             <div class="mt-2">
-                @if (!_roles.Any()) {<Empty Description="false"/>}
-                <Tree TItem="RoleResponse" ShowIcon
+                @if (!_roles.Any())
+                {
+                    <Empty Description="false"/>
+                }
+                <Tree TItem="RoleResponse" ShowIcon DefaultExpandAll
                       SearchValue="@_searchRoleKey"
                       MatchedClass="site-tree-search-value"
+                      IsLeafExpression="x => x.DataItem.Children?.Count == 0"
+                      KeyExpression="x => x.DataItem.Id.ToString()"
                       DataSource="_roles" OnSelect="OnSelectRole"
                       TitleExpression="x => x.DataItem.Name"
-                      ChildrenExpression="x => x.DataItem.Children"
-                      KeyExpression="x => x.DataItem.Id.ToString()">
+                      ChildrenExpression="x => x.DataItem.Children">
                 </Tree>
             </div>
         </div>
     </div>
     <div class="col-xl-10 col-lg-9 col-md-8">
-        
+
     </div>
 </div>
 
@@ -46,5 +50,5 @@
        Visible="@_modalRoleDetailVisible"
        OnOk="@OnSubmitRoleDetail"
        OnCancel="@OnToggleModalRoleDetail">
-    <RoleDetail Roles="@_roles" SelectedRole="@_role" />
+    <RoleDetail Roles="@_roles" SelectedRole="@_role"/>
 </Modal>

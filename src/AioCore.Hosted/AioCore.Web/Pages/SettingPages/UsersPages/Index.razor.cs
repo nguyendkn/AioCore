@@ -16,7 +16,7 @@ public partial class Index
     private bool _modalUserDetailVisible;
     private bool _modalRoleDetailVisible;
     private string? _searchRoleKey;
-    private Guid? _selectedRoleId;
+    private Guid _selectedRoleId;
     private RoleResponse? _role = new();
     private List<RoleResponse> _roles = new();
     private readonly UserResponse _user = new();
@@ -53,7 +53,7 @@ public partial class Index
     {
         _modalUserDetailVisible = !_modalUserDetailVisible;
     }
-    
+
     private void OnToggleModalRoleDetail()
     {
         _modalRoleDetailVisible = !_modalRoleDetailVisible;
@@ -76,9 +76,11 @@ public partial class Index
         }
     }
 
-    private void OnSelectRole(TreeEventArgs<RoleResponse> args)
+    private async void OnSelectRole(TreeEventArgs<RoleResponse> args)
     {
         _selectedRoleId = args.Node.Key.ToGuid();
-        _role = _roles.First(x => x.Id.Equals(_selectedRoleId));
+        var response = await Mediator.Send(new GetRoleQuery(_selectedRoleId));
+        if (response.Success) _role = response.Data;
+        StateHasChanged();
     }
 }

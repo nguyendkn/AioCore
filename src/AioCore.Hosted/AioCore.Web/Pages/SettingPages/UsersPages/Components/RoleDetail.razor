@@ -3,14 +3,17 @@
 <Form Model="@SelectedRole"
       Layout="@FormLayout.Vertical">
     <FormItem Label="Tên nhóm">
-        <Input @bind-Value="@context.Name" />
+        <Input @bind-Value="@context.DraftName"/>
     </FormItem>
     <FormItem Label="Nhóm cha">
-        <Select DataSource="@Roles" Class="w-100"
-                Placeholder="Chọn nhóm cha"
-                @bind-Value="@SelectedRole.ParentId"
-                ValueName="@nameof(RoleResponse.Id)"
-                LabelName="@nameof(RoleResponse.Name)">
+        <Select
+            DefaultValue="@SelectedRole.Id"
+            DataSource="@Roles" Class="w-100"
+            Placeholder="Chọn nhóm cha"
+            @bind-Value="@SelectedRole.ParentId"
+            ValueName="@nameof(RoleResponse.Id)"
+            LabelName="@nameof(RoleResponse.Name)"
+            AllowClear="@true">
         </Select>
     </FormItem>
 </Form>

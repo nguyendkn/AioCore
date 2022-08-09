@@ -3,6 +3,7 @@ using AioCore.Domain.DatabaseDataSeeds;
 using AioCore.Domain.IdentityAggregate;
 using AioCore.Shared.Extensions;
 using AioCore.Shared.ValueObjects;
+using AioCore.Web.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace AioCore.Web.Helpers;
@@ -50,6 +51,17 @@ public static class StartupHelper
         return services;
     }
 
+    public static IServiceCollection AddScopedAioCore(this IServiceCollection services)
+    {
+        services.AddScoped<IAlertService, AlertService>();
+        return services;
+    }
+    
+    public static IServiceCollection AddSingletonAioCore(this IServiceCollection services)
+    {
+        return services;
+    }
+    
     public static WebApplication UseAioCore(this WebApplication app)
     {
         app.MigrateDatabase<IdentityContext>((context, appServices) =>

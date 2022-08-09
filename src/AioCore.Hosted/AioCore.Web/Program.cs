@@ -15,6 +15,8 @@ services.AddServerSideBlazor();
 services.AddAntDesign();
 services.AddAioContext(appSettings);
 services.AddMapper<MappingProfile>();
+services.AddScopedAioCore();
+services.AddSingletonAioCore();
 services.AddMediatR(typeof(AioCore.Read.Assembly));
 services.AddMediatR(typeof(AioCore.Write.Assembly));
 var app = builder.Build();

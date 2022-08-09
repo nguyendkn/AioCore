@@ -14,11 +14,13 @@ public class MappingProfile : Profile
         CreateMap<CreateRoleCommand, Role>();
         CreateMap<Role, CreateRoleCommand>();
         CreateMap<RoleResponse, CreateRoleCommand>();
+        CreateMap<CreateRoleCommand, RoleResponse>();
         
         CreateMap<User, UserResponse>();
         CreateMap<UserResponse, User>();
         CreateMap<CreateUserCommand, User>();
         CreateMap<User, CreateUserCommand>();
         CreateMap<UserResponse, CreateUserCommand>();
+        CreateMap<CreateUserCommand, UserResponse>();
     }
 }

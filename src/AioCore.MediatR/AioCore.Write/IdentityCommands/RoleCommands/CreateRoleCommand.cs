@@ -11,7 +11,7 @@ public class CreateRoleCommand : IRequest<Response<RoleResponse>>
 {
     public string Name { get; set; } = default!;
 
-    public Guid ParentId { get; set; } = default!;
+    public Guid? ParentId { get; set; }
     
     internal class Handler : IRequestHandler<CreateRoleCommand, Response<RoleResponse>>
     {

@@ -12,7 +12,7 @@ public static class AutoMapperExtension
         return mapper;
     }
 
-    public static T To<T>(this object source)
+    public static T To<T>(this object? source)
     {
         return _mapper.Map<T>(source);
     }

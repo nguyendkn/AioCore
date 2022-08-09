@@ -5,6 +5,7 @@ using AioCore.Shared.Extensions;
 using AioCore.Web.Services;
 using AioCore.Write.IdentityCommands.RoleCommands;
 using AioCore.Write.IdentityCommands.UserCommands;
+using AntDesign;
 using MediatR;
 using Microsoft.AspNetCore.Components;
 
@@ -15,7 +16,8 @@ public partial class Index
     private bool _modalUserDetailVisible;
     private bool _modalRoleDetailVisible;
     private string? _searchRoleKey;
-    private readonly RoleResponse _role = new();
+    private Guid? _selectedRoleId;
+    private RoleResponse? _role = new();
     private List<RoleResponse> _roles = new();
     private readonly UserResponse _user = new();
     private List<UserResponse> _users = new();
@@ -72,5 +74,11 @@ public partial class Index
         {
             await Alert.Error(response.Message);
         }
+    }
+
+    private void OnSelectRole(TreeEventArgs<RoleResponse> args)
+    {
+        _selectedRoleId = args.Node.Key.ToGuid();
+        _role = _roles.First(x => x.Id.Equals(_selectedRoleId));
     }
 }

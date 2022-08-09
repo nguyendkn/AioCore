@@ -1,20 +1,16 @@
 ﻿@using AioCore.Domain.IdentityAggregate
 
-<Form Model="@Role"
-      Layout="@FormLayout.Vertical"
-      OnFinishFailed="OnFinishFailed">
+<Form Model="@SelectedRole"
+      Layout="@FormLayout.Vertical">
     <FormItem Label="Tên nhóm">
         <Input @bind-Value="@context.Name" />
     </FormItem>
     <FormItem Label="Nhóm cha">
-        <Select DataSource="@_roles"
-                AllowClear="true"
-                EnableSearch="true"
+        <Select DataSource="@Roles" Class="w-100"
                 Placeholder="Chọn nhóm cha"
-        		@bind-Value="@_selectedRole"
-        		ValueName="@nameof(RoleResponse.ParentId)"
-        		LabelName="@nameof(RoleResponse.Name)"
-        		OnSelectedItemChanged="OnSelectedRole">
+                @bind-Value="@SelectedRole.ParentId"
+                ValueName="@nameof(RoleResponse.Id)"
+                LabelName="@nameof(RoleResponse.Name)">
         </Select>
     </FormItem>
 </Form>

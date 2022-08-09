@@ -5,20 +5,11 @@ namespace AioCore.Web.Pages.SettingPages.UsersPages.Components;
 
 public partial class RoleDetail
 {
-    [Parameter] public RoleResponse Role { get; set; } = new();
-    private Guid _selectedRole;
-    private List<RoleResponse> _roles = new();
+    [Parameter] public RoleResponse SelectedRole { get; set; } = new();
+    [Parameter] public List<RoleResponse> Roles { get; set; } = new();
 
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-    }
-
-    private void OnFinishFailed()
-    {
-    }
-
-    private void OnSelectedRole(RoleResponse obj)
-    {
     }
 }

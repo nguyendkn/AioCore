@@ -10,7 +10,7 @@ public class RoleResponse
     
     public string Name { get; set; } = default!;
 
-    public Guid? ParentId { get; set; }
+    public Guid ParentId { get; set; }
 
     public List<RoleResponse> Children { get; set; } = default!;
 }

@@ -1,4 +1,6 @@
 ﻿@page "/setting/users"
+@using Microsoft.AspNetCore.Components
+@using AioCore.Domain.IdentityAggregate
 @layout SettingsLayout
 
 <div class="h-100 d-flex">
@@ -17,12 +19,13 @@
             </AntDesign.Input>
             <div class="mt-2">
                 @if (!_roles.Any()) {<Empty Description="false"/>}
-                <Tree ShowIcon
+                <Tree TItem="RoleResponse" ShowIcon
                       SearchValue="@_searchRoleKey"
                       MatchedClass="site-tree-search-value"
-                      DataSource="_roles"
+                      DataSource="_roles" OnSelect="OnSelectRole"
                       TitleExpression="x => x.DataItem.Name"
-                      ChildrenExpression="x => x.DataItem.Children">
+                      ChildrenExpression="x => x.DataItem.Children"
+                      KeyExpression="x => x.DataItem.Id.ToString()">
                 </Tree>
             </div>
         </div>
@@ -43,5 +46,5 @@
        Visible="@_modalRoleDetailVisible"
        OnOk="@OnSubmitRoleDetail"
        OnCancel="@OnToggleModalRoleDetail">
-    <RoleDetail Role="@_role" />
+    <RoleDetail Roles="@_roles" SelectedRole="@_role" />
 </Modal>

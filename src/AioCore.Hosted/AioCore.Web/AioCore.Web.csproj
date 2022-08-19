@@ -30,4 +30,11 @@
       <Folder Include="wwwroot\images" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Pages\SettingPages\UsersPages\Components\RoleDetail.razor" />
+      <_ContentIncludedByDefault Remove="Pages\SettingPages\UsersPages\Components\UserDetail.razor" />
+      <_ContentIncludedByDefault Remove="Pages\SettingPages\UsersPages\Index.razor" />
+      <_ContentIncludedByDefault Remove="Pages\SettingPages\UsersPages\_Imports.razor" />
+    </ItemGroup>
+
 </Project>

@@ -2,9 +2,13 @@
     height: 50px;
 }
 
-::deep .header i {
-    margin-left: 25px;
-    margin-right: 25px;
+section .section-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: #091e42;
+    padding-left: 9px;
+    display: inline-block;
+    margin: 0;
 }
 
 .logo img {

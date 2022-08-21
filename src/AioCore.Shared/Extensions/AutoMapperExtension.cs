@@ -4,7 +4,7 @@ namespace AioCore.Shared.Extensions;
 
 public static class AutoMapperExtension
 {
-    private static IMapper _mapper;
+    private static IMapper _mapper = null!;
 
     public static IMapper RegisterMap(this IMapper mapper)
     {

@@ -1,0 +1,14 @@
+{
+  "name": "aioc",
+  "scripts": {
+    "buildcss:dev": "postcss --config ./wwwroot/js/app.dev.js ./wwwroot/css/app.scss -o ./wwwroot/css/app.css && tailwindcss --config ./wwwroot/js/app.dev.js -i ./wwwroot/css/app.css -o ./wwwroot/css/app.min.css",
+    "buildcss:prod": "postcss --config ./wwwroot/js/app.prod.js ./wwwroot/css/app.scss -o ./wwwroot/css/app.css"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.8",
+    "cssnano": "^5.1.13",
+    "postcss": "^8.4.16",
+    "postcss-cli": "^10.0.0",
+    "tailwindcss": "^3.1.8"
+  }
+}

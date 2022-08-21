@@ -1,20 +1,2 @@
 ﻿@page "/identity/login"
 @layout IdentityLayout
-
-<h3>Chào mừng đã tới nền tảng "Dynamic System"</h3>
-<p>Đăng nhập để truy cập và xây dựng hệ thống ngay!</p>
-<form id="loginForm" method="post" action="#">
-    <input data-val-required="The Email field is required" class="form-control" placeholder="Địa chỉ email" type="text" data-val="true" id="email" name="email" value=""/>
-    <span class="text-danger field-validation-valid" data-valmsg-for="Input.UserName" data-valmsg-replace="true"></span>
-
-    <input data-val-required="The Password field is required" class="form-control" placeholder="Mật khẩu" type="password" data-val="true" id="password" name="password"/>
-    <span class="text-danger field-validation-valid" data-valmsg-for="Input.Password" data-valmsg-replace="true"></span>
-
-    <input type="hidden" value="true" data-val="true" data-val-required="The Remember me? field is required." id="Input_RememberMe" name="Input.RememberMe"/>
-    <div class="form-button">
-        <button type="submit" id="ibtn" class="ibtn">Đăng nhập</button>
-        <a target="_top" href="#">
-            Quên mật khẩu?
-        </a>
-    </div>
-</form>

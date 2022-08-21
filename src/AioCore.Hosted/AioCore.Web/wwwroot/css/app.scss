@@ -1,0 +1,7 @@
+﻿@tailwind base;
+@tailwind components;
+@tailwind utilities;
+    
+.wrapper-sider {
+    height: calc(100vh - 50px);
+}

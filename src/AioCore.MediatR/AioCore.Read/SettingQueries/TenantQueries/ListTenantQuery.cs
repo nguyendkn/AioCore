@@ -30,7 +30,10 @@ public class ListTenantQuery : IRequest<Response<List<SettingTenant>>>
         public async Task<Response<List<SettingTenant>>> Handle(ListTenantQuery request,
             CancellationToken cancellationToken)
         {
-            var tenants = await _context.Tenants.Skip((request.Page - 1) * request.PageSize).Take(request.PageSize)
+            var tenants = await _context.Tenants
+                .OrderByDescending(x=>x.ModifiedAt)
+                .Skip((request.Page - 1) * request.PageSize)
+                .Take(request.PageSize)
                 .ToListAsync(cancellationToken);
             return new Response<List<SettingTenant>>
             {

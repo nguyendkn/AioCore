@@ -4,8 +4,9 @@
 @using AioCore.Web.Migrations.Settings
 @using AioCore.Web.Services
 @using AioCore.Write.SettingCommands.TenantCommands
+@using AioCore.Shared.Common.Constants
 <Drawer Width="300" Closable="true" Visible="@Visible" Placement="right" Title="@Title" OnClose="Close">
-    <Form Model="@_model" Layout="@FormLayout.Vertical">
+    <Form @ref="@_form" Model="@_model" Layout="@FormLayout.Vertical">
         <FormItem>
             <Input @bind-Value="@context.Name"/>
         </FormItem>
@@ -44,7 +45,12 @@
     public EventCallback<bool> VisibleChanged { get; set; }
 
     [Parameter]
+    public EventCallback<bool> Submitted { get; set; }
+
+    [Parameter]
     public string Title { get; set; } = default!;
+
+    private Form<TenantDetailModel> _form = new();
 
     private TenantDetailModel _model = new();
 
@@ -61,11 +67,19 @@
 
     private async Task OnSubmit()
     {
-        Visible = false;
-        var response = await Mediator.Send(_model.To<SubmitTenantCommand>());
-        if (response.Success) await Alert.Success(response.Message);
-        else await Alert.Error(response.Message);
-        _model = new TenantDetailModel();
+        var validated = _form.Validate();
+        if (validated)
+        {
+            Visible = false;
+            var response = await Mediator.Send(_model.To<SubmitTenantCommand>());
+            await Submitted.InvokeAsync(response.Success);
+            if (response.Success) await Alert.Success(response.Message);
+            else await Alert.Error(response.Message);
+            _model = new TenantDetailModel();
+        }
+        else
+        {
+            await Alert.Error(Messages.ValidateFormFailed);
+        }
     }
-
 }

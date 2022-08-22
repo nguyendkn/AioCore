@@ -15,6 +15,8 @@ public class SettingsContext : DbContext
 
     public DbSet<SettingFeature> Features { get; set; } = default!;
 
+    public DbSet<SettingTenant> Tenants { get; set; } = default!;
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

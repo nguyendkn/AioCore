@@ -59,6 +59,7 @@ public static class StartupHelper
     
     public static IServiceCollection AddSingletonAioCore(this IServiceCollection services)
     {
+        services.AddSingleton<IAvatarService, AvatarService>();
         return services;
     }
     

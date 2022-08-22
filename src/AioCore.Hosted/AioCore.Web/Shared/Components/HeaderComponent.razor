@@ -1,0 +1,40 @@
+<Header Class="header flex px-6 border-b">
+    <h1 class="section-title font-bold text-base color-[#091e42] my-auto m-0">@Title</h1>
+</Header>
+<Header Class="border-b h-auto px-[]">
+    <!-- This example requires Tailwind CSS v2.0+ -->
+    <div class="bg-white overflow-hidden w-[1024px] mx-auto">
+        <div class="bg-white p-6">
+            <div class="sm:flex sm:items-center sm:justify-between">
+                <div class="sm:flex sm:space-x-5">
+                    <div class="flex-shrink-0 flex mx-2">
+                        <i class="m-auto text-4xl rounded-full fa-duotone fa-@Icon"></i>
+                    </div>
+                    <div class="mt-4 text-center sm:mt-0 sm:pt-1 sm:text-left">
+                        <p class="text-lg font-medium">@Title</p>
+                        @Description
+                    </div>
+                </div>
+                <div class="mt-5 flex justify-center sm:mt-0">
+                    @Action
+                </div>
+            </div>
+        </div>
+    </div>
+</Header>
+
+@code {
+
+    [Parameter]
+    public string Title { get; set; } = default!;
+    
+    [Parameter]
+    public string? Icon { get; set; }
+
+    [Parameter]
+    public RenderFragment Action { get; set; } = default!;
+    
+    [Parameter]
+    public RenderFragment? Description { get; set; }
+
+}

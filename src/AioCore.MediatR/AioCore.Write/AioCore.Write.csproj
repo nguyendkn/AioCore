@@ -10,8 +10,4 @@
       <ProjectReference Include="..\..\AioCore.Services\AioCore.Services.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="SettingCommands" />
-    </ItemGroup>
-
 </Project>

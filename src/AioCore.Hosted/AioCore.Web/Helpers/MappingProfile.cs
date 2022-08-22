@@ -1,6 +1,8 @@
 ﻿using AioCore.Domain.IdentityAggregate;
+using AioCore.Web.Pages.SettingPages.TenantPages.ViewModels;
 using AioCore.Write.IdentityCommands.RoleCommands;
 using AioCore.Write.IdentityCommands.UserCommands;
+using AioCore.Write.SettingCommands.TenantCommands;
 using AutoMapper;
 
 namespace AioCore.Web.Helpers;
@@ -9,6 +11,8 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
+        CreateMap<TenantDetailModel, SubmitTenantCommand>();
+        
         CreateMap<Role, RoleResponse>();
         CreateMap<RoleResponse, Role>();
         CreateMap<CreateRoleCommand, Role>();

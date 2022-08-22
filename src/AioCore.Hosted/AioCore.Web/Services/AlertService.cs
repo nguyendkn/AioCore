@@ -4,21 +4,21 @@ namespace AioCore.Web.Services;
 
 public interface IAlertService
 {
-    Task Show(string? description, NotificationType type);
+    Task Show(string? message, NotificationType type);
     
-    Task Show(string message, string description, NotificationType type);
+    Task Show(string title, string message, NotificationType type);
     
-    Task Success(string? description);
+    Task Success(string? title);
     
-    Task Success(string message, string description);
+    Task Success(string title, string message);
     
-    Task Warning(string? description);
+    Task Warning(string? title);
     
-    Task Warning(string message, string description);
+    Task Warning(string title, string message);
     
-    Task Error(string? description);
+    Task Error(string? title);
     
-    Task Error(string message, string description);
+    Task Error(string title, string message);
 }
 
 public class AlertService : IAlertService
@@ -30,91 +30,91 @@ public class AlertService : IAlertService
         _notice = notice;
     }
 
-    public async Task Show(string? description, NotificationType type)
+    public async Task Show(string? message, NotificationType type)
     {
         await _notice.Open(new NotificationConfig
         {
             Placement = NotificationPlacement.TopRight,
             NotificationType = type,
             Message = "Thông báo",
-            Description = description
+            Description = message
         });
     }
 
-    public async Task Show(string message, string description, NotificationType type)
+    public async Task Show(string title, string message, NotificationType type)
     {
         await _notice.Open(new NotificationConfig
         {
             Placement = NotificationPlacement.TopRight,
             NotificationType = type,
-            Message = message,
-            Description = description
+            Message = title,
+            Description = message
         });
     }
 
-    public async Task Success(string? description)
+    public async Task Success(string? title)
     {
         await _notice.Open(new NotificationConfig
         {
             Placement = NotificationPlacement.TopRight,
             NotificationType = NotificationType.Success,
             Message = "Thông báo",
-            Description = description
+            Description = title
         });
     }
 
-    public async Task Success(string message, string description)
+    public async Task Success(string title, string message)
     {
         await _notice.Open(new NotificationConfig
         {
             Placement = NotificationPlacement.TopRight,
             NotificationType = NotificationType.Success,
-            Message = message,
-            Description = description
+            Message = title,
+            Description = message
         });
     }
 
-    public async Task Warning(string? description)
+    public async Task Warning(string? title)
     {
         await _notice.Open(new NotificationConfig
         {
             Placement = NotificationPlacement.TopRight,
             NotificationType = NotificationType.Warning,
             Message = "Thông báo",
-            Description = description
+            Description = title
         });
     }
 
-    public async Task Warning(string message, string description)
+    public async Task Warning(string title, string message)
     {
         await _notice.Open(new NotificationConfig
         {
             Placement = NotificationPlacement.TopRight,
             NotificationType = NotificationType.Warning,
-            Message = message,
-            Description = description
+            Message = title,
+            Description = message
         });
     }
 
-    public async Task Error(string? description)
+    public async Task Error(string? title)
     {
         await _notice.Open(new NotificationConfig
         {
             Placement = NotificationPlacement.TopRight,
             NotificationType = NotificationType.Error,
             Message = "Thông báo",
-            Description = description
+            Description = title
         });
     }
 
-    public async Task Error(string message, string description)
+    public async Task Error(string title, string message)
     {
         await _notice.Open(new NotificationConfig
         {
             Placement = NotificationPlacement.TopRight,
             NotificationType = NotificationType.Error,
-            Message = message,
-            Description = description
+            Message = title,
+            Description = message
         });
     }
 }

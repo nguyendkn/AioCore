@@ -11,4 +11,8 @@ public class SettingTenant : Entity
     public string Title { get; set; } = default!;
 
     public string? Keyword { get; set; }
+
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
+
+    public DateTime ModifiedAt { get; set; } = DateTime.Now;
 }

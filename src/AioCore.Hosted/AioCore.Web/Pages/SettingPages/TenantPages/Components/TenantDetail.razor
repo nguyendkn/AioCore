@@ -1,0 +1,71 @@
+@using AioCore.Web.Pages.SettingPages.TenantPages.ViewModels
+@using MediatR
+@using AioCore.Shared.Extensions
+@using AioCore.Web.Migrations.Settings
+@using AioCore.Web.Services
+@using AioCore.Write.SettingCommands.TenantCommands
+<Drawer Width="300" Closable="true" Visible="@Visible" Placement="right" Title="@Title" OnClose="Close">
+    <Form Model="@_model" Layout="@FormLayout.Vertical">
+        <FormItem>
+            <Input @bind-Value="@context.Name"/>
+        </FormItem>
+        <FormItem>
+            <Input @bind-Value="@context.Domain"/>
+        </FormItem>
+        <FormItem>
+            <Input @bind-Value="@context.Title"/>
+        </FormItem>
+        <FormItem>
+            <Input @bind-Value="@context.Keyword"/>
+        </FormItem>
+        <Button class="flex ml-auto text-gray-700 bg-white hover:bg-gray-50 hover:text-black" @onclick="OnSubmit">
+            Lưu
+        </Button>
+    </Form>
+</Drawer>
+
+@code{
+
+    private bool _visible;
+
+    [Parameter]
+    public bool Visible
+    {
+        get => _visible;
+        set
+        {
+            if (_visible == value) return;
+            _visible = value;
+            VisibleChanged.InvokeAsync(value);
+        }
+    }
+
+    [Parameter]
+    public EventCallback<bool> VisibleChanged { get; set; }
+
+    [Parameter]
+    public string Title { get; set; } = default!;
+
+    private TenantDetailModel _model = new();
+
+    [Inject]
+    public IMediator Mediator { get; set; } = default!;
+
+    [Inject]
+    public IAlertService Alert { get; set; } = default!;
+
+    void Close()
+    {
+        Visible = false;
+    }
+
+    private async Task OnSubmit()
+    {
+        Visible = false;
+        var response = await Mediator.Send(_model.To<SubmitTenantCommand>());
+        if (response.Success) await Alert.Success(response.Message);
+        else await Alert.Error(response.Message);
+        _model = new TenantDetailModel();
+    }
+
+}

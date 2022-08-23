@@ -7,7 +7,9 @@
 @using AioCore.Write.SettingCommands.EntityCommands
 @using Microsoft.AspNetCore.Components
 @using AioCore.Domain.SettingAggregate
+@using AioCore.Read.SettingQueries.AttributeCommands
 @using AioCore.Read.SettingQueries.EntityQueries
+@using AioCore.Write.SettingCommands.AttributeCommands
 <Drawer Width="300" Closable="true" Visible="@Visible" Placement="right" Title="@Title" OnClose="Close">
     <Form @ref="@_form" Model="@_model" Layout="@FormLayout.Vertical">
         <FormItem Label="Đối tượng">
@@ -17,14 +19,104 @@
                     @bind-Value="@context.Id"
                     ValueName="@nameof(SettingEntity.Id)"
                     LabelName="@nameof(SettingEntity.Name)"
-                    Placeholder="Chọn đối tượng"
+                    Placeholder="Chọn đối tượng" Loading="@_loadingAttributes"
                     OnSelectedItemChanged="OnSelectEntity"
                     DropdownRender="@DropdownRender">
             </Select>
+            <div class="flow-root">
+                <Button Size="@AntSizeLDSType.Small" class="w-full ml-auto text-gray-700 bg-white hover:bg-gray-50 hover:text-black my-2"
+                        Type="@ButtonType.Dashed" @onclick="OnCreateAttribute">
+                    <i class="fa-duotone fa-plus"></i>
+                </Button>
+                <ul>
+                    @if (Attributes is {Count: > 0 })
+                    {
+                        foreach (var item in Attributes)
+                        {
+                            <li class="my-1">
+                                <div class="flex items-center space-x-4">
+                                    <div class="flex-shrink-0">
+                                        <i class="fa-duotone fa-grip-dots-vertical"></i>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        @if (SelectedAttribute is not null && SelectedAttribute.Id.Equals(item.Id))
+                                        {
+                                            <Input Size="@InputSize.Small" @bind-Value="@SelectedAttribute.Name"
+                                                   @onblur="() => OnEditAttribute(null)" @onkeydown="@OnSaveAttribute"/>
+                                        }
+                                        else
+                                        {
+                                            <p class="text-sm font-medium text-gray-900 truncate"
+                                               @ondblclick="() => OnEditAttribute(item)">
+                                                @item.Name
+                                            </p>
+                                        }
+                                        <Dropdown Trigger="@(new[] { Trigger.Click })">
+                                            <Overlay>
+                                                <Menu>
+                                                    <MenuItem Class="text-xs">
+                                                        <i class="fa-duotone fa-input-text w-5 text-center"></i>
+                                                        Text
+                                                    </MenuItem>
+                                                    <MenuItem Class="text-xs">
+                                                        <i class="fa-duotone fa-input-numeric w-5 text-center"></i>
+                                                        Number
+                                                    </MenuItem>
+                                                    <MenuItem Class="text-xs">
+                                                        <i class="fa-duotone fa-calendar w-5 text-center"></i>
+                                                        DateTime
+                                                    </MenuItem>
+                                                    <MenuItem Class="text-xs">
+                                                        <i class="fa-duotone fa-list-dropdown w-5 text-center"></i>
+                                                        Select
+                                                    </MenuItem>
+                                                </Menu>
+                                            </Overlay>
+                                            <ChildContent>
+                                                <p class="text-xs text-gray-500 truncate">
+                                                    @switch (item.DataType)
+                                                    {
+                                                        case AttributeType.Undefined:
+                                                            <i class="mr-1 fa-duotone fa-empty-set"></i>
+                                                            break;
+                                                        case AttributeType.Text:
+                                                            <i class="mr-1 fa-duotone fa-input-text w-5 text-center"></i>
+                                                            break;
+                                                        case AttributeType.Number:
+                                                            <i class="mr-1 fa-duotone fa-input-numeric w-5 text-center"></i>
+                                                            break;
+                                                        case AttributeType.DateTime:
+                                                            <i class="mr-1 fa-duotone fa-calendar w-5 text-center"></i>
+                                                            break;
+                                                        case AttributeType.Select:
+                                                            <i class="mr-1 fa-duotone fa-list-dropdown w-5 text-center"></i>
+                                                            break;
+                                                        default:
+                                                            <i class="mr-1 fa-duotone fa-empty-set"></i>
+                                                            break;
+                                                    }
+                                                    @item.DataType
+                                                    <i class="fa-duotone fa-angle-down"></i>
+                                                </p>
+                                            </ChildContent>
+                                        </Dropdown>
+                                    </div>
+                                    <div>
+                                        <Button Type="@ButtonType.Link" class="inline-flex items-center shadow-sm px-2.5 text-sm leading-5 font-medium rounded-full text-gray-700 bg-white hover:bg-gray-50">
+                                            <i class="fa-duotone fa-trash-can"></i>
+                                        </Button>
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                    }
+                    else
+                    {
+                        <Empty Description="false"/>
+                    }
+                </ul>
+            </div>
         </FormItem>
-        <Button class="flex ml-auto text-gray-700 bg-white hover:bg-gray-50 hover:text-black" @onclick="OnSubmit">
-            Lưu
-        </Button>
     </Form>
 </Drawer>
 
@@ -44,8 +136,11 @@
     }
 
     private bool _visible;
+    private bool _loadingAttributes = false;
     private List<SettingEntity>? Entities { get; set; }
+    private List<SettingAttribute>? Attributes { get; set; }
     private SettingEntity? SelectedEntity { get; set; }
+    private SettingAttribute? SelectedAttribute { get; set; }
     private string? _entityName;
 
     [Parameter]
@@ -81,14 +176,21 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await FetchAsync(1);
+        await FetchEntitiesAsync(1);
         await base.OnInitializedAsync();
     }
 
-    private async Task FetchAsync(int page = 1, int pageSize = 100)
+    private async Task FetchEntitiesAsync(int page = 1, int pageSize = 100)
     {
         var response = await Mediator.Send(new ListEntityQuery(page, pageSize));
         Entities = response.Data;
+    }
+
+    private async Task FetchAttributesAsync(Guid entityId, int page = 1, int pageSize = 100)
+    {
+        var response = await Mediator.Send(new ListAttributeQuery(entityId, page, pageSize));
+        Attributes = response.Data;
+        _loadingAttributes = false;
     }
 
     void Close()
@@ -96,38 +198,56 @@
         Visible = false;
     }
 
-    private async Task OnSubmit()
-    {
-        var validated = _form.Validate();
-        if (validated)
-        {
-            Visible = false;
-            var response = await Mediator.Send(_model.To<SubmitEntityCommand>());
-            await Submitted.InvokeAsync(response.Success);
-            if (response.Success) await Alert.Success(response.Message);
-            else await Alert.Error(response.Message);
-            _model = new EntityDetailModel();
-        }
-        else
-        {
-            await Alert.Error(Messages.ValidateFormFailed);
-        }
-    }
-
     private async void OnCreateEntity()
     {
         if (string.IsNullOrEmpty(_entityName)) return;
         var response = await Mediator.Send(new SubmitEntityCommand(_entityName));
         if (!response.Success) return;
-        await FetchAsync(1);
+        await FetchEntitiesAsync(1);
         _entityName = string.Empty;
         StateHasChanged();
         await Alert.Success(response.Message);
     }
 
-    private void OnSelectEntity(SettingEntity? selectedEntity)
+    private async void OnSelectEntity(SettingEntity selectedEntity)
     {
+        _loadingAttributes = true;
         SelectedEntity = selectedEntity;
+        await FetchAttributesAsync(selectedEntity.Id);
+    }
+
+    private async void OnCreateAttribute()
+    {
+        if (SelectedEntity is null || SelectedEntity.Id.Equals(Guid.Empty)) return;
+        var response = await Mediator.Send(new SubmitAttributeCommand
+        {
+            Name = "Empty",
+            EntityId = SelectedEntity.Id,
+            DataType = AttributeType.Undefined
+        });
+        if (!response.Success) return;
+        await FetchAttributesAsync(SelectedEntity.Id, 1);
+        StateHasChanged();
+    }
+
+    private void OnEditAttribute(SettingAttribute? selectedAttribute)
+    {
+        SelectedAttribute = selectedAttribute;
+    }
+
+    private async void OnSaveAttribute(KeyboardEventArgs e)
+    {
+        if (e.Code is not ("Enter" or "NumpadEnter")) return;
+        if (SelectedEntity is null || SelectedAttribute is null) return;
+        var response = await Mediator.Send(new SubmitAttributeCommand
+        {
+            Id = SelectedAttribute.Id,
+            Name = SelectedAttribute.Name,
+            ModifiedAt = DateTime.Now
+        });
+        SelectedAttribute = null;
+        StateHasChanged();
+        await Alert.Success(response.Message);
     }
 
 }

@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace AioCore.Domain.IdentityAggregate;
+﻿namespace AioCore.Domain.IdentityAggregate;
 
 public class RoleResponse
 {

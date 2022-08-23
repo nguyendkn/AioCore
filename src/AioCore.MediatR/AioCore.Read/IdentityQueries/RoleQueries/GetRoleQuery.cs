@@ -1,5 +1,4 @@
-﻿using AioCore.Domain.DatabaseContexts;
-using AioCore.Domain.IdentityAggregate;
+﻿using AioCore.Domain.IdentityAggregate;
 using AioCore.Shared.Common.Constants;
 using AioCore.Shared.Extensions;
 using AioCore.Shared.SeedWorks;

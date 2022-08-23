@@ -8,7 +8,7 @@ namespace AioCore.Write.SettingCommands.EntityCommands;
 
 public class SubmitEntityCommand : SettingEntity, IRequest<Response<SettingEntity>>
 {
-    public SubmitEntityCommand(string? name)
+    public SubmitEntityCommand(string name)
     {
         Name = name;
         CreatedAt = DateTime.Now;

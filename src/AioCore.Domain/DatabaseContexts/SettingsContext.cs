@@ -11,6 +11,8 @@ public class SettingsContext : DbContext
     {
     }
 
+    public DbSet<SettingAttribute> Attributes { get; set; } = default!;
+
     public DbSet<SettingEntity> Entities { get; set; } = default!;
 
     public DbSet<SettingFeature> Features { get; set; } = default!;
@@ -21,5 +23,8 @@ public class SettingsContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.HasDefaultSchema(Schema);
+
+        modelBuilder.Entity<SettingAttribute>().Property(p => p.Name).HasMaxLength(255).IsRequired();
+        modelBuilder.Entity<SettingAttribute>().HasIndex(i => new { i.EntityId, i.Name });
     }
 }

@@ -15,7 +15,9 @@
                 DataSource="@Entities"            
                 @bind-Value="@context.Id"
                 LabelName="@nameof(SettingEntity.Name)"
-                ValueName="@nameof(SettingEntity.Id)">
+                ValueName="@nameof(SettingEntity.Id)"
+                EnableSearch AllowClear AutoClearSearchValue
+                OnMouseEnter="OnCreateEntity">
             </Select>
         </FormItem>
         <Button class="flex ml-auto text-gray-700 bg-white hover:bg-gray-50 hover:text-black" @onclick="OnSubmit">
@@ -94,4 +96,10 @@
             await Alert.Error(Messages.ValidateFormFailed);
         }
     }
+
+    private void OnCreateEntity()
+    {
+        Console.WriteLine("SEARCH...");
+    }
+
 }

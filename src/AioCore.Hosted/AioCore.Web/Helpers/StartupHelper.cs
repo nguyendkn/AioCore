@@ -20,7 +20,7 @@ public static class StartupHelper
                 b.MigrationsAssembly(Assembly.Name);
                 b.EnableRetryOnFailure(15, TimeSpan.FromSeconds(30), null);
             });
-        });
+        }, ServiceLifetime.Transient);
         services.AddDbContext<DynamicContext>(options =>
         {
             options.UseSqlServer(configuration.ConnectionStrings.DefaultConnection, b =>

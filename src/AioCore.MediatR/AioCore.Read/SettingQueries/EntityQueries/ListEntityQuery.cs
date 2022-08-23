@@ -31,14 +31,14 @@ public class ListEntityQuery : IRequest<Response<List<SettingEntity>>>
         public async Task<Response<List<SettingEntity>>> Handle(ListEntityQuery request,
             CancellationToken cancellationToken)
         {
-            var tenants = await _context.Entities
+            var entities = await _context.Entities
                 .OrderByDescending(x => x.ModifiedAt)
                 .Skip((request.Page - 1) * request.PageSize)
                 .Take(request.PageSize)
                 .ToListAsync(cancellationToken);
             return new Response<List<SettingEntity>>
             {
-                Data = tenants,
+                Data = entities,
                 Success = true
             };
         }

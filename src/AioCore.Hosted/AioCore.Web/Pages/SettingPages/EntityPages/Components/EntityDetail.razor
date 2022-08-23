@@ -1,0 +1,97 @@
+@using AioCore.Web.Pages.SettingPages.TenantPages.ViewModels
+@using MediatR
+@using AioCore.Shared.Extensions
+@using AioCore.Web.Services
+@using AioCore.Shared.Common.Constants
+@using AioCore.Web.Pages.SettingPages.EntityPages.ViewModels
+@using AioCore.Write.SettingCommands.EntityCommands
+@using Microsoft.AspNetCore.Components
+@using AioCore.Domain.SettingAggregate
+@using AioCore.Read.SettingQueries.EntityQueries
+<Drawer Width="300" Closable="true" Visible="@Visible" Placement="right" Title="@Title" OnClose="Close">
+    <Form @ref="@_form" Model="@_model" Layout="@FormLayout.Vertical">
+        <FormItem Label="Đối tượng">
+            <Select Mode="default" TItem="SettingEntity" TItemValue="Guid"
+                DataSource="@Entities"            
+                @bind-Value="@context.Id"
+                LabelName="@nameof(SettingEntity.Name)"
+                ValueName="@nameof(SettingEntity.Id)">
+            </Select>
+        </FormItem>
+        <Button class="flex ml-auto text-gray-700 bg-white hover:bg-gray-50 hover:text-black" @onclick="OnSubmit">
+            Lưu
+        </Button>
+    </Form>
+</Drawer>
+
+@code{
+
+    private bool _visible;
+    private List<SettingEntity>? Entities { get; set; }
+    
+    [Parameter]
+    public bool Visible
+    {
+        get => _visible;
+        set
+        {
+            if (_visible == value) return;
+            _visible = value;
+            VisibleChanged.InvokeAsync(value);
+        }
+    }
+    
+    [Parameter]
+    public EventCallback<bool> VisibleChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> Submitted { get; set; }
+
+    [Parameter]
+    public string Title { get; set; } = default!;
+
+    private Form<EntityDetailModel> _form = new();
+
+    private EntityDetailModel _model = new();
+
+    [Inject]
+    public IMediator Mediator { get; set; } = default!;
+
+    [Inject]
+    public IAlertService Alert { get; set; } = default!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await FetchAsync(1, 100);
+        await base.OnInitializedAsync();
+    }
+    
+    private async Task FetchAsync(int page = 1, int pageSize = 8)
+    {
+        var response = await Mediator.Send(new ListEntityQuery(page, pageSize));
+        Entities = response.Data;
+    }
+
+    void Close()
+    {
+        Visible = false;
+    }
+
+    private async Task OnSubmit()
+    {
+        var validated = _form.Validate();
+        if (validated)
+        {
+            Visible = false;
+            var response = await Mediator.Send(_model.To<SubmitEntityCommand>());
+            await Submitted.InvokeAsync(response.Success);
+            if (response.Success) await Alert.Success(response.Message);
+            else await Alert.Error(response.Message);
+            _model = new EntityDetailModel();
+        }
+        else
+        {
+            await Alert.Error(Messages.ValidateFormFailed);
+        }
+    }
+}

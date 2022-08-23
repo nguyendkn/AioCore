@@ -11,13 +11,15 @@
 <Drawer Width="300" Closable="true" Visible="@Visible" Placement="right" Title="@Title" OnClose="Close">
     <Form @ref="@_form" Model="@_model" Layout="@FormLayout.Vertical">
         <FormItem Label="Đối tượng">
-            <Select Mode="default" TItem="SettingEntity" TItemValue="Guid"
-                DataSource="@Entities"            
-                @bind-Value="@context.Id"
-                LabelName="@nameof(SettingEntity.Name)"
-                ValueName="@nameof(SettingEntity.Id)"
-                EnableSearch AllowClear AutoClearSearchValue
-                OnMouseEnter="OnCreateEntity">
+            <Select TItem="SettingEntity"
+                    TItemValue="Guid"
+                    DataSource="@Entities"
+                    @bind-Value="@context.Id"
+                    ValueName="@nameof(SettingEntity.Id)"
+                    LabelName="@nameof(SettingEntity.Name)"
+                    Placeholder="Chọn đối tượng"
+                    OnSelectedItemChanged="OnSelectEntity"
+                    DropdownRender="@DropdownRender">
             </Select>
         </FormItem>
         <Button class="flex ml-auto text-gray-700 bg-white hover:bg-gray-50 hover:text-black" @onclick="OnSubmit">
@@ -28,9 +30,24 @@
 
 @code{
 
+    private RenderFragment DropdownRender(RenderFragment originNode)
+    {
+        return @<Template>
+                   <div>
+                       @originNode
+                       <Divider Style="margin: 4px 0"></Divider>
+                       <div style="display: flex; flex-wrap: nowrap; padding: 8px">
+                           <Input placeholder="'Enter' để thêm mới đối tượng" @bind-Value="@_entityName" OnPressEnter="@OnCreateEntity"/>
+                       </div>
+                   </div>
+               </Template>;
+    }
+
     private bool _visible;
     private List<SettingEntity>? Entities { get; set; }
-    
+    private SettingEntity? SelectedEntity { get; set; }
+    private string? _entityName;
+
     [Parameter]
     public bool Visible
     {
@@ -42,7 +59,7 @@
             VisibleChanged.InvokeAsync(value);
         }
     }
-    
+
     [Parameter]
     public EventCallback<bool> VisibleChanged { get; set; }
 
@@ -64,11 +81,11 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await FetchAsync(1, 100);
+        await FetchAsync(1);
         await base.OnInitializedAsync();
     }
-    
-    private async Task FetchAsync(int page = 1, int pageSize = 8)
+
+    private async Task FetchAsync(int page = 1, int pageSize = 100)
     {
         var response = await Mediator.Send(new ListEntityQuery(page, pageSize));
         Entities = response.Data;
@@ -97,9 +114,20 @@
         }
     }
 
-    private void OnCreateEntity()
+    private async void OnCreateEntity()
     {
-        Console.WriteLine("SEARCH...");
+        if (string.IsNullOrEmpty(_entityName)) return;
+        var response = await Mediator.Send(new SubmitEntityCommand(_entityName));
+        if (!response.Success) return;
+        await FetchAsync(1);
+        _entityName = string.Empty;
+        StateHasChanged();
+        await Alert.Success(response.Message);
+    }
+
+    private void OnSelectEntity(SettingEntity? selectedEntity)
+    {
+        SelectedEntity = selectedEntity;
     }
 
 }

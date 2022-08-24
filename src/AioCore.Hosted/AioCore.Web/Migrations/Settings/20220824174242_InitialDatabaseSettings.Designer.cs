@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AioCore.Web.Migrations.Settings
 {
     [DbContext(typeof(SettingsContext))]
-    [Migration("20220824154117_InitialDatabaseSettings")]
+    [Migration("20220824174242_InitialDatabaseSettings")]
     partial class InitialDatabaseSettings
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -111,6 +111,58 @@ namespace AioCore.Web.Migrations.Settings
                     b.ToTable("Features", "Settings");
                 });
 
+            modelBuilder.Entity("AioCore.Domain.SettingAggregate.SettingForm", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Forms", "Settings");
+                });
+
+            modelBuilder.Entity("AioCore.Domain.SettingAggregate.SettingFormAttribute", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("AttributeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("ColSpan")
+                        .HasColumnType("int");
+
+                    b.Property<string>("DisplayName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("FormId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AttributeId");
+
+                    b.HasIndex("FormId");
+
+                    b.ToTable("FormAttributes", "Settings");
+                });
+
             modelBuilder.Entity("AioCore.Domain.SettingAggregate.SettingTenant", b =>
                 {
                     b.Property<Guid>("Id")
@@ -152,6 +204,28 @@ namespace AioCore.Web.Migrations.Settings
                         .IsRequired();
 
                     b.Navigation("Entity");
+                });
+
+            modelBuilder.Entity("AioCore.Domain.SettingAggregate.SettingFormAttribute", b =>
+                {
+                    b.HasOne("AioCore.Domain.SettingAggregate.SettingAttribute", "Attribute")
+                        .WithMany()
+                        .HasForeignKey("AttributeId");
+
+                    b.HasOne("AioCore.Domain.SettingAggregate.SettingForm", "Form")
+                        .WithMany("Attributes")
+                        .HasForeignKey("FormId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Attribute");
+
+                    b.Navigation("Form");
+                });
+
+            modelBuilder.Entity("AioCore.Domain.SettingAggregate.SettingForm", b =>
+                {
+                    b.Navigation("Attributes");
                 });
 #pragma warning restore 612, 618
         }

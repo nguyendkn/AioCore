@@ -1,0 +1,148 @@
+@page "/settings/form/list"
+@using MediatR
+@using AioCore.Read.SettingQueries.ListFormQueries
+@using AioCore.Domain.SettingAggregate
+@layout SettingsLayout
+
+<HeaderComponent Title="Biểu mẫu" Icon="rectangle-list">
+    <Description>
+        <p class="text-sm text-gray-500">Tương tác với đối tượng thông qua biểu mẫu</p>
+        <p class="text-sm text-gray-500">Nhập liệu dễ dàng và linh động</p>
+    </Description>
+    <Action>
+        <Button @onclick="@Open" class="flex justify-center items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+            Cấu hình
+        </Button>
+    </Action>
+</HeaderComponent>
+<Content>
+    <div class="w-[1024px] mx-auto my-10 bg-white main mb-2">
+        <div class="bg-white shadow overflow-hidden sm:rounded-md">
+            <ul role="list" class="divide-y divide-gray-200">
+                @if (Forms != null && Forms.Count != 0)
+                {
+                    foreach (var item in Forms)
+                    {
+                        <li>
+                            <a href="#" class="block hover:bg-gray-50">
+                                <div class="flex items-center px-4 py-4 sm:px-6">
+                                    <div class="min-w-0 flex-1 flex items-center">
+                                        <div class="flex-shrink-0">
+                                            <img class="h-10 w-10" src="@($"/avatar/100/{item.Id}")" alt="avatar">
+                                        </div>
+                                        <div class="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
+                                            <div>
+                                                <p class="text-sm font-medium text-indigo-600 truncate">@item.Name</p>
+                                                <p class="mt-2 flex items-center text-sm text-gray-500">
+                                                    <i class="fa-duotone fa-table-tree mr-2"></i>
+                                                    <span class="truncate">@(item.Entity?.Name ?? "Chưa định danh đối tượng")</span>
+                                                </p>
+                                            </div>
+                                            <div class="hidden md:block">
+                                                <div>
+                                                    <p class="text-sm text-gray-900">
+                                                        Ngày tạo
+                                                        <time datetime="@item.CreatedAt.ToString("dd/MM/yyyy")">
+                                                            @item.CreatedAt.ToString("dd/MM/yyyy")
+                                                        </time>
+                                                    </p>
+                                                    <p class="mt-2 flex items-center text-sm text-gray-500">
+                                                        <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                                        </svg>
+                                                        Cài đặt thành công
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <Dropdown Placement="@Placement.BottomLeft">
+                                            <Overlay>
+                                                @_overlayMenu
+                                            </Overlay>
+                                            <ChildContent>
+                                                <Button Size="@AntSizeLDSType.Small">...</Button>
+                                            </ChildContent>
+                                        </Dropdown>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    }
+                }
+                else
+                {
+                    <Empty Description="false"/>
+                }
+            </ul>
+        </div>
+    </div>
+    <div class="flex w-[1024px] mx-auto">
+        <Button @onclick="Previous" class="ml-auto text-gray-700 bg-white hover:bg-gray-50 hover:text-black w-16 block text-center mr-0.5">
+            <i class="fa-duotone fa-caret-left"></i>
+        </Button>
+        <Button @onclick="Next" class="text-gray-700 bg-white hover:bg-gray-50 hover:text-black w-16 block text-center ml-0.5">
+            <i class="fa-duotone fa-caret-right"></i>
+        </Button>
+    </div>
+</Content>
+
+<FormDetail @bind-Visible="@_toggleDetail" Title="@Title" Submitted="() => FetchAsync()"/>
+
+@code {
+
+    private readonly RenderFragment _overlayMenu =
+        @<Menu>
+            <MenuItem>
+                <a href="#" class="text-blue-600 text-xs">
+                    <i class="fa-duotone fa-pen-to-square"></i>
+                    Chỉnh sửa
+                </a>
+            </MenuItem>
+            <MenuItem>
+                <a href="#" class="text-red-600 text-xs">
+                    <i class="fa-duotone fa-trash-can mr-1"></i>
+                    Xóa
+                </a>
+            </MenuItem>
+        </Menu>;
+
+    private bool _toggleDetail;
+        private const string Title = "Thông tin biểu mẫu";
+    private List<SettingForm>? Forms { get; set; }
+    private static int _page = 1;
+
+    [Inject]
+    public IMediator Mediator { get; set; } = default!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await FetchAsync(_page);
+        await base.OnInitializedAsync();
+    }
+
+    private void Open()
+    {
+        _toggleDetail = true;
+    }
+
+    private async Task FetchAsync(int page = 1, int pageSize = 8)
+    {
+        var response = await Mediator.Send(new ListFormQuery(page, pageSize));
+        Forms = response.Data;
+    }
+
+    private async Task Next()
+    {
+        _page++;
+        await FetchAsync(_page);
+    }
+
+    private async Task Previous()
+    {
+        _page = _page == 1 ? 1 : _page - 1;
+        await FetchAsync(_page);
+    }
+
+}

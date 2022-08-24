@@ -48,6 +48,21 @@ namespace AioCore.Web.Migrations.Settings
                 });
 
             migrationBuilder.CreateTable(
+                name: "Forms",
+                schema: "Settings",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Forms", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Tenants",
                 schema: "Settings",
                 columns: table => new
@@ -90,6 +105,36 @@ namespace AioCore.Web.Migrations.Settings
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "FormAttributes",
+                schema: "Settings",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Order = table.Column<int>(type: "int", nullable: false),
+                    FormId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ColSpan = table.Column<int>(type: "int", nullable: false),
+                    DisplayName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AttributeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FormAttributes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_FormAttributes_Attributes_AttributeId",
+                        column: x => x.AttributeId,
+                        principalSchema: "Settings",
+                        principalTable: "Attributes",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_FormAttributes_Forms_FormId",
+                        column: x => x.FormId,
+                        principalSchema: "Settings",
+                        principalTable: "Forms",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Attributes_EntityId_Name",
                 schema: "Settings",
@@ -101,20 +146,40 @@ namespace AioCore.Web.Migrations.Settings
                 schema: "Settings",
                 table: "Attributes",
                 column: "Order");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FormAttributes_AttributeId",
+                schema: "Settings",
+                table: "FormAttributes",
+                column: "AttributeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FormAttributes_FormId",
+                schema: "Settings",
+                table: "FormAttributes",
+                column: "FormId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Attributes",
-                schema: "Settings");
-
-            migrationBuilder.DropTable(
                 name: "Features",
                 schema: "Settings");
 
             migrationBuilder.DropTable(
+                name: "FormAttributes",
+                schema: "Settings");
+
+            migrationBuilder.DropTable(
                 name: "Tenants",
+                schema: "Settings");
+
+            migrationBuilder.DropTable(
+                name: "Attributes",
+                schema: "Settings");
+
+            migrationBuilder.DropTable(
+                name: "Forms",
                 schema: "Settings");
 
             migrationBuilder.DropTable(

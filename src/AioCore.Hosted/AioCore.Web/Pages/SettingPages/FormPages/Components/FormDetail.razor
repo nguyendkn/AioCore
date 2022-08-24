@@ -1,0 +1,320 @@
+@using Microsoft.AspNetCore.Components
+@using AioCore.Web.Pages.SettingPages.FormPages.ViewModels
+@using AioCore.Web.Services
+@using AioCore.Write.SettingCommands.FormCommands
+@using MediatR
+@using AioCore.Domain.SettingAggregate
+@using AioCore.Read.SettingQueries.EntityQueries
+@using AioCore.Read.SettingQueries.ListFormQueries
+<Drawer Width="900" Closable="true" Visible="@Visible" Placement="right" Title="@Title" OnClose="Close">
+    <Form @ref="@_form" Model="@_model" Layout="@FormLayout.Vertical">
+        <div class="flex">
+            <div class="flex-1">
+                <FormItem Label="Đối tượng">
+                    <Select TItem="SettingEntity"
+                            TItemValue="Guid"
+                            DataSource="@Entities"
+                            @bind-Value="@context.EntityId"
+                            ValueName="@nameof(SettingEntity.Id)"
+                            LabelName="@nameof(SettingEntity.Name)"
+                            Placeholder="Chọn đối tượng"
+                            OnSelectedItemChanged="OnSelectEntity">
+                    </Select>
+                </FormItem>
+            </div>
+            <div class="flex-1 ml-2">
+                <FormItem Label="Biểu mẫu">
+                    <Select TItem="SettingForm" Disabled="@(SelectedEntity is null)"
+                            TItemValue="Guid"
+                            DataSource="@Forms"
+                            @bind-Value="@context.Id"
+                            ValueName="@nameof(SettingForm.Id)"
+                            LabelName="@nameof(SettingForm.Name)"
+                            Placeholder="Chọn biểu mẫu" Loading="@_loadingFormAttributes"
+                            OnSelectedItemChanged="OnSelectForm"
+                            DropdownRender="@DropdownRender">
+                    </Select>
+                </FormItem>
+            </div>
+        </div>
+        <div class="flow-root">
+            <Button Size="@AntSizeLDSType.Small" class="w-full ml-auto text-gray-700 bg-white hover:bg-gray-50 hover:text-black my-2"
+                    Type="@ButtonType.Dashed" @onclick="OnCreateFormAttribute">
+                <i class="fa-duotone fa-plus"></i>
+            </Button>
+            <ul>
+                @if (FormAttributes is {Count: > 0 })
+                {
+                    foreach (var item in FormAttributes)
+                    {
+                        <li class="border shadow p-2">
+                            <div class="flex items-center space-x-4">
+                                <div class="flex-shrink-0 grid">
+                                    <i class="fa-duotone fa-caret-up cursor-pointer text-center" @onclick="() => OnChangeOrderAttribute(item, -1)"></i>
+                                    <i class="fa-duotone fa-circle-xmark cursor-pointer"></i>
+                                    <i class="fa-duotone fa-caret-down cursor-pointer text-center" @onclick="() => OnChangeOrderAttribute(item, 1)"></i>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    @if (SelectedFormAttribute is not null && SelectedFormAttribute.Id.Equals(item.Id))
+                                    {
+                                        <Input Size="@InputSize.Small" @bind-Value="@SelectedFormAttribute.DisplayName"
+                                               @onblur="() => OnEditFormAttribute(null)" @onkeydown="@OnSaveFormAttribute"/>
+                                    }
+                                    else
+                                    {
+                                        <p class="text-sm font-medium text-gray-900 truncate"
+                                           @ondblclick="() => OnEditFormAttribute(item)">
+                                            @item.DisplayName
+                                        </p>
+                                    }
+                                    <Dropdown Trigger="@(new[] { Trigger.Click })">
+                                        <Overlay>
+                                            <Menu>
+                                                @if (Attributes is not null && Attributes.Count > 0)
+                                                {
+                                                    @foreach (var settingAttribute in Attributes)
+                                                    {
+                                                        <MenuItem Class="text-xs" @onclick="() => OnMappingAttribute(item, settingAttribute)">
+                                                            @settingAttribute.Name
+                                                        </MenuItem>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <MenuItem Class="text-xs">
+                                                        <i class="fa-duotone fa-empty-set w-5 text-center"></i>
+                                                        Không có thuộc tính định danh
+                                                    </MenuItem>
+                                                }
+                                            </Menu>
+                                        </Overlay>
+                                        <ChildContent>
+                                            <p class="text-xs text-gray-500 truncate">
+                                                @if (item.Attribute is not null)
+                                                {
+                                                    @switch (item.Attribute.AttributeType)
+                                                    {
+                                                        case AttributeType.Undefined:
+                                                            <i class="mr-1 fa-duotone fa-empty-set"></i>
+                                                            break;
+                                                        case AttributeType.Text:
+                                                            <i class="mr-1 fa-duotone fa-input-text w-5 text-center"></i>
+                                                            break;
+                                                        case AttributeType.Number:
+                                                            <i class="mr-1 fa-duotone fa-input-numeric w-5 text-center"></i>
+                                                            break;
+                                                        case AttributeType.DateTime:
+                                                            <i class="mr-1 fa-duotone fa-calendar w-5 text-center"></i>
+                                                            break;
+                                                        case AttributeType.Select:
+                                                            <i class="mr-1 fa-duotone fa-list-dropdown w-5 text-center"></i>
+                                                            break;
+                                                        default:
+                                                            <i class="mr-1 fa-duotone fa-empty-set"></i>
+                                                            break;
+                                                    }
+                                                    @item.Attribute.Name
+                                                    <i class="fa-duotone fa-angle-down ml-1"></i>
+                                                }
+                                                else
+                                                {
+                                                    <span class="cursor-pointer">Chưa định danh</span>
+                                                }
+                                            </p>
+                                        </ChildContent>
+                                    </Dropdown>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                }
+                else
+                {
+                    <Empty Description="false"/>
+                }
+            </ul>
+        </div>
+    </Form>
+</Drawer>
+
+@code {
+
+    private RenderFragment DropdownRender(RenderFragment originNode)
+    {
+        return @<Template>
+                   <div>
+                       @originNode
+                       <Divider Style="margin: 4px 0"></Divider>
+                       <div style="display: flex; flex-wrap: nowrap; padding: 8px">
+                           <Input placeholder="'Enter' để thêm mới đối tượng" @bind-Value="@_formName" OnPressEnter="@OnCreateForm"/>
+                       </div>
+                   </div>
+               </Template>;
+    }
+
+    private bool _visible;
+    private bool _loadingFormAttributes = false;
+    private Guid _formId = Guid.NewGuid();
+    private List<SettingEntity>? Entities { get; set; }
+    private List<SettingAttribute>? Attributes { get; set; }
+    private List<SettingForm>? Forms { get; set; }
+    private List<SettingFormAttribute>? FormAttributes { get; set; }
+    private SettingEntity? SelectedEntity { get; set; }
+    private SettingForm? SelectedForm { get; set; }
+    private SettingFormAttribute? SelectedFormAttribute { get; set; }
+    private string? _formName;
+
+    [Parameter]
+    public bool Visible
+    {
+        get => _visible;
+        set
+        {
+            if (_visible == value) return;
+            _visible = value;
+            VisibleChanged.InvokeAsync(value);
+        }
+    }
+
+    [Parameter]
+    public EventCallback<bool> VisibleChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> Submitted { get; set; }
+
+    [Parameter]
+    public string Title { get; set; } = default!;
+
+    private Form<FormDetailModel> _form = new();
+
+    private FormDetailModel _model = new();
+
+    [Inject]
+    public IMediator Mediator { get; set; } = default!;
+
+    [Inject]
+    public IAlertService Alert { get; set; } = default!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await FetchEntitiesAsync();
+        await FetchFormsAsync();
+        await base.OnInitializedAsync();
+    }
+
+    private async Task FetchEntitiesAsync(int page = 1, int pageSize = 100)
+    {
+        var response = await Mediator.Send(new ListEntityQuery(page, pageSize));
+        Entities = response.Data;
+    }
+
+    private async Task FetchAttributesAsync(Guid entityId, int page = 1, int pageSize = 100)
+    {
+        var response = await Mediator.Send(new ListAttributeQuery(entityId, page, pageSize));
+        Attributes = response.Data;
+    }
+
+    private async Task FetchFormsAsync(int page = 1, int pageSize = 100)
+    {
+        var response = await Mediator.Send(new ListFormQuery(page, pageSize));
+        Forms = response.Data;
+    }
+
+    private async Task FetchFormAttributesAsync(Guid entityId, int page = 1, int pageSize = 100)
+    {
+        var response = await Mediator.Send(new ListFormAttributeQuery(entityId, page, pageSize));
+        FormAttributes = response.Data;
+    }
+
+    void Close()
+    {
+        Visible = false;
+    }
+
+    private async void OnSelectEntity(SettingEntity? selectedEntity)
+    {
+        if (selectedEntity is null) return;
+        SelectedEntity = selectedEntity;
+        await FetchAttributesAsync(selectedEntity.Id);
+        StateHasChanged();
+    }
+
+    private async void OnCreateForm()
+    {
+        if (string.IsNullOrEmpty(_formName) && SelectedEntity is null) return;
+        if (string.IsNullOrEmpty(_formName) || SelectedEntity is null) return;
+        var response = await Mediator.Send(new SubmitFormCommand(SelectedEntity.Id, _formName));
+        if (!response.Success) return;
+        await FetchFormsAsync(1);
+        _formName = string.Empty;
+        StateHasChanged();
+        await Alert.Success(response.Message);
+    }
+
+    private async void OnSelectForm(SettingForm? selectedForm)
+    {
+        if (selectedForm is null) return;
+        _loadingFormAttributes = true;
+        SelectedForm = selectedForm;
+        await FetchFormAttributesAsync(selectedForm.Id);
+        _loadingFormAttributes = false;
+        StateHasChanged();
+    }
+
+    private async void OnCreateFormAttribute()
+    {
+        if (SelectedForm is null || SelectedForm.Id.Equals(Guid.Empty)) return;
+        var response = await Mediator.Send(new SubmitFormAttributeCommand
+        {
+            DisplayName = "Empty",
+            FormId = SelectedForm.Id,
+        });
+        if (!response.Success) return;
+        await FetchFormAttributesAsync(SelectedForm.Id, 1);
+        StateHasChanged();
+    }
+
+    private void OnEditFormAttribute(SettingFormAttribute? selectedFormAttribute)
+    {
+        SelectedFormAttribute = selectedFormAttribute;
+    }
+
+    private async void OnSaveFormAttribute(KeyboardEventArgs e)
+    {
+        if (e.Code is not ("Enter" or "NumpadEnter")) return;
+        if (SelectedForm is null || SelectedFormAttribute is null) return;
+        var response = await Mediator.Send(new SubmitFormAttributeCommand
+        {
+            Id = SelectedFormAttribute.Id,
+            DisplayName = SelectedFormAttribute.DisplayName,
+        });
+        SelectedFormAttribute = null;
+        StateHasChanged();
+        await Alert.Success(response.Message);
+    }
+
+    private async void OnMappingAttribute(SettingFormAttribute formAttribute, SettingAttribute attribute)
+    {
+        var response = await Mediator.Send(new SubmitFormAttributeCommand
+        {
+            Id = formAttribute.Id,
+            AttributeId = attribute.Id
+        });
+        if (!response.Success) return;
+        await FetchFormAttributesAsync(formAttribute.FormId, 1);
+        StateHasChanged();
+    }
+
+    private async void OnChangeOrderAttribute(SettingFormAttribute attribute, int orderStep)
+    {
+        var response = await Mediator.Send(new SubmitFormAttributeCommand
+        {
+            Id = attribute.Id,
+            OrderStep = orderStep
+        });
+        if (!response.Success) return;
+        await FetchFormAttributesAsync(attribute.FormId, 1);
+        StateHasChanged();
+    }
+
+}

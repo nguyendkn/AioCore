@@ -17,6 +17,10 @@ public class SettingsContext : DbContext
 
     public DbSet<SettingFeature> Features { get; set; } = default!;
 
+    public DbSet<SettingForm> Forms { get; set; } = default!;
+
+    public DbSet<SettingFormAttribute> FormAttributes { get; set; } = default!;
+
     public DbSet<SettingTenant> Tenants { get; set; } = default!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

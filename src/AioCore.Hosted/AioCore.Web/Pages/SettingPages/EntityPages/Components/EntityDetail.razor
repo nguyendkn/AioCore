@@ -7,7 +7,6 @@
 @using AioCore.Write.SettingCommands.EntityCommands
 @using Microsoft.AspNetCore.Components
 @using AioCore.Domain.SettingAggregate
-@using AioCore.Read.SettingQueries.AttributeCommands
 @using AioCore.Read.SettingQueries.EntityQueries
 @using AioCore.Write.SettingCommands.AttributeCommands
 <Drawer Width="300" Closable="true" Visible="@Visible" Placement="right" Title="@Title" OnClose="Close">
@@ -60,15 +59,15 @@
                                                         <i class="fa-duotone fa-input-text w-5 text-center"></i>
                                                         Text
                                                     </MenuItem>
-                                                    <MenuItem Class="text-xs">
+                                                    <MenuItem Class="text-xs" @onclick="() => OnChangeDataType(item, AttributeType.Number)">
                                                         <i class="fa-duotone fa-input-numeric w-5 text-center"></i>
                                                         Number
                                                     </MenuItem>
-                                                    <MenuItem Class="text-xs">
+                                                    <MenuItem Class="text-xs" @onclick="() => OnChangeDataType(item, AttributeType.DateTime)">
                                                         <i class="fa-duotone fa-calendar w-5 text-center"></i>
                                                         DateTime
                                                     </MenuItem>
-                                                    <MenuItem Class="text-xs">
+                                                    <MenuItem Class="text-xs" @onclick="() => OnChangeDataType(item, AttributeType.Select)">
                                                         <i class="fa-duotone fa-list-dropdown w-5 text-center"></i>
                                                         Select
                                                     </MenuItem>

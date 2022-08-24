@@ -35,8 +35,10 @@
                         {
                             <li class="my-1">
                                 <div class="flex items-center space-x-4">
-                                    <div class="flex-shrink-0">
-                                        <i class="fa-duotone fa-grip-dots-vertical"></i>
+                                    <div class="flex-shrink-0 grid">
+                                        <i class="fa-duotone fa-caret-up cursor-pointer" @onclick="() => OnChangeOrderAttribute(item, -1)"></i>
+                                        <i class="fa-duotone fa-grip-dots-vertical cursor-move"></i>
+                                        <i class="fa-duotone fa-caret-down cursor-pointer" @onclick="() => OnChangeOrderAttribute(item, 1)"></i>
                                     </div>
                                     <div class="flex-1 min-w-0">
                                         @if (SelectedAttribute is not null && SelectedAttribute.Id.Equals(item.Id))
@@ -54,7 +56,7 @@
                                         <Dropdown Trigger="@(new[] { Trigger.Click })">
                                             <Overlay>
                                                 <Menu>
-                                                    <MenuItem Class="text-xs">
+                                                    <MenuItem Class="text-xs" @onclick="() => OnChangeDataType(item, AttributeType.Text)">
                                                         <i class="fa-duotone fa-input-text w-5 text-center"></i>
                                                         Text
                                                     </MenuItem>
@@ -74,7 +76,7 @@
                                             </Overlay>
                                             <ChildContent>
                                                 <p class="text-xs text-gray-500 truncate">
-                                                    @switch (item.DataType)
+                                                    @switch (item.AttributeType)
                                                     {
                                                         case AttributeType.Undefined:
                                                             <i class="mr-1 fa-duotone fa-empty-set"></i>
@@ -95,7 +97,7 @@
                                                             <i class="mr-1 fa-duotone fa-empty-set"></i>
                                                             break;
                                                     }
-                                                    @item.DataType
+                                                    @item.AttributeType
                                                     <i class="fa-duotone fa-angle-down"></i>
                                                 </p>
                                             </ChildContent>
@@ -223,7 +225,7 @@
         {
             Name = "Empty",
             EntityId = SelectedEntity.Id,
-            DataType = AttributeType.Undefined
+            AttributeType = AttributeType.Undefined
         });
         if (!response.Success) return;
         await FetchAttributesAsync(SelectedEntity.Id, 1);
@@ -248,6 +250,31 @@
         SelectedAttribute = null;
         StateHasChanged();
         await Alert.Success(response.Message);
+    }
+
+    private async void OnChangeDataType(SettingAttribute attribute, AttributeType type)
+    {
+        var response = await Mediator.Send(new SubmitAttributeCommand
+        {
+            Id = attribute.Id,
+            AttributeType = type,
+            ModifiedAt = DateTime.Now
+        });
+        if (!response.Success) return;
+        await FetchAttributesAsync(attribute.EntityId, 1);
+        StateHasChanged();
+    }
+
+    private async void OnChangeOrderAttribute(SettingAttribute attribute, int orderStep)
+    {
+        var response = await Mediator.Send(new SubmitAttributeCommand
+        {
+            Id = attribute.Id,
+            OrderStep = orderStep
+        });
+        if (!response.Success) return;
+        await FetchAttributesAsync(attribute.EntityId, 1);
+        StateHasChanged();
     }
 
 }

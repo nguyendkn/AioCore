@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AioCore.Web.Migrations.Settings
 {
     [DbContext(typeof(SettingsContext))]
-    [Migration("20220823165843_UpdateLengthAndIndexForSettingAttribute")]
-    partial class UpdateLengthAndIndexForSettingAttribute
+    [Migration("20220824154117_InitialDatabaseSettings")]
+    partial class InitialDatabaseSettings
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -25,24 +25,39 @@ namespace AioCore.Web.Migrations.Settings
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.HasSequence<int>("Sequence_D14134D2B12E52CA5E1278F73D12928F");
+
             modelBuilder.Entity("AioCore.Domain.SettingAggregate.SettingAttribute", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("DataType")
+                    b.Property<int>("AttributeType")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<Guid>("EntityId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ModifiedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
+                    b.Property<int>("Order")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValueSql("NEXT VALUE FOR [Settings].Sequence_D14134D2B12E52CA5E1278F73D12928F");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("Order");
 
                     b.HasIndex("EntityId", "Name");
 

@@ -23,17 +23,19 @@ namespace AioCore.Web.Migrations.Settings
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.HasSequence<int>("Sequence_D14134D2B12E52CA5E1278F73D12928F");
+
             modelBuilder.Entity("AioCore.Domain.SettingAggregate.SettingAttribute", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("AttributeType")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("DataType")
-                        .HasColumnType("int");
 
                     b.Property<Guid>("EntityId")
                         .HasColumnType("uniqueidentifier");
@@ -46,7 +48,14 @@ namespace AioCore.Web.Migrations.Settings
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
+                    b.Property<int>("Order")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValueSql("NEXT VALUE FOR [Settings].Sequence_D14134D2B12E52CA5E1278F73D12928F");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("Order");
 
                     b.HasIndex("EntityId", "Name");
 

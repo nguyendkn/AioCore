@@ -35,7 +35,7 @@ public class ListAttributeQuery : IRequest<Response<List<SettingAttribute>>>
         {
             var entities = await _context.Attributes
                 .Where(x=>x.EntityId.Equals(request.EntityId))
-                .OrderBy(x => x.Name)
+                .OrderBy(x => x.Order)
                 .Skip((request.Page - 1) * request.PageSize)
                 .Take(request.PageSize)
                 .ToListAsync(cancellationToken);

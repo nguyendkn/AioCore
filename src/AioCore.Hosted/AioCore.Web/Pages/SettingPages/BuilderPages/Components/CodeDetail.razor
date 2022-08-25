@@ -7,7 +7,7 @@
 @using AioCore.Shared.Extensions
 @using AioCore.Shared.Common.Constants
 @using AioCore.Write.SettingCommands.CodeCommands
-<Drawer Width="300" Closable="true" Visible="@Visible" Placement="left" Title="@Title" OnClose="Close">
+<Drawer Width="@_drawerSize" Closable="true" Visible="@Visible" Placement="left" Title="@Title" OnClose="Close">
     <Form @ref="@_form" Model="@_model" Layout="@FormLayout.Vertical">
         <FormItem>
             <Input @bind-Value="@context.Name"/>
@@ -21,6 +21,7 @@
 @code{
 
     private bool _visible;
+    private int _drawerSize = 300;
 
     [Parameter]
     public bool Visible
@@ -35,7 +36,7 @@
     }
 
     private Guid? _selectedNode;
-    
+
     [Parameter]
     public Guid? VisibleNode
     {
@@ -50,7 +51,7 @@
 
     [Parameter]
     public EventCallback<bool> VisibleChanged { get; set; }
-    
+
     [Parameter]
     public EventCallback<Guid?> VisibleNodeChanged { get; set; }
 
@@ -69,6 +70,12 @@
 
     [Inject]
     public IAlertService Alert { get; set; } = default!;
+
+    protected override Task OnInitializedAsync()
+    {
+        if (_selectedNode != null) _drawerSize = 600;
+        return base.OnInitializedAsync();
+    }
 
     void Close()
     {

@@ -1,0 +1,98 @@
+@using AioCore.Web.Pages.SettingPages.BuilderPages.ViewModels
+@using AioCore.Web.Pages.SettingPages.TenantPages.ViewModels
+@using AioCore.Web.Services
+@using AioCore.Write.SettingCommands.TenantCommands
+@using MediatR
+@using Microsoft.AspNetCore.Components
+@using AioCore.Shared.Extensions
+@using AioCore.Shared.Common.Constants
+@using AioCore.Write.SettingCommands.CodeCommands
+<Drawer Width="300" Closable="true" Visible="@Visible" Placement="left" Title="@Title" OnClose="Close">
+    <Form @ref="@_form" Model="@_model" Layout="@FormLayout.Vertical">
+        <FormItem>
+            <Input @bind-Value="@context.Name"/>
+        </FormItem>
+        <Button class="flex ml-auto text-gray-700 bg-white hover:bg-gray-50 hover:text-black" @onclick="OnSubmit">
+            Lưu
+        </Button>
+    </Form>
+</Drawer>
+
+@code{
+
+    private bool _visible;
+
+    [Parameter]
+    public bool Visible
+    {
+        get => _visible;
+        set
+        {
+            if (_visible == value) return;
+            _visible = value;
+            VisibleChanged.InvokeAsync(value);
+        }
+    }
+
+    private Guid? _selectedNode;
+    
+    [Parameter]
+    public Guid? VisibleNode
+    {
+        get => _selectedNode;
+        set
+        {
+            if (_selectedNode == value) return;
+            _selectedNode = value;
+            VisibleNodeChanged.InvokeAsync(value);
+        }
+    }
+
+    [Parameter]
+    public EventCallback<bool> VisibleChanged { get; set; }
+    
+    [Parameter]
+    public EventCallback<Guid?> VisibleNodeChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> Submitted { get; set; }
+
+    [Parameter]
+    public string Title { get; set; } = default!;
+
+    private Form<CodeDetailModel> _form = new();
+
+    private CodeDetailModel _model = new();
+
+    [Inject]
+    public IMediator Mediator { get; set; } = default!;
+
+    [Inject]
+    public IAlertService Alert { get; set; } = default!;
+
+    void Close()
+    {
+        Visible = false;
+    }
+
+    private async Task OnSubmit()
+    {
+        var validated = _form.Validate();
+        if (validated)
+        {
+            Visible = false;
+            var command = _model.To<SubmitCodeCommand>();
+            command.Update(_selectedNode);
+            var response = await Mediator.Send(command);
+            await Submitted.InvokeAsync(response.Success);
+            if (response.Success) await Alert.Success(response.Message);
+            else await Alert.Error(response.Message);
+            _model = new CodeDetailModel();
+        }
+        else
+        {
+            await Alert.Error(Messages.ValidateFormFailed);
+        }
+    }
+
+}

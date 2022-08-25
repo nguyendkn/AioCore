@@ -13,6 +13,8 @@ public class SettingsContext : DbContext
 
     public DbSet<SettingAttribute> Attributes { get; set; } = default!;
 
+    public DbSet<SettingCode> Codes { get; set; } = default!;
+    
     public DbSet<SettingEntity> Entities { get; set; } = default!;
 
     public DbSet<SettingFeature> Features { get; set; } = default!;

@@ -10,7 +10,7 @@ namespace AioCore.Web.Helpers;
 
 public static class StartupHelper
 {
-    public static IServiceCollection AddAioContext(this IServiceCollection services, AppSettings configuration)
+    public static void AddAioContext(this IServiceCollection services, AppSettings configuration)
     {
         services.AddDbContext<SettingsContext>(options =>
         {
@@ -48,22 +48,19 @@ public static class StartupHelper
             })
             .AddRoles<Role>()
             .AddEntityFrameworkStores<IdentityContext>();
-        return services;
     }
 
-    public static IServiceCollection AddScopedAioCore(this IServiceCollection services)
+    public static void AddScopedAioCore(this IServiceCollection services)
     {
         services.AddScoped<IAlertService, AlertService>();
-        return services;
     }
-    
-    public static IServiceCollection AddSingletonAioCore(this IServiceCollection services)
+
+    public static void AddSingletonAioCore(this IServiceCollection services)
     {
         services.AddSingleton<IAvatarService, AvatarService>();
-        return services;
     }
-    
-    public static WebApplication UseAioCore(this WebApplication app)
+
+    public static void UseAioCore(this WebApplication app)
     {
         app.MigrateDatabase<IdentityContext>((context, appServices) =>
         {
@@ -75,6 +72,5 @@ public static class StartupHelper
             var logger = appServices.GetService<ILogger<SettingsContextSeed>>();
             SettingsContextSeed.SeedAsync(context, logger).Wait();
         });
-        return app;
     }
 }

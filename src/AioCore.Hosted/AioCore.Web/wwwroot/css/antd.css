@@ -39,3 +39,7 @@
 .anticon-close-circle {
     vertical-align: 0.875em;
 }
+
+.ant-tree .ant-tree-treenode {
+    padding: 0 !important;
+}

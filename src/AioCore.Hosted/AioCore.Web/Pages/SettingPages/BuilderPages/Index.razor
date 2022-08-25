@@ -1,133 +1,124 @@
-﻿@page "/setting/builder"
-@layout EmptyLayout
+﻿@page "/settings/builder"
+@using AioCore.Domain.SettingAggregate
+@using AioCore.Read.SettingQueries.CodeQueries
+@using AioCore.Shared.Extensions
+@using AioCore.Web.Pages.SettingPages.BuilderPages.ViewModels
+@using MediatR
+@using Microsoft.AspNetCore.Components
+@layout EditorLayout
 
 <div>
-<div class="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0 bg-white border-r">
-  <div class="flex flex-col flex-grow pt-5 bg-white overflow-y-auto">
-    <div class="flex font-bold">
-      <Button Type="@ButtonType.Link" class="flex items-center flex-shrink-0 px-4">
-        <i class="fa-duotone fa-caret-left"></i>
-      </Button>
-      <h1 class="flex my-auto">Giao diện</h1>
-    </div>
-    <div class="mt-5 flex-1 flex flex-col">
-      <h1 class="font-bold px-2.5">Mã nguồn</h1>
-      <Tree @ref="tree" DefaultExpandAll Draggable BlockNode
-            ShowIcon DataSource="games" Class="border m-2.5 shadow-sm rounded-md"
-            TitleExpression="x => x.DataItem.Text"
-            ChildrenExpression="x => x.DataItem.Items"
-            IconExpression="x => x.DataItem.Icon"
-            IsLeafExpression="x => x.DataItem.Items?.Count == 0"
-            KeyExpression="x => x.DataItem.Id"
-            TItem="GameElement" OnDragEnd="e => { }" OnDrop="onDrop">
-      </Tree>
-      <div class="space-grow grow"></div>
-      <div class="">
-        <div class="px-2 pb-3 space-y-1">
-          <NavLink href="#" class="bg-[#001529] text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-            <i class="fa-duotone fa-swatchbook mr-2"></i>
-            Màu sắc
-          </NavLink>
+    <div class="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0 bg-white border-r">
+        <div class="flex flex-col flex-grow pt-5 bg-white overflow-y-auto">
+            <div class="flex font-bold">
+                <Button Type="@ButtonType.Link" class="flex items-center flex-shrink-0 px-4">
+                    <i class="fa-duotone fa-caret-left"></i>
+                </Button>
+                <h1 class="flex my-auto">Giao diện</h1>
+            </div>
+            <div class="mt-5 flex-1 flex flex-col">
+                <h1 class="flex font-bold justify-center px-2.5">
+                    Mã nguồn
+                    <div class="button-group flex ml-auto">
+                        <Button @onclick="@Open" Size="@AntSizeLDSType.Small" Disabled="@(_selectedKey is null)" class="mx-0.5 flex justify-center items-center text-sm font-medium">
+                            <i class="fa-duotone fa-pen-to-square"></i>
+                        </Button>
+                        <Button @onclick="@Open" Size="@AntSizeLDSType.Small" class="mx-0.5 flex justify-center items-center text-sm font-medium">
+                            <i class="fa-solid fa-plus"></i>
+                        </Button>
+                    </div>
+                </h1>
+                @if (Codes is not null && Codes.Count > 0)
+                {
+                    <Tree @ref="_tree" DefaultExpandAll BlockNode
+                          ShowLine ShowIcon DataSource="@Codes" Class="border m-2.5 shadow-sm rounded-md"
+                          TitleExpression="x => x.DataItem.Name"
+                          ChildrenExpression="x => x.DataItem.Child"
+                          IsLeafExpression="x => x.DataItem.Child?.Count == 0"
+                          KeyExpression="x => x.DataItem.Id.ToString()"
+                          TItem="SettingCode" OnClick="@OnSelectNode">
+                    </Tree>
+                }
+                else
+                {
+                    <Empty Class="my-4" Description="false"/>
+                }
+                <div class="space-grow grow"></div>
+                <div class="">
+                    <div class="px-2 pb-3 space-y-1">
+                        <NavLink href="#" class="bg-[#001529] text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                            <i class="fa-duotone fa-swatchbook mr-2"></i>
+                            Màu sắc
+                        </NavLink>
+                    </div>
+                    <div class="px-2 pb-3 space-y-1">
+                        <NavLink href="#" class="bg-[#001529] text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                            <i class="fa-duotone fa-swatchbook mr-2"></i>
+                            Thiết lập tổng quan
+                        </NavLink>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="px-2 pb-3 space-y-1">
-          <NavLink href="#" class="bg-[#001529] text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-            <i class="fa-duotone fa-swatchbook mr-2"></i>
-            Thiết lập tổng quan
-          </NavLink>
-        </div>
-      </div>
     </div>
-  </div>
-</div>
-<div class="md:pl-64 flex flex-col flex-1">
-  <div class="sticky top-0 z-10 flex-shrink-0 flex h-16 bg-white border-b">
-  </div>
-  <main>
-    <div class="py-6">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-        <h1 class="text-2xl font-semibold text-gray-900">Dashboard</h1>
-      </div>
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-        <div class="py-4">
-          <div class="border-4 border-dashed border-gray-200 rounded-lg h-96"></div>
+    <div class="md:pl-64 flex flex-col flex-1">
+        <div class="sticky top-0 z-10 flex-shrink-0 flex h-16 bg-white border-b">
         </div>
-      </div>
+        <main>
+            <div class="py-6">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+                    <h1 class="text-2xl font-semibold text-gray-900">Dashboard</h1>
+                </div>
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+                    <div class="py-4">
+                        <div class="border-4 border-dashed border-gray-200 rounded-lg h-96">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
-  </main>
 </div>
-</div>
+
+<CodeDetail @bind-Visible="@_toggleDetail" @bind-VisibleNode="@_selectedKey" Title="@Title" Submitted="() => FetchAsync()"/>
 
 @code{
 
-  Tree<GameElement> tree;
+    private bool _toggleDetail;
+        private const string Title = "Thông tin tệp";
+    private Tree<SettingCode> _tree = default!;
+    private Guid? _selectedKey;
+    private SettingCode? SelectedFile { get; set; }
+    private TreeNode<SettingCode>? SelectedNode { get; set; }
+    private List<SettingCode>? Codes { get; set; }
+    private Form<CodeDetailModel> _form = new();
+    private CodeDetailModel _model = new();
 
-  string selectedKey;
+    [Inject]
+    private IMediator Mediator { get; set; } = default!;
 
-  GameElement selectedData;
-
-  TreeNode<GameElement> selectedNode;
-
-  List<GameElement> games = new()
-  {
-    new ("0-0","0-0")
+    protected override async Task OnInitializedAsync()
     {
-      Items = new List<GameElement>()
-      {
-        new ("0-0-0","0-0-0")
-        {
-          Items = new List<GameElement>()
-          {
-            new ("0-0-0-0","0-0-0-0"),
-            new ("0-0-0-1","0-0-0-1"),
-            new ("0-0-0-2","0-0-0-2"),
-          }
-        },
-        new ("0-0-1","0-0-1")
-        {
-          Items = new List<GameElement>()
-          {
-            new ("0-0-1-0","0-0-1-0"),
-            new ("0-0-1-1","0-0-1-1"),
-            new ("0-0-1-2","0-0-1-2"),
-          }
-        },
-        new ("0-0-2","0-0-2")
-        {
-          Items = new List<GameElement>()
-          {
-            new ("0-0-2-0","0-0-2-0"),
-            new ("0-0-2-1","0-0-2-1"),
-            new ("0-0-2-2","0-0-2-2"),
-          }
-        },
-      }
-    },
-    new ("0-1","0-1")
-    {
-      Items = new List<GameElement>()
-      {
-        new ("0-1-0","0-1-0"),
-        new ("0-1-1","0-1-0"),
-        new ("0-1-2","0-1-2"),
-      }
-    },
-    new ("0-2","0-2")
-    {
-      Items = new List<GameElement>()
-      {
-        new ("0-2-0","0-2-0"),
-        new ("0-2-1","0-2-1"),
-      }
+        await FetchAsync(1);
+        await base.OnInitializedAsync();
     }
-  };
 
-  private record GameElement(string Id, string Text, string Icon = null)
-  {
-    public List<GameElement> Items { get; set; } = new List<GameElement>();
-  }
+    private async Task FetchAsync(int page = 1, int pageSize = 8)
+    {
+        var response = await Mediator.Send(new ListCodeQuery(page, pageSize));
+        Codes = response.Data;
+    }
 
-  void onDrop(TreeEventArgs<GameElement> e)
-  {
+    private void Open()
+    {
+        _toggleDetail = true;
+    }
 
-  }
+    private void OnSelectNode(TreeEventArgs<SettingCode> obj)
+    {
+        if (_selectedKey.Equals(obj.Node.Key.ToGuid()))
+            _selectedKey = null;
+        else _selectedKey = obj.Node.Key.ToGuid();
+    }
+
 }

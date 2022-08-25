@@ -10,6 +10,7 @@ var configuration = builder.Configuration;
 var appSettings = new AppSettings();
 configuration.Bind(appSettings);
 
+services.AddSingleton(appSettings);
 services.AddRazorPages();
 services.AddServerSideBlazor();
 services.AddAntDesign();

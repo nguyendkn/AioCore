@@ -2,6 +2,7 @@
 @using MediatR
 @using AioCore.Read.SettingQueries.TenantQueries
 @using AioCore.Domain.SettingAggregate
+@using AioCore.Shared.Common.Constants
 @layout SettingsLayout
 
 <HeaderComponent Title="Thuê bao" Icon="server">
@@ -100,16 +101,22 @@
     private readonly RenderFragment _overlayMenu =
         @<Menu>
             <MenuItem>
-                <a href="#" class="text-blue-600 text-xs">
-                    <i class="fa-duotone fa-pen-to-square"></i>
-                    Chỉnh sửa
-                </a>
+                <NavLink href="@SettingFeatures.Builder" class="text-green-600 text-xs">
+                    <i class="fa-duotone fa-table-layout"></i>
+                    Giao diện
+                </NavLink>
             </MenuItem>
             <MenuItem>
-                <a href="#" class="text-red-600 text-xs">
+                <NavLink href="#" class="text-blue-600 text-xs">
+                    <i class="fa-duotone fa-pen-to-square"></i>
+                    Chỉnh sửa
+                </NavLink>
+            </MenuItem>
+            <MenuItem>
+                <NavLink href="#" class="text-red-600 text-xs">
                     <i class="fa-duotone fa-trash-can mr-1"></i>
                     Xóa
-                </a>
+                </NavLink>
             </MenuItem>
         </Menu>;
 

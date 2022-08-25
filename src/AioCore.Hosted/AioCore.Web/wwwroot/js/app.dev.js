@@ -1,5 +1,7 @@
 module.exports = {
-    plugins: [],
+    plugins: [
+        require('@tailwindcss/forms')
+    ],
     content: [
         "./Pages/**/*.razor",
         "./Pages/**/*.cshtml",

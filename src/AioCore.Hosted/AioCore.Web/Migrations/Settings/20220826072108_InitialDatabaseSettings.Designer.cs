@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AioCore.Web.Migrations.Settings
 {
     [DbContext(typeof(SettingsContext))]
-    [Migration("20220824180533_CreateReferenceEntityAndForm")]
-    partial class CreateReferenceEntityAndForm
+    [Migration("20220826072108_InitialDatabaseSettings")]
+    partial class InitialDatabaseSettings
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -62,6 +62,42 @@ namespace AioCore.Web.Migrations.Settings
                     b.HasIndex("EntityId", "Name");
 
                     b.ToTable("Attributes", "Settings");
+                });
+
+            modelBuilder.Entity("AioCore.Domain.SettingAggregate.SettingCode", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("ParentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("PathFile")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("TenantId")
+                        .IsRequired()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParentId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("Codes", "Settings");
                 });
 
             modelBuilder.Entity("AioCore.Domain.SettingAggregate.SettingEntity", b =>
@@ -211,6 +247,23 @@ namespace AioCore.Web.Migrations.Settings
                     b.Navigation("Entity");
                 });
 
+            modelBuilder.Entity("AioCore.Domain.SettingAggregate.SettingCode", b =>
+                {
+                    b.HasOne("AioCore.Domain.SettingAggregate.SettingCode", "Parent")
+                        .WithMany("Child")
+                        .HasForeignKey("ParentId");
+
+                    b.HasOne("AioCore.Domain.SettingAggregate.SettingTenant", "Tenant")
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Parent");
+
+                    b.Navigation("Tenant");
+                });
+
             modelBuilder.Entity("AioCore.Domain.SettingAggregate.SettingForm", b =>
                 {
                     b.HasOne("AioCore.Domain.SettingAggregate.SettingEntity", "Entity")
@@ -235,6 +288,11 @@ namespace AioCore.Web.Migrations.Settings
                     b.Navigation("Attribute");
 
                     b.Navigation("Form");
+                });
+
+            modelBuilder.Entity("AioCore.Domain.SettingAggregate.SettingCode", b =>
+                {
+                    b.Navigation("Child");
                 });
 
             modelBuilder.Entity("AioCore.Domain.SettingAggregate.SettingForm", b =>

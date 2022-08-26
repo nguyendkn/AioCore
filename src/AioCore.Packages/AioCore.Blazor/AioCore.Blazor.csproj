@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\AioCore.Blazor\AioCore.Blazor.csproj" />
+      <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor" Version="2.2.0" />
     </ItemGroup>
 
 </Project>

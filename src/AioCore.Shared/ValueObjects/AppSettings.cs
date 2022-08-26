@@ -1,4 +1,6 @@
-﻿namespace AioCore.Shared.ValueObjects;
+﻿using System.Reflection;
+
+namespace AioCore.Shared.ValueObjects;
 
 public class AppSettings
 {
@@ -15,4 +17,8 @@ public class ConnectionStrings
 public class TenantConfigs
 {
     public string SavedFolder { get; set; } = default!;
+
+    public string? AssemblySavedFolder => Path.Combine(
+            Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location) ?? 
+            throw new InvalidOperationException(), SavedFolder);
 }

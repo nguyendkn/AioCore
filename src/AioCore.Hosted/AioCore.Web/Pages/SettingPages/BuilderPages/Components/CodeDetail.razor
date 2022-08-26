@@ -35,16 +35,19 @@
         }
     }
 
-    private Guid? _selectedNode;
+    private Guid? _selectedParentIdNode;
+
+    [Parameter]
+    public Guid TenantId { get; set; }
 
     [Parameter]
     public Guid? VisibleNode
     {
-        get => _selectedNode;
+        get => _selectedParentIdNode;
         set
         {
-            if (_selectedNode == value) return;
-            _selectedNode = value;
+            if (_selectedParentIdNode == value) return;
+            _selectedParentIdNode = value;
             VisibleNodeChanged.InvokeAsync(value);
         }
     }
@@ -73,7 +76,7 @@
 
     protected override Task OnInitializedAsync()
     {
-        if (_selectedNode != null) _drawerSize = 600;
+        if (_selectedParentIdNode != null) _drawerSize = 600;
         return base.OnInitializedAsync();
     }
 
@@ -89,7 +92,7 @@
         {
             Visible = false;
             var command = _model.To<SubmitCodeCommand>();
-            command.Update(_selectedNode);
+            command.Update(TenantId, _selectedParentIdNode);
             var response = await Mediator.Send(command);
             await Submitted.InvokeAsync(response.Success);
             if (response.Success) await Alert.Success(response.Message);

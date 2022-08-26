@@ -6,5 +6,5 @@ public static class SettingFeatures
     public const string Entities = "/settings/entity/list";
     public const string Forms = "/settings/form/list";
     public const string Features = "/settings/feature/list";
-    public const string Builder = "/settings/builder";
+    public const string Builder = "/settings/builder/{0}";
 }

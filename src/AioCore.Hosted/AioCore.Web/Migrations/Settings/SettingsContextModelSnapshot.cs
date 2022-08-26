@@ -81,13 +81,15 @@ namespace AioCore.Web.Migrations.Settings
                     b.Property<Guid?>("ParentId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("PathFile")
+                    b.Property<Guid?>("TenantId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ParentId");
+
+                    b.HasIndex("TenantId");
 
                     b.ToTable("Codes", "Settings");
                 });
@@ -245,7 +247,15 @@ namespace AioCore.Web.Migrations.Settings
                         .WithMany("Child")
                         .HasForeignKey("ParentId");
 
+                    b.HasOne("AioCore.Domain.SettingAggregate.SettingTenant", "Tenant")
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Parent");
+
+                    b.Navigation("Tenant");
                 });
 
             modelBuilder.Entity("AioCore.Domain.SettingAggregate.SettingForm", b =>

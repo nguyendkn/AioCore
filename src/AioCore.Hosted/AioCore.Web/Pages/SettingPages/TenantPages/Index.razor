@@ -65,7 +65,7 @@
                                     <div>
                                         <Dropdown Placement="@Placement.BottomLeft">
                                             <Overlay>
-                                                @_overlayMenu
+                                                @_overlayMenu(item.Id)
                                             </Overlay>
                                             <ChildContent>
                                                 <Button Size="@AntSizeLDSType.Small">...</Button>
@@ -98,10 +98,10 @@
 
 @code {
 
-    private readonly RenderFragment _overlayMenu =
+    private RenderFragment _overlayMenu(Guid tenantId) =>
         @<Menu>
             <MenuItem>
-                <NavLink href="@SettingFeatures.Builder" class="text-green-600 text-xs">
+                <NavLink href="@(string.Format(SettingFeatures.Builder, tenantId))" class="text-green-600 text-xs">
                     <i class="fa-duotone fa-table-layout"></i>
                     Giao diện
                 </NavLink>

@@ -1,4 +1,4 @@
-﻿@page "/settings/builder"
+﻿@page "/settings/builder/{tenantId:guid}"
 @using AioCore.Domain.SettingAggregate
 @using AioCore.Read.SettingQueries.CodeQueries
 @using AioCore.Shared.Extensions
@@ -80,7 +80,7 @@
     </div>
 </div>
 
-<CodeDetail @bind-Visible="@_toggleDetail" @bind-VisibleNode="@_selectedKey" Title="@Title" Submitted="() => FetchAsync()"/>
+<CodeDetail @bind-Visible="@_toggleDetail" @bind-VisibleNode="@_selectedKey" Title="@Title" TenantId="@TenantId" Submitted="() => FetchAsync()"/>
 
 @code{
 
@@ -93,6 +93,9 @@
     private List<SettingCode>? Codes { get; set; }
     private Form<CodeDetailModel> _form = new();
     private CodeDetailModel _model = new();
+    
+    [Parameter]
+    public Guid TenantId { get; set; }
 
     [Inject]
     private IMediator Mediator { get; set; } = default!;

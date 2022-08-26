@@ -48,21 +48,6 @@ namespace AioCore.Web.Migrations.Settings
                 });
 
             migrationBuilder.CreateTable(
-                name: "Forms",
-                schema: "Settings",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Forms", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Tenants",
                 schema: "Settings",
                 columns: table => new
@@ -106,6 +91,59 @@ namespace AioCore.Web.Migrations.Settings
                 });
 
             migrationBuilder.CreateTable(
+                name: "Forms",
+                schema: "Settings",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EntityId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Forms", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Forms_Entities_EntityId",
+                        column: x => x.EntityId,
+                        principalSchema: "Settings",
+                        principalTable: "Entities",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Codes",
+                schema: "Settings",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PathFile = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ParentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Codes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Codes_Codes_ParentId",
+                        column: x => x.ParentId,
+                        principalSchema: "Settings",
+                        principalTable: "Codes",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Codes_Tenants_TenantId",
+                        column: x => x.TenantId,
+                        principalSchema: "Settings",
+                        principalTable: "Tenants",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "FormAttributes",
                 schema: "Settings",
                 columns: table => new
@@ -114,8 +152,8 @@ namespace AioCore.Web.Migrations.Settings
                     Order = table.Column<int>(type: "int", nullable: false),
                     FormId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ColSpan = table.Column<int>(type: "int", nullable: false),
-                    DisplayName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AttributeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    AttributeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    DisplayName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -148,6 +186,18 @@ namespace AioCore.Web.Migrations.Settings
                 column: "Order");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Codes_ParentId",
+                schema: "Settings",
+                table: "Codes",
+                column: "ParentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Codes_TenantId",
+                schema: "Settings",
+                table: "Codes",
+                column: "TenantId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_FormAttributes_AttributeId",
                 schema: "Settings",
                 table: "FormAttributes",
@@ -158,10 +208,20 @@ namespace AioCore.Web.Migrations.Settings
                 schema: "Settings",
                 table: "FormAttributes",
                 column: "FormId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Forms_EntityId",
+                schema: "Settings",
+                table: "Forms",
+                column: "EntityId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Codes",
+                schema: "Settings");
+
             migrationBuilder.DropTable(
                 name: "Features",
                 schema: "Settings");

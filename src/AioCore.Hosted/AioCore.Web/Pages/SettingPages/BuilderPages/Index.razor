@@ -80,7 +80,7 @@
     </div>
 </div>
 
-<CodeDetail @bind-Visible="@_toggleDetail" @bind-VisibleNode="@_selectedKey" Title="@Title" TenantId="@TenantId" Submitted="() => FetchAsync()"/>
+<CodeDetail @ref="@CodeDetail" @bind-Visible="@_toggleDetail" @bind-VisibleNode="@_selectedKey" Title="@Title" TenantId="@TenantId" Submitted="() => FetchAsync()"/>
 
 @code{
 
@@ -93,6 +93,7 @@
     private List<SettingCode>? Codes { get; set; }
     private Form<CodeDetailModel> _form = new();
     private CodeDetailModel _model = new();
+    private CodeDetail CodeDetail { get; set; } = new();
     
     [Parameter]
     public Guid TenantId { get; set; }
@@ -112,9 +113,12 @@
         Codes = response.Data;
     }
 
-    private void Open()
+    private async void Open()
     {
+        if (_selectedKey is not null)
+            await CodeDetail.FetchAsync(_selectedKey);
         _toggleDetail = true;
+        StateHasChanged();
     }
 
     private void OnSelectNode(TreeEventArgs<SettingCode> obj)

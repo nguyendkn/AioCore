@@ -1,4 +1,5 @@
 ﻿using AioCore.Domain.IdentityAggregate;
+using AioCore.Domain.SettingAggregate;
 using AioCore.Web.Pages.SettingPages.BuilderPages.ViewModels;
 using AioCore.Web.Pages.SettingPages.TenantPages.ViewModels;
 using AioCore.Write.IdentityCommands.RoleCommands;
@@ -30,5 +31,6 @@ public class MappingProfile : Profile
         CreateMap<CreateUserCommand, UserResponse>();
 
         CreateMap<CodeDetailModel, SubmitCodeCommand>();
+        CreateMap<SettingCode, CodeDetailModel>();
     }
 }

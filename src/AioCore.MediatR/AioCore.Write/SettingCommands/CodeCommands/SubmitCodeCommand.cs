@@ -1,9 +1,11 @@
 using AioCore.Domain.DatabaseContexts;
 using AioCore.Domain.SettingAggregate;
 using AioCore.Shared.Common.Constants;
+using AioCore.Shared.Extensions;
 using AioCore.Shared.SeedWorks;
 using AioCore.Shared.ValueObjects;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace AioCore.Write.SettingCommands.CodeCommands;
 
@@ -22,32 +24,59 @@ public class SubmitCodeCommand : SettingCode, IRequest<Response<SettingCode>>
 
         public async Task<Response<SettingCode>> Handle(SubmitCodeCommand request, CancellationToken cancellationToken)
         {
-            if (string.IsNullOrEmpty(_appSettings.TenantConfigs.AssemblySavedFolder) || request.TenantId is null)
-                return new Response<SettingCode>
-                {
-                    Message = Messages.UnspecifiedException,
-                    Success = false
-                };
-            
-            var tenantFolder = Path.Combine(_appSettings.TenantConfigs.AssemblySavedFolder, request.TenantId.ToString() ?? string.Empty);
-            if (!Directory.Exists(_appSettings.TenantConfigs.AssemblySavedFolder))
+            if (request.Id.Equals(Guid.Empty))
             {
-                Directory.CreateDirectory(_appSettings.TenantConfigs.AssemblySavedFolder);
+                if (string.IsNullOrEmpty(_appSettings.TenantConfigs.AssemblySavedFolder) || request.TenantId is null)
+                    return new Response<SettingCode>
+                    {
+                        Message = Messages.UnspecifiedException,
+                        Success = false
+                    };
+            
+                var tenantFolder = Path.Combine(_appSettings.TenantConfigs.AssemblySavedFolder, request.TenantId.ToString() ?? string.Empty);
+                if (!Directory.Exists(_appSettings.TenantConfigs.AssemblySavedFolder))
+                    Directory.CreateDirectory(_appSettings.TenantConfigs.AssemblySavedFolder);
                 if (!Directory.Exists(tenantFolder))
                     Directory.CreateDirectory(tenantFolder);
+                var pathFile = Path.Combine(tenantFolder, request.Name);
+                if (File.Exists(pathFile)) pathFile.DeleteFile();
+                if (!string.IsNullOrEmpty(request.Code)) pathFile.WriteFile(request.Code);
+                var entityEntry = await _context.Codes.AddAsync(request, cancellationToken);
+                await _context.SaveChangesAsync(cancellationToken);
+                return new Response<SettingCode>
+                {
+                    Data = entityEntry.Entity,
+                    Message = Messages.CreateDataSuccessful,
+                    Success = true
+                };
             }
-            var pathFile = Path.Combine(tenantFolder, request.Name);
-            if (File.Exists(pathFile)) File.Delete(pathFile);
-            File.Create(pathFile);
-            var entityEntry = await _context.Codes.AddAsync(request, cancellationToken);
-            await _context.SaveChangesAsync(cancellationToken);
-            return new Response<SettingCode>
+            else
             {
-                Data = entityEntry.Entity,
-                Message = Messages.CreateDataSuccessful,
-                Success = true
-            };
-
+                if (string.IsNullOrEmpty(_appSettings.TenantConfigs.AssemblySavedFolder) || request.TenantId is null)
+                    return new Response<SettingCode>
+                    {
+                        Message = Messages.UnspecifiedException,
+                        Success = false
+                    };
+                var code = await _context.Codes.FirstOrDefaultAsync(x => x.Id.Equals(request.Id), cancellationToken);
+                if (code is null) return new Response<SettingCode>
+                {
+                    Message = Messages.DataNotFound,
+                    Success = false
+                };
+                code.Update(request.Name, request.Code);
+                await _context.SaveChangesAsync(cancellationToken);
+                var tenantFolder = Path.Combine(_appSettings.TenantConfigs.AssemblySavedFolder, request.TenantId.ToString() ?? string.Empty);
+                var pathFile = Path.Combine(tenantFolder, request.Name);
+                if (File.Exists(pathFile)) pathFile.DeleteFile();
+                pathFile.WriteFile(request.Code);
+                return new Response<SettingCode>
+                {
+                    Data = code,
+                    Message = Messages.UpdateDataSuccessful,
+                    Success = true
+                };
+            }
         }
     }
 

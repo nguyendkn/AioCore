@@ -2,6 +2,7 @@
 using AioCore.Domain.DatabaseContexts;
 using AioCore.Domain.DatabaseDataSeeds;
 using AioCore.Domain.IdentityAggregate;
+using AioCore.Services;
 using AioCore.Shared.Extensions;
 using AioCore.Shared.ValueObjects;
 using AioCore.Web.Services;
@@ -11,6 +12,13 @@ namespace AioCore.Web.Helpers;
 
 public static class StartupHelper
 {
+    public static void AddAioController(this IServiceCollection services)
+    {
+        services.AddHttpClient();
+        services.AddControllers();
+        services.AddSwaggerGen();
+    }
+    
     public static void AddAioContext(this IServiceCollection services, AppSettings configuration)
     {
         services.AddDbContext<SettingsContext>(options =>
@@ -54,15 +62,24 @@ public static class StartupHelper
     public static void AddScopedAioCore(this IServiceCollection services)
     {
         services.AddScoped<IAlertService, AlertService>();
+        services.AddScoped<IPreviewService, PreviewService>();
     }
 
     public static void AddSingletonAioCore(this IServiceCollection services)
     {
+        services.AddSingleton<IClientService, ClientService>();
         services.AddSingleton<IAvatarService, AvatarService>();
         services.AddSingleton<IRazorEngine, RazorEngine>();
     }
 
-    public static void UseAioCore(this WebApplication app)
+    public static void UseAioController(this WebApplication app)
+    {
+        app.MapControllers();
+        app.UseSwagger();
+        app.UseSwaggerUI();
+    }
+
+    public static void UseAioCoreDatabase(this WebApplication app)
     {
         app.MigrateDatabase<IdentityContext>((context, appServices) =>
         {

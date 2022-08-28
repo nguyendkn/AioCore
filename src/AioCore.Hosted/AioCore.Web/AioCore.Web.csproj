@@ -5,6 +5,7 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <MvcRazorCompileOnPublish>false</MvcRazorCompileOnPublish>
+        <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
     </PropertyGroup>
 
     <ItemGroup>
@@ -27,7 +28,6 @@
       <ProjectReference Include="..\..\AioCore.MediatR\AioCore.Read\AioCore.Read.csproj" />
       <ProjectReference Include="..\..\AioCore.MediatR\AioCore.Write\AioCore.Write.csproj" />
       <ProjectReference Include="..\..\AioCore.Migrations\AioCore.Migrations.csproj" />
-      <ProjectReference Include="..\..\AioCore.Packages\_AioCore.Packages\_AioCore.Packages.csproj" />
     </ItemGroup>
 
 </Project>

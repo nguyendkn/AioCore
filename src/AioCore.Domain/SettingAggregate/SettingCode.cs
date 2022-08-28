@@ -11,6 +11,10 @@ public class SettingCode : Entity
 
     public Guid? ParentId { get; set; }
 
+    public string PathType { get; set; } = default!;
+
+    public SaveType SaveType { get; set; } = SaveType.Undefined;
+    
     public string Code { get; set; } = "// Code Empty";
     
     [ForeignKey(nameof(ParentId))] public SettingCode? Parent { get; set; }
@@ -29,4 +33,12 @@ public class SettingCode : Entity
         Name = string.IsNullOrEmpty(name) ? Name : name;
         Code = string.IsNullOrEmpty(code) ? Code : code;
     }
+}
+
+public enum SaveType
+{
+    Undefined = 0,
+    Inline = 1,
+    Url = 2,
+    File = 3
 }

@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace AioCore.Web.Migrations.Settings
 {
-    public partial class InitialDatabaseSettings : Migration
+    public partial class InitialDatabÃasÃáseSettings : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -47,21 +48,18 @@ namespace AioCore.Web.Migrations.Settings
                 });
 
             migrationBuilder.CreateTable(
-                name: "Tenants",
+                name: "TenantGroups",
                 schema: "Settings",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Domain = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Keyword = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Tenants", x => x.Id);
+                    table.PrimaryKey("PK_TenantGroups", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -112,32 +110,27 @@ namespace AioCore.Web.Migrations.Settings
                 });
 
             migrationBuilder.CreateTable(
-                name: "Codes",
+                name: "Tenants",
                 schema: "Settings",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ParentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Domain = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Keyword = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    GroupId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Codes", x => x.Id);
+                    table.PrimaryKey("PK_Tenants", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Codes_Codes_ParentId",
-                        column: x => x.ParentId,
+                        name: "FK_Tenants_TenantGroups_GroupId",
+                        column: x => x.GroupId,
                         principalSchema: "Settings",
-                        principalTable: "Codes",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Codes_Tenants_TenantId",
-                        column: x => x.TenantId,
-                        principalSchema: "Settings",
-                        principalTable: "Tenants",
+                        principalTable: "TenantGroups",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -168,6 +161,39 @@ namespace AioCore.Web.Migrations.Settings
                         column: x => x.FormId,
                         principalSchema: "Settings",
                         principalTable: "Forms",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Codes",
+                schema: "Settings",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ParentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    PathType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SaveType = table.Column<int>(type: "int", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Codes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Codes_Codes_ParentId",
+                        column: x => x.ParentId,
+                        principalSchema: "Settings",
+                        principalTable: "Codes",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Codes_Tenants_TenantId",
+                        column: x => x.TenantId,
+                        principalSchema: "Settings",
+                        principalTable: "Tenants",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -213,6 +239,12 @@ namespace AioCore.Web.Migrations.Settings
                 schema: "Settings",
                 table: "Forms",
                 column: "EntityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tenants_GroupId",
+                schema: "Settings",
+                table: "Tenants",
+                column: "GroupId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -239,6 +271,10 @@ namespace AioCore.Web.Migrations.Settings
 
             migrationBuilder.DropTable(
                 name: "Forms",
+                schema: "Settings");
+
+            migrationBuilder.DropTable(
+                name: "TenantGroups",
                 schema: "Settings");
 
             migrationBuilder.DropTable(

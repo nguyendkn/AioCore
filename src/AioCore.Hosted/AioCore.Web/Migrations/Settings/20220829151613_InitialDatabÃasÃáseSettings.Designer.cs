@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AioCore.Web.Migrations.Settings
 {
     [DbContext(typeof(SettingsContext))]
-    [Migration("20220828172725_CreateSaveTypeForSettingCode")]
-    partial class CreateSaveTypeForSettingCode
+    [Migration("20220829151613_InitialDatabÃasÃáseSettings")]
+    partial class InitialDatabÃasÃáseSettings
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -224,6 +224,10 @@ namespace AioCore.Web.Migrations.Settings
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("GroupId")
+                        .IsRequired()
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Keyword")
                         .HasColumnType("nvarchar(max)");
 
@@ -240,7 +244,30 @@ namespace AioCore.Web.Migrations.Settings
 
                     b.HasKey("Id");
 
+                    b.HasIndex("GroupId");
+
                     b.ToTable("Tenants", "Settings");
+                });
+
+            modelBuilder.Entity("AioCore.Domain.SettingAggregate.SettingTenantGroup", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TenantGroups", "Settings");
                 });
 
             modelBuilder.Entity("AioCore.Domain.SettingAggregate.SettingAttribute", b =>
@@ -297,6 +324,17 @@ namespace AioCore.Web.Migrations.Settings
                     b.Navigation("Form");
                 });
 
+            modelBuilder.Entity("AioCore.Domain.SettingAggregate.SettingTenant", b =>
+                {
+                    b.HasOne("AioCore.Domain.SettingAggregate.SettingTenantGroup", "Group")
+                        .WithMany("Tenants")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Group");
+                });
+
             modelBuilder.Entity("AioCore.Domain.SettingAggregate.SettingCode", b =>
                 {
                     b.Navigation("Child");
@@ -310,6 +348,11 @@ namespace AioCore.Web.Migrations.Settings
             modelBuilder.Entity("AioCore.Domain.SettingAggregate.SettingTenant", b =>
                 {
                     b.Navigation("Codes");
+                });
+
+            modelBuilder.Entity("AioCore.Domain.SettingAggregate.SettingTenantGroup", b =>
+                {
+                    b.Navigation("Tenants");
                 });
 #pragma warning restore 612, 618
         }

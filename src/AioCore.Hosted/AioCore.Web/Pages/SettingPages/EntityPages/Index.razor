@@ -34,26 +34,23 @@
                                             <div>
                                                 <p class="text-sm font-medium text-indigo-600 truncate">@item.Name</p>
                                                 <p class="mt-2 flex items-center text-sm text-gray-500">
-                                                    <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                        <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
-                                                        <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
-                                                    </svg>
-                                                    <span class="truncate">...</span>
+                                                    <i class="fa-duotone fa-file-import mr-1"></i>
+                                                    <span class="truncate">@item.DataSource</span>
                                                 </p>
                                             </div>
                                             <div class="hidden md:block">
                                                 <div>
                                                     <p class="text-sm text-gray-900">
-                                                        Ngày tạo
-                                                        <time datetime="@item.CreatedAt.ToString("dd/MM/yyyy")">
+                                                        Ngày tạo:
+                                                        <time class="font-bold" datetime="@item.CreatedAt.ToString("dd/MM/yyyy")">
                                                             @item.CreatedAt.ToString("dd/MM/yyyy")
                                                         </time>
                                                     </p>
-                                                    <p class="mt-2 flex items-center text-sm text-gray-500">
-                                                        <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                                                        </svg>
-                                                        Cài đặt thành công
+                                                    <p class="text-sm text-gray-900">
+                                                        Cập nhật lúc:
+                                                        <time class="font-bold" datetime="@item.ModifiedAt.ToString("dd/MM/yyyy hh:mm tt")">
+                                                            @item.ModifiedAt.ToString("dd/MM/yyyy hh:mm tt")
+                                                        </time>
                                                     </p>
                                                 </div>
                                             </div>
@@ -76,7 +73,7 @@
                 }
                 else
                 {
-                    <Empty Description="false" />
+                    <Empty Description="false"/>
                 }
             </ul>
         </div>
@@ -147,4 +144,5 @@
         _page = _page == 1 ? 1 : _page - 1;
         await FetchAsync(_page);
     }
+
 }

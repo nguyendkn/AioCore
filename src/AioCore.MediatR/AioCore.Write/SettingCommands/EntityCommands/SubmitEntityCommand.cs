@@ -2,7 +2,9 @@ using AioCore.Domain.DatabaseContexts;
 using AioCore.Domain.SettingAggregate;
 using AioCore.Shared.Common.Constants;
 using AioCore.Shared.SeedWorks;
+using AioCore.Write.SettingCommands.TenantCommands;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace AioCore.Write.SettingCommands.EntityCommands;
 
@@ -13,6 +15,14 @@ public class SubmitEntityCommand : SettingEntity, IRequest<Response<SettingEntit
         Name = name;
         CreatedAt = DateTime.Now;
         ModifiedAt = DateTime.Now;
+    }
+
+    public SubmitEntityCommand(Guid? id, string? name, DataSource dataSource, string? sourcePath)
+    {
+        Id = id ?? Guid.Empty;
+        Name = string.IsNullOrEmpty(name) ? Name : name;
+        DataSource = dataSource;
+        SourcePath = string.IsNullOrEmpty(sourcePath) ? SourcePath : sourcePath;
     }
 
     internal class Handler : IRequestHandler<SubmitEntityCommand, Response<SettingEntity>>
@@ -27,14 +37,35 @@ public class SubmitEntityCommand : SettingEntity, IRequest<Response<SettingEntit
         public async Task<Response<SettingEntity>> Handle(SubmitEntityCommand request,
             CancellationToken cancellationToken)
         {
-            var entityEntry = await _context.Entities.AddAsync(request, cancellationToken);
-            await _context.SaveChangesAsync(cancellationToken);
-            return new Response<SettingEntity>
+            if (request.Id.Equals(Guid.Empty))
             {
-                Data = entityEntry.Entity,
-                Message = Messages.CreateDataSuccessful,
-                Success = true
-            };
+                var entityEntry = await _context.Entities.AddAsync(request, cancellationToken);
+                await _context.SaveChangesAsync(cancellationToken);
+                return new Response<SettingEntity>
+                {
+                    Data = entityEntry.Entity,
+                    Message = Messages.CreateDataSuccessful,
+                    Success = true
+                };
+            }
+            else
+            {
+                var entity = await _context.Entities.FirstOrDefaultAsync(
+                    x => x.Id.Equals(request.Id), cancellationToken);
+                if (entity is null) return new Response<SettingEntity>
+                {
+                    Message = Messages.DataNotFound,
+                    Success = false
+                };
+                entity.Update(request.Name, request.DataSource, request.SourcePath);
+                await _context.SaveChangesAsync(cancellationToken);
+                return new Response<SettingEntity>
+                {
+                    Data = entity,
+                    Message = Messages.UpdateDataSuccessful,
+                    Success = true
+                };
+            }
         }
     }
 }

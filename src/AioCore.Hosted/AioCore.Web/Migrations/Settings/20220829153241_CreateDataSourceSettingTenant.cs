@@ -4,25 +4,25 @@
 
 namespace AioCore.Web.Migrations.Settings
 {
-    public partial class CreateInlineCodeForSettingCode : Migration
+    public partial class CreateDataSourceSettingTenant : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<bool>(
-                name: "InlineCode",
+            migrationBuilder.AddColumn<int>(
+                name: "DataSource",
                 schema: "Settings",
-                table: "Codes",
-                type: "bit",
+                table: "Entities",
+                type: "int",
                 nullable: false,
-                defaultValue: false);
+                defaultValue: 0);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "InlineCode",
+                name: "DataSource",
                 schema: "Settings",
-                table: "Codes");
+                table: "Entities");
         }
     }
 }

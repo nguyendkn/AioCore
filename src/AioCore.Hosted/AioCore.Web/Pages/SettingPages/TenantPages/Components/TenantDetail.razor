@@ -4,6 +4,8 @@
 @using AioCore.Web.Services
 @using AioCore.Write.SettingCommands.TenantCommands
 @using AioCore.Shared.Common.Constants
+@using AioCore.Domain.SettingAggregate
+@using AioCore.Read.SettingQueries.TenantQueries
 <Drawer Width="300" Closable="true" Visible="@Visible" Placement="right" Title="@Title" OnClose="Close">
     <Form @ref="@_form" Model="@_model" Layout="@FormLayout.Vertical">
         <FormItem>
@@ -18,6 +20,18 @@
         <FormItem>
             <Input @bind-Value="@context.Keyword"/>
         </FormItem>
+        <FormItem Label="Chọn nhóm thuê bao">
+            <Select TItem="SettingTenantGroup"
+                    TItemValue="Guid"
+                    DataSource="@TenantGroups"
+                    @bind-Value="@context.Id"
+                    ValueName="@nameof(SettingTenantGroup.Id)"
+                    LabelName="@nameof(SettingTenantGroup.Name)"
+                    Placeholder="Chọn nhóm" Loading="@_loadingTenantGroups"
+                    OnSelectedItemChanged="OnSelectTenantGroup"
+                    DropdownRender="@DropdownRender">
+            </Select>
+        </FormItem>
         <Button class="flex ml-auto text-gray-700 bg-white hover:bg-gray-50 hover:text-black" @onclick="OnSubmit">
             Lưu
         </Button>
@@ -26,7 +40,27 @@
 
 @code{
 
+    private RenderFragment DropdownRender(RenderFragment originNode)
+    {
+        return @<Template>
+                   <div>
+                       @originNode
+                       <Divider Style="margin: 4px 0"></Divider>
+                       <div style="display: flex; flex-wrap: nowrap; padding: 8px">
+                           <Input placeholder="'Enter' để thêm mới nhóm" @bind-Value="@_tenantGroupName" OnPressEnter="@OnCreateTenantGroup"/>
+                       </div>
+                   </div>
+               </Template>;
+    }
+
+
     private bool _visible;
+    private bool _loadingTenantGroups;
+    private string? _tenantGroupName;
+    private Form<TenantDetailModel> _form = new();
+    private TenantDetailModel _model = new();
+    private List<SettingTenantGroup>? TenantGroups { get; set; }
+    private SettingTenantGroup? SelectedTenantGroup { get; set; }
 
     [Parameter]
     public bool Visible
@@ -49,19 +83,28 @@
     [Parameter]
     public string Title { get; set; } = default!;
 
-    private Form<TenantDetailModel> _form = new();
-
-    private TenantDetailModel _model = new();
-
     [Inject]
     public IMediator Mediator { get; set; } = default!;
 
     [Inject]
     public IAlertService Alert { get; set; } = default!;
 
+    protected override async Task OnInitializedAsync()
+    {
+        await FetchTenantGroupsAsync();
+        await base.OnInitializedAsync();
+    }
+
     void Close()
     {
         Visible = false;
+    }
+
+    private async Task FetchTenantGroupsAsync(int page = 1, int pageSize = 100)
+    {
+        var response = await Mediator.Send(new ListTenantGroupQuery(page, pageSize));
+        TenantGroups = response.Data;
+        _loadingTenantGroups = false;
     }
 
     private async Task OnSubmit()
@@ -81,4 +124,24 @@
             await Alert.Error(Messages.ValidateFormFailed);
         }
     }
+
+    private async void OnSelectTenantGroup(SettingTenantGroup tenantGroup)
+    {
+        _loadingTenantGroups = true;
+        _model.GroupId = tenantGroup.Id;
+        SelectedTenantGroup = tenantGroup;
+        await FetchTenantGroupsAsync();
+    }
+
+    private async void OnCreateTenantGroup()
+    {
+        if (string.IsNullOrEmpty(_tenantGroupName)) return;
+        var response = await Mediator.Send(new SubmitTenantGroupCommand(_tenantGroupName));
+        if (!response.Success) return;
+        await FetchTenantGroupsAsync();
+        _tenantGroupName = string.Empty;
+        StateHasChanged();
+        await Alert.Success(response.Message);
+    }
+
 }

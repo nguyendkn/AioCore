@@ -25,6 +25,8 @@ public class SettingsContext : DbContext
 
     public DbSet<SettingTenant> Tenants { get; set; } = default!;
 
+    public DbSet<SettingTenantGroup> TenantGroups { get; set; } = default!;
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

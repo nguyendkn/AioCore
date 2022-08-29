@@ -4,25 +4,24 @@
 
 namespace AioCore.Web.Migrations.Settings
 {
-    public partial class CreatePathTypeForSettingCode : Migration
+    public partial class CreateSourcePathSettingTenant : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "PathType",
+                name: "SourcePath",
                 schema: "Settings",
-                table: "Codes",
+                table: "Entities",
                 type: "nvarchar(max)",
-                nullable: false,
-                defaultValue: "");
+                nullable: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "PathType",
+                name: "SourcePath",
                 schema: "Settings",
-                table: "Codes");
+                table: "Entities");
         }
     }
 }

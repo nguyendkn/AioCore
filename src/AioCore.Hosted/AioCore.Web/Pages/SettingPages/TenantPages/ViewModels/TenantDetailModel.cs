@@ -5,6 +5,8 @@ namespace AioCore.Web.Pages.SettingPages.TenantPages.ViewModels;
 
 public class TenantDetailModel
 {
+    public Guid Id { get; set; }
+    
     [Required, DisplayName("Tên")]
     public string Name { get; set; } = default!;
 
@@ -16,4 +18,7 @@ public class TenantDetailModel
 
     [DisplayName("Từ khóa chính")]
     public string? Keyword { get; set; }
+
+    [DisplayName("Nhóm thuê bao")]
+    public Guid GroupId { get; set; }
 }

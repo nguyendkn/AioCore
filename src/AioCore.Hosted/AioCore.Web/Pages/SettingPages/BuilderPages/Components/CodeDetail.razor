@@ -14,6 +14,9 @@
             <Input Class="w-full" @bind-Value="@context.Name"/>
         </FormItem>
         <FormItem>
+            <Input Class="w-full" @bind-Value="@context.PathType"/>
+        </FormItem>
+        <FormItem>
             <TextArea Rows="20" ShowCount @bind-Value="@context.Code"></TextArea>
         </FormItem>
         <Button class="flex ml-auto text-gray-700 bg-white hover:bg-gray-50 hover:text-black" @onclick="OnSubmit">

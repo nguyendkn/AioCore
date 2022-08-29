@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -9,6 +10,9 @@ public class CodeDetailModel
     
     [Required, DisplayName("Tên tập tin")]
     public string Name { get; set; } = default!;
+    
+    [Required, DisplayName("Đường dẫn thứ cấp")]
+    public string PathType { get; set; } = default!;
 
     [DisplayName("Mã nguồn")] public string Code { get; set; } = "// Code Empty";
 }

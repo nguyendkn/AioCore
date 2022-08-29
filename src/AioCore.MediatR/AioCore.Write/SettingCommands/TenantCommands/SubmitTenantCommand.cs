@@ -5,6 +5,7 @@ using AioCore.Shared.Common.Constants;
 using AioCore.Shared.SeedWorks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AioCore.Write.SettingCommands.TenantCommands;
 
@@ -13,12 +14,12 @@ public class SubmitTenantCommand : SettingTenant, IRequest<Response<SettingTenan
     internal class Handler : IRequestHandler<SubmitTenantCommand, Response<SettingTenant>>
     {
         private readonly SettingsContext _settingsContext;
-        private readonly DynamicContext _dynamicContext;
+        private readonly IServiceProvider _serviceProvider;
 
-        public Handler(SettingsContext settingsContext, DynamicContext dynamicContext)
+        public Handler(SettingsContext settingsContext, IServiceProvider serviceProvider)
         {
             _settingsContext = settingsContext;
-            _dynamicContext = dynamicContext;
+            _serviceProvider = serviceProvider;
         }
 
         public async Task<Response<SettingTenant>> Handle(SubmitTenantCommand request,
@@ -27,10 +28,13 @@ public class SubmitTenantCommand : SettingTenant, IRequest<Response<SettingTenan
             if (request.Id.Equals(Guid.Empty))
             {
                 var tenantEntityEntry = await _settingsContext.Tenants.AddAsync(request, cancellationToken);
-                await _settingsContext.SaveChangesAsync(cancellationToken);
-                DynamicContext.Schema = "aioc-" + tenantEntityEntry.Entity?.Id;
-                await _dynamicContext.Database.MigrateAsync(cancellationToken);
 
+                DynamicContext.Schema = "aioc-" + tenantEntityEntry.Entity?.Id;
+                var dynamicContext = _serviceProvider.GetRequiredService<DynamicContext>();
+                await dynamicContext.Database.MigrateAsync(cancellationToken);
+                await dynamicContext.Database.ExecuteSqlRawAsync("truncate table [aioc].[__EFMigrationsHistory]",
+                    cancellationToken: cancellationToken);
+                await _settingsContext.SaveChangesAsync(cancellationToken);
                 var settingTenant = tenantEntityEntry.Entity;
                 return new Response<SettingTenant>
                 {

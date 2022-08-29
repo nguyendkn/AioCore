@@ -47,7 +47,7 @@ public class DynamicContext : DbContext
         base.OnConfiguring(optionsBuilder);
         optionsBuilder.UseSqlServer(_appSettings.ConnectionStrings.DefaultConnection, b =>
         {
-            b.MigrationsHistoryTable("__EFMigrationsHistory", Schema);
+            b.MigrationsHistoryTable("__EFMigrationsHistory", "aioc");
             b.MigrationsAssembly("AioCore.Migrations");
             b.EnableRetryOnFailure(15, TimeSpan.FromSeconds(30), null);
         });

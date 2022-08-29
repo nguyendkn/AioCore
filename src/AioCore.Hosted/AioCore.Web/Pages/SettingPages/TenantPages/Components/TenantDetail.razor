@@ -24,7 +24,7 @@
             <Select TItem="SettingTenantGroup"
                     TItemValue="Guid"
                     DataSource="@TenantGroups"
-                    @bind-Value="@context.Id"
+                    @bind-Value="@context.GroupId"
                     ValueName="@nameof(SettingTenantGroup.Id)"
                     LabelName="@nameof(SettingTenantGroup.Name)"
                     Placeholder="Chọn nhóm" Loading="@_loadingTenantGroups"

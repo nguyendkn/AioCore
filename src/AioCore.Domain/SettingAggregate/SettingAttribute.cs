@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using AioCore.Shared.Extensions;
 using AioCore.Shared.SeedWorks;
+using AioCore.Shared.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 
 namespace AioCore.Domain.SettingAggregate;
@@ -44,13 +45,4 @@ public class SettingAttribute : Entity
         AttributeType = type;
         ModifiedAt = DateTime.Now;
     }
-}
-
-public enum AttributeType
-{
-    Undefined,
-    Text,
-    Number,
-    DateTime,
-    Select
 }

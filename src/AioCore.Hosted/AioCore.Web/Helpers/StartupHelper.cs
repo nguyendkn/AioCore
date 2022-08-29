@@ -2,6 +2,7 @@
 using AioCore.Domain.DatabaseContexts;
 using AioCore.Domain.DatabaseDataSeeds;
 using AioCore.Domain.IdentityAggregate;
+using AIoCore.Migrations.Migrations;
 using AioCore.Services;
 using AioCore.Shared.Extensions;
 using AioCore.Shared.ValueObjects;
@@ -18,7 +19,7 @@ public static class StartupHelper
         services.AddControllers();
         services.AddSwaggerGen();
     }
-    
+
     public static void AddAioContext(this IServiceCollection services, AppSettings configuration)
     {
         services.AddDbContext<SettingsContext>(options =>
@@ -30,14 +31,16 @@ public static class StartupHelper
                 b.EnableRetryOnFailure(15, TimeSpan.FromSeconds(30), null);
             });
         }, ServiceLifetime.Transient);
-        services.AddDbContext<DynamicContext>(options =>
-        {
-            options.UseSqlServer(configuration.ConnectionStrings.DefaultConnection, b =>
-            {
-                b.MigrationsAssembly(AioCore.Migrations.Assembly.Name);
-                b.EnableRetryOnFailure(15, TimeSpan.FromSeconds(30), null);
-            });
-        });
+        // services.AddDbContext<DynamicContext>(options =>
+        // {
+        //     options.UseSqlServer(configuration.ConnectionStrings.DefaultConnection, b =>
+        //     {
+        //         b.MigrationsHistoryTable("__EFMigrationsHistory", DynamicDatabase.Schema);
+        //         b.MigrationsAssembly(AioCore.Migrations.Assembly.Name);
+        //         b.EnableRetryOnFailure(15, TimeSpan.FromSeconds(30), null);
+        //     });
+        // });
+        services.AddDbContext<DynamicContext>();
         services.AddDbContext<IdentityContext>(options =>
         {
             options.UseSqlServer(configuration.ConnectionStrings.DefaultConnection, b =>
@@ -61,13 +64,13 @@ public static class StartupHelper
 
     public static void AddScopedAioCore(this IServiceCollection services)
     {
+        services.AddScoped<IClientService, ClientService>();
         services.AddScoped<IAlertService, AlertService>();
         services.AddScoped<IPreviewService, PreviewService>();
     }
 
     public static void AddSingletonAioCore(this IServiceCollection services)
     {
-        services.AddSingleton<IClientService, ClientService>();
         services.AddSingleton<IAvatarService, AvatarService>();
         services.AddSingleton<IRazorEngine, RazorEngine>();
     }

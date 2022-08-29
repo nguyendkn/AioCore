@@ -6,6 +6,7 @@
 @using AioCore.Domain.SettingAggregate
 @using AioCore.Read.SettingQueries.EntityQueries
 @using AioCore.Read.SettingQueries.ListFormQueries
+@using AioCore.Shared.ValueObjects
 <Drawer Width="900" Closable="true" Visible="@Visible" Placement="right" Title="@Title" OnClose="Close">
     <Form @ref="@_form" Model="@_model" Layout="@FormLayout.Vertical">
         <div class="flex">
@@ -106,8 +107,11 @@
                                                         case AttributeType.DateTime:
                                                             <i class="mr-1 fa-duotone fa-calendar w-5 text-center"></i>
                                                             break;
-                                                        case AttributeType.Select:
-                                                            <i class="mr-1 fa-duotone fa-list-dropdown w-5 text-center"></i>
+                                                        case AttributeType.Float:
+                                                            <i class="mr-1 fa-duotone fa-f w-5 text-center"></i>
+                                                            break;
+                                                        case AttributeType.Guid:
+                                                            <i class="mr-1 fa-duotone fa-g w-5 text-center"></i>
                                                             break;
                                                         default:
                                                             <i class="mr-1 fa-duotone fa-empty-set"></i>

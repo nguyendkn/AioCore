@@ -85,9 +85,13 @@
                                                     <i class="fa-duotone fa-calendar w-5 text-center"></i>
                                                     DateTime
                                                 </MenuItem>
-                                                <MenuItem Class="text-xs" @onclick="() => OnChangeDataType(item, AttributeType.Select)">
-                                                    <i class="fa-duotone fa-list-dropdown w-5 text-center"></i>
-                                                    Select
+                                                <MenuItem Class="text-xs" @onclick="() => OnChangeDataType(item, AttributeType.Float)">
+                                                    <i class="fa-duotone fa-f w-5 text-center"></i>
+                                                    Float
+                                                </MenuItem>
+                                                <MenuItem Class="text-xs" @onclick="() => OnChangeDataType(item, AttributeType.Float)">
+                                                    <i class="fa-duotone fa-g w-5 text-center"></i>
+                                                    Guid
                                                 </MenuItem>
                                             </Menu>
                                         </Overlay>
@@ -107,8 +111,11 @@
                                                     case AttributeType.DateTime:
                                                         <i class="mr-1 fa-duotone fa-calendar w-5 text-center"></i>
                                                         break;
-                                                    case AttributeType.Select:
-                                                        <i class="mr-1 fa-duotone fa-list-dropdown w-5 text-center"></i>
+                                                    case AttributeType.Float:
+                                                        <i class="mr-1 fa-duotone fa-F w-5 text-center"></i>
+                                                        break;
+                                                    case AttributeType.Guid:
+                                                        <i class="mr-1 fa-duotone fa-g w-5 text-center"></i>
                                                         break;
                                                     default:
                                                         <i class="mr-1 fa-duotone fa-empty-set"></i>

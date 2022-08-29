@@ -23,7 +23,7 @@ public class SettingsContext : DbContext
 
     public DbSet<SettingFormAttribute> FormAttributes { get; set; } = default!;
 
-    public DbSet<SettingTenant> Tenants { get; set; } = default!;
+    public DbSet<SettingTenant?> Tenants { get; set; } = default!;
 
     public DbSet<SettingTenantGroup> TenantGroups { get; set; } = default!;
 

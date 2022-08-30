@@ -1,12 +1,12 @@
 using AioCore.Domain.DatabaseContexts;
 using AioCore.Domain.SettingAggregate;
-using AIoCore.Migrations.Migrations;
 using AioCore.Shared.Common.Constants;
+using AioCore.Shared.Extensions;
 using AioCore.Shared.SeedWorks;
 using AioCore.Shared.ValueObjects;
+using Humanizer;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace AioCore.Write.SettingCommands.TenantCommands;
 
@@ -16,13 +16,10 @@ public class SubmitTenantCommand : SettingTenant, IRequest<Response<SettingTenan
     {
         private readonly AppSettings _appSettings;
         private readonly SettingsContext _settingsContext;
-        private readonly IServiceProvider _serviceProvider;
 
-        public Handler(SettingsContext settingsContext, 
-            IServiceProvider serviceProvider, AppSettings appSettings)
+        public Handler(SettingsContext settingsContext, AppSettings appSettings)
         {
             _settingsContext = settingsContext;
-            _serviceProvider = serviceProvider;
             _appSettings = appSettings;
         }
 
@@ -33,10 +30,11 @@ public class SubmitTenantCommand : SettingTenant, IRequest<Response<SettingTenan
             {
                 var tenantEntityEntry = await _settingsContext.Tenants.AddAsync(request, cancellationToken);
 
-                var schema = "aioc-" + tenantEntityEntry.Entity?.Id;
+                var schema = $"aioc_" + tenantEntityEntry.Entity.Name.RemoveDiacritics().Underscore() +
+                             $"_{tenantEntityEntry.Entity.CreatedAt.ToString(DateTimeFormat.FormatXxl)}";
                 await using (var dynamicContext = DynamicContext.GetContext(_appSettings, schema))
                     await dynamicContext.Database.MigrateAsync(cancellationToken);
-                
+
                 await _settingsContext.SaveChangesAsync(cancellationToken);
                 var settingTenant = tenantEntityEntry.Entity;
                 return new Response<SettingTenant>

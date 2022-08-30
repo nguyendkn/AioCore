@@ -2,7 +2,6 @@ using AioCore.Domain.DatabaseContexts;
 using AioCore.Domain.SettingAggregate;
 using AioCore.Shared.Common.Constants;
 using AioCore.Shared.SeedWorks;
-using AioCore.Write.SettingCommands.TenantCommands;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 

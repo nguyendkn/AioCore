@@ -131,6 +131,8 @@
         _model.GroupId = tenantGroup.Id;
         SelectedTenantGroup = tenantGroup;
         await FetchTenantGroupsAsync();
+        _loadingTenantGroups = false;
+        StateHasChanged();
     }
 
     private async void OnCreateTenantGroup()

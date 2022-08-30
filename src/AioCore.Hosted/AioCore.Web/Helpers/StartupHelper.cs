@@ -3,7 +3,6 @@ using AioCore.Domain.DatabaseContexts;
 using AioCore.Domain.DatabaseDataSeeds;
 using AioCore.Domain.IdentityAggregate;
 using AioCore.Jobs;
-using AIoCore.Migrations.Migrations;
 using AioCore.Notion;
 using AioCore.Services;
 using AioCore.Services.BackgroundJobs;

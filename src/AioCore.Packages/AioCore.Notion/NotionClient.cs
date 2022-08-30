@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using AioCore.Notion.Constants;
+﻿using AioCore.Notion.Constants;
 using AioCore.Notion.Responses._Globals;
 using Newtonsoft.Json;
 using RestSharp;

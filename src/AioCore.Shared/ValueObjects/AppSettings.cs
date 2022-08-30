@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using AioCore.Notion;
 
 namespace AioCore.Shared.ValueObjects;
 
@@ -7,6 +8,8 @@ public class AppSettings
     public ConnectionStrings ConnectionStrings { get; set; } = default!;
 
     public TenantConfigs TenantConfigs { get; set; } = default!;
+    
+    public NotionOptions NotionOptions { get; set; } = default!;
 }
 
 public class ConnectionStrings

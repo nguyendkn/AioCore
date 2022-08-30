@@ -4,6 +4,7 @@ using AioCore.Domain.DatabaseDataSeeds;
 using AioCore.Domain.IdentityAggregate;
 using AioCore.Jobs;
 using AIoCore.Migrations.Migrations;
+using AioCore.Notion;
 using AioCore.Services;
 using AioCore.Services.BackgroundJobs;
 using AioCore.Shared.Extensions;
@@ -61,8 +62,9 @@ public static class StartupHelper
         services.AddScoped<IPreviewService, PreviewService>();
     }
 
-    public static void AddSingletonAioCore(this IServiceCollection services)
+    public static void AddSingletonAioCore(this IServiceCollection services, AppSettings appSettings)
     {
+        services.AddAiocNotionClient(appSettings.NotionOptions);
         services.AddSingleton<IAvatarService, AvatarService>();
         services.AddSingleton<IRazorEngine, RazorEngine>();
     }

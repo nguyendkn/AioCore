@@ -9,6 +9,7 @@
     <ItemGroup>
       <ProjectReference Include="..\AioCore.Domain\AioCore.Domain.csproj" />
       <ProjectReference Include="..\AioCore.Migrations\AioCore.Migrations.csproj" />
+      <ProjectReference Include="..\AioCore.Packages\AioCore.Jobs\AioCore.Jobs.csproj" />
       <ProjectReference Include="..\AioCore.Packages\_AioCore.Packages\_AioCore.Packages.csproj" />
     </ItemGroup>
 

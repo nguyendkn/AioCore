@@ -1,5 +1,9 @@
-﻿using AutoMapper;
+﻿using System.Reflection;
+using AioCore.Shared.ValueObjects;
+using AutoMapper;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace AioCore.Shared.Extensions;
 
@@ -13,5 +17,17 @@ public static class AioCoreExtensions
         });
         services.AddSingleton(mapperConfig.CreateMapper().RegisterMap());
         return services;
+    }
+    
+    public static AppSettings Configuration(IHostEnvironment environment)
+    {
+        var environmentName = environment.EnvironmentName;
+        var assemblyPath = Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location);
+        var appSettingsPath = Path.Combine(assemblyPath!, $"appsettings.{environmentName}.json");
+        var appSettings = new AppSettings();
+        new ConfigurationBuilder()
+            .AddJsonFile(appSettingsPath)
+            .Build().Bind(appSettings);
+        return appSettings;
     }
 }

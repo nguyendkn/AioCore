@@ -1,11 +1,9 @@
-﻿using System;
+﻿#nullable disable
+
 using AioCore.Database;
-using AioCore.Domain.DatabaseContexts;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-#nullable disable
-
-namespace AIoCore.Migrations.Migrations
+namespace AioCore.Migrations.Migrations
 {
     public partial class DynamicDatabase : Migration
     {

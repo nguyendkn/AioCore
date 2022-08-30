@@ -2,8 +2,10 @@
 using AioCore.Domain.DatabaseContexts;
 using AioCore.Domain.DatabaseDataSeeds;
 using AioCore.Domain.IdentityAggregate;
+using AioCore.Jobs;
 using AIoCore.Migrations.Migrations;
 using AioCore.Services;
+using AioCore.Services.BackgroundJobs;
 using AioCore.Shared.Extensions;
 using AioCore.Shared.ValueObjects;
 using AioCore.Web.Services;
@@ -63,6 +65,12 @@ public static class StartupHelper
     {
         services.AddSingleton<IAvatarService, AvatarService>();
         services.AddSingleton<IRazorEngine, RazorEngine>();
+    }
+
+    public static void AddBackgroundServicesAioCore(this IServiceCollection services, AppSettings appSettings)
+    {
+        services.AddAiocHangfire(appSettings.ConnectionStrings.DefaultConnection);
+        services.AddScoped<ICronJob, NotionJob>();
     }
 
     public static void UseAioController(this WebApplication app)

@@ -37,15 +37,15 @@ public class PreviewService : IPreviewService
     {
         var domain = _clientService.Host();
         if (string.IsNullOrEmpty(domain)) return string.Empty;
-        var tenant = await _context.Tenants.Include(x => x.Codes)
-            .FirstOrDefaultAsync(x => x.Domain.Equals(domain));
+        var tenant = await _context.Tenants.Include(x => x!.Codes)
+            .FirstOrDefaultAsync(y => y.Domain.Equals(domain));
         var settingCode = tenant?.Codes.FirstOrDefault(x => x.PathType.Equals(indexPage ? "index" : pathType));
         if (settingCode is null) return string.Empty;
 
         var staticCode = await GetCode(tenant, settingCode);
         var template = await _razorEngine.CompileAsync(staticCode);
 
-        var actual = await template.RunAsync(new {});
+        var actual = await template.RunAsync(new { });
         return actual;
     }
 

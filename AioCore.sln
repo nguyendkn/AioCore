@@ -30,6 +30,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AioCore.Database", "src\Aio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AioCore.Jobs", "src\AioCore.Packages\AioCore.Jobs\AioCore.Jobs.csproj", "{5F2C2A8B-E556-43C8-9776-69B27AC67BAC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AioCore.Notion", "src\AioCore.Packages\AioCore.Notion\AioCore.Notion.csproj", "{D967950E-5EE2-416A-9C63-FFBA1D09157F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +52,7 @@ Global
 		{09EB944E-D764-467F-93CB-D1710AEA21CF} = {D0A1E053-3C57-45A1-8232-DC30029CFD22}
 		{AE30FBDD-6691-46E9-8ED2-19FAB3568E86} = {D0A1E053-3C57-45A1-8232-DC30029CFD22}
 		{5F2C2A8B-E556-43C8-9776-69B27AC67BAC} = {D0A1E053-3C57-45A1-8232-DC30029CFD22}
+		{D967950E-5EE2-416A-9C63-FFBA1D09157F} = {D0A1E053-3C57-45A1-8232-DC30029CFD22}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{A50B9B9B-3065-4954-B063-C19A7D50E764}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -96,5 +99,9 @@ Global
 		{5F2C2A8B-E556-43C8-9776-69B27AC67BAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F2C2A8B-E556-43C8-9776-69B27AC67BAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F2C2A8B-E556-43C8-9776-69B27AC67BAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D967950E-5EE2-416A-9C63-FFBA1D09157F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D967950E-5EE2-416A-9C63-FFBA1D09157F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D967950E-5EE2-416A-9C63-FFBA1D09157F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D967950E-5EE2-416A-9C63-FFBA1D09157F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

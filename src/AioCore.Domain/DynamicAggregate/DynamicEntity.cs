@@ -1,5 +1,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using AioCore.Domain.DatabaseContexts;
 using AioCore.Shared.SeedWorks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace AioCore.Domain.DynamicAggregate;
@@ -27,7 +29,16 @@ public class DynamicEntity : Entity
 
 public class DynamicEntityTypeConfiguration : EntityTypeConfiguration<DynamicEntity>
 {
+    private readonly string? _schema;
+
+    public DynamicEntityTypeConfiguration(string? schema)
+    {
+        _schema = schema;
+    }
+
     public override void Config(EntityTypeBuilder<DynamicEntity> builder)
     {
+        if (!string.IsNullOrWhiteSpace(_schema))
+            builder.ToTable(nameof(DynamicContext.DateValues), _schema);
     }
 }

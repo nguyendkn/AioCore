@@ -31,16 +31,6 @@ public static class StartupHelper
                 b.EnableRetryOnFailure(15, TimeSpan.FromSeconds(30), null);
             });
         }, ServiceLifetime.Transient);
-        // services.AddDbContext<DynamicContext>(options =>
-        // {
-        //     options.UseSqlServer(configuration.ConnectionStrings.DefaultConnection, b =>
-        //     {
-        //         b.MigrationsHistoryTable("__EFMigrationsHistory", DynamicDatabase.Schema);
-        //         b.MigrationsAssembly(AioCore.Migrations.Assembly.Name);
-        //         b.EnableRetryOnFailure(15, TimeSpan.FromSeconds(30), null);
-        //     });
-        // });
-        services.AddDbContext<DynamicContext>();
         services.AddDbContext<IdentityContext>(options =>
         {
             options.UseSqlServer(configuration.ConnectionStrings.DefaultConnection, b =>

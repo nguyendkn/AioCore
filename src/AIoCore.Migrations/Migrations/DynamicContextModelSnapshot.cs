@@ -17,7 +17,6 @@ namespace AIoCore.Migrations.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema(DynamicContext.Schema)
                 .HasAnnotation("ProductVersion", "6.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
@@ -42,7 +41,7 @@ namespace AIoCore.Migrations.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Attributes", DynamicContext.Schema);
+                    b.ToTable("Attributes");
                 });
 
             modelBuilder.Entity("AioCore.Domain.DynamicAggregate.DynamicDateValue", b =>
@@ -69,7 +68,7 @@ namespace AIoCore.Migrations.Migrations
 
                     b.HasIndex("EntityId");
 
-                    b.ToTable("DateValues", DynamicContext.Schema);
+                    b.ToTable("DateValues");
                 });
 
             modelBuilder.Entity("AioCore.Domain.DynamicAggregate.DynamicEntity", b =>
@@ -94,7 +93,7 @@ namespace AIoCore.Migrations.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Entities", DynamicContext.Schema);
+                    b.ToTable("Entities");
                 });
 
             modelBuilder.Entity("AioCore.Domain.DynamicAggregate.DynamicFloatValue", b =>
@@ -121,7 +120,7 @@ namespace AIoCore.Migrations.Migrations
 
                     b.HasIndex("EntityId");
 
-                    b.ToTable("FloatValues", DynamicContext.Schema);
+                    b.ToTable("FloatValues");
                 });
 
             modelBuilder.Entity("AioCore.Domain.DynamicAggregate.DynamicGuidValue", b =>
@@ -148,7 +147,7 @@ namespace AIoCore.Migrations.Migrations
 
                     b.HasIndex("EntityId");
 
-                    b.ToTable("GuidValues", DynamicContext.Schema);
+                    b.ToTable("GuidValues");
                 });
 
             modelBuilder.Entity("AioCore.Domain.DynamicAggregate.DynamicIntegerValue", b =>
@@ -175,7 +174,7 @@ namespace AIoCore.Migrations.Migrations
 
                     b.HasIndex("EntityId");
 
-                    b.ToTable("IntegerValues", DynamicContext.Schema);
+                    b.ToTable("IntegerValues");
                 });
 
             modelBuilder.Entity("AioCore.Domain.DynamicAggregate.DynamicStringValue", b =>
@@ -203,7 +202,7 @@ namespace AIoCore.Migrations.Migrations
 
                     b.HasIndex("EntityId");
 
-                    b.ToTable("StringValues", DynamicContext.Schema);
+                    b.ToTable("StringValues");
                 });
 
             modelBuilder.Entity("AioCore.Domain.DynamicAggregate.DynamicDateValue", b =>

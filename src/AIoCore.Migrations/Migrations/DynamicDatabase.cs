@@ -1,4 +1,5 @@
 ﻿using System;
+using AioCore.Database;
 using AioCore.Domain.DatabaseContexts;
 using Microsoft.EntityFrameworkCore.Migrations;
 
@@ -8,16 +9,21 @@ namespace AIoCore.Migrations.Migrations
 {
     public partial class DynamicDatabase : Migration
     {
-        public static string Schema = DynamicContext.Schema;
+        private readonly IDbContextSchema _schema;
+
+        public DynamicDatabase(IDbContextSchema schema)
+        {
+            _schema = schema ?? throw new ArgumentNullException(nameof(schema));
+        }
 
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.EnsureSchema(
-                name: Schema);
+                name: _schema.Schema);
 
             migrationBuilder.CreateTable(
                 name: "Attributes",
-                schema: Schema,
+                schema: _schema.Schema,
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -29,7 +35,7 @@ namespace AIoCore.Migrations.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Entities",
-                schema: Schema,
+                schema: _schema.Schema,
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -42,7 +48,7 @@ namespace AIoCore.Migrations.Migrations
 
             migrationBuilder.CreateTable(
                 name: "DateValues",
-                schema: Schema,
+                schema: _schema.Schema,
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -57,14 +63,14 @@ namespace AIoCore.Migrations.Migrations
                     table.ForeignKey(
                         name: "FK_DateValues_Attributes_AttributeId",
                         column: x => x.AttributeId,
-                        principalSchema: Schema,
+                        principalSchema: _schema.Schema,
                         principalTable: "Attributes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_DateValues_Entities_EntityId",
                         column: x => x.EntityId,
-                        principalSchema: Schema,
+                        principalSchema: _schema.Schema,
                         principalTable: "Entities",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -72,7 +78,7 @@ namespace AIoCore.Migrations.Migrations
 
             migrationBuilder.CreateTable(
                 name: "FloatValues",
-                schema: Schema,
+                schema: _schema.Schema,
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -87,14 +93,14 @@ namespace AIoCore.Migrations.Migrations
                     table.ForeignKey(
                         name: "FK_FloatValues_Attributes_AttributeId",
                         column: x => x.AttributeId,
-                        principalSchema: Schema,
+                        principalSchema: _schema.Schema,
                         principalTable: "Attributes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_FloatValues_Entities_EntityId",
                         column: x => x.EntityId,
-                        principalSchema: Schema,
+                        principalSchema: _schema.Schema,
                         principalTable: "Entities",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -102,7 +108,7 @@ namespace AIoCore.Migrations.Migrations
 
             migrationBuilder.CreateTable(
                 name: "GuidValues",
-                schema: Schema,
+                schema: _schema.Schema,
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -117,14 +123,14 @@ namespace AIoCore.Migrations.Migrations
                     table.ForeignKey(
                         name: "FK_GuidValues_Attributes_AttributeId",
                         column: x => x.AttributeId,
-                        principalSchema: Schema,
+                        principalSchema: _schema.Schema,
                         principalTable: "Attributes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_GuidValues_Entities_EntityId",
                         column: x => x.EntityId,
-                        principalSchema: Schema,
+                        principalSchema: _schema.Schema,
                         principalTable: "Entities",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -132,7 +138,7 @@ namespace AIoCore.Migrations.Migrations
 
             migrationBuilder.CreateTable(
                 name: "IntegerValues",
-                schema: Schema,
+                schema: _schema.Schema,
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -147,14 +153,14 @@ namespace AIoCore.Migrations.Migrations
                     table.ForeignKey(
                         name: "FK_IntegerValues_Attributes_AttributeId",
                         column: x => x.AttributeId,
-                        principalSchema: Schema,
+                        principalSchema: _schema.Schema,
                         principalTable: "Attributes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_IntegerValues_Entities_EntityId",
                         column: x => x.EntityId,
-                        principalSchema: Schema,
+                        principalSchema: _schema.Schema,
                         principalTable: "Entities",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -162,7 +168,7 @@ namespace AIoCore.Migrations.Migrations
 
             migrationBuilder.CreateTable(
                 name: "StringValues",
-                schema: Schema,
+                schema: _schema.Schema,
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -177,14 +183,14 @@ namespace AIoCore.Migrations.Migrations
                     table.ForeignKey(
                         name: "FK_StringValues_Attributes_AttributeId",
                         column: x => x.AttributeId,
-                        principalSchema: Schema,
+                        principalSchema: _schema.Schema,
                         principalTable: "Attributes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_StringValues_Entities_EntityId",
                         column: x => x.EntityId,
-                        principalSchema: Schema,
+                        principalSchema: _schema.Schema,
                         principalTable: "Entities",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -192,61 +198,61 @@ namespace AIoCore.Migrations.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_DateValues_AttributeId",
-                schema: Schema,
+                schema: _schema.Schema,
                 table: "DateValues",
                 column: "AttributeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DateValues_EntityId",
-                schema: Schema,
+                schema: _schema.Schema,
                 table: "DateValues",
                 column: "EntityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_FloatValues_AttributeId",
-                schema: Schema,
+                schema: _schema.Schema,
                 table: "FloatValues",
                 column: "AttributeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_FloatValues_EntityId",
-                schema: Schema,
+                schema: _schema.Schema,
                 table: "FloatValues",
                 column: "EntityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GuidValues_AttributeId",
-                schema: Schema,
+                schema: _schema.Schema,
                 table: "GuidValues",
                 column: "AttributeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GuidValues_EntityId",
-                schema: Schema,
+                schema: _schema.Schema,
                 table: "GuidValues",
                 column: "EntityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_IntegerValues_AttributeId",
-                schema: Schema,
+                schema: _schema.Schema,
                 table: "IntegerValues",
                 column: "AttributeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_IntegerValues_EntityId",
-                schema: Schema,
+                schema: _schema.Schema,
                 table: "IntegerValues",
                 column: "EntityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StringValues_AttributeId",
-                schema: Schema,
+                schema: _schema.Schema,
                 table: "StringValues",
                 column: "AttributeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StringValues_EntityId",
-                schema: Schema,
+                schema: _schema.Schema,
                 table: "StringValues",
                 column: "EntityId");
         }
@@ -255,31 +261,31 @@ namespace AIoCore.Migrations.Migrations
         {
             migrationBuilder.DropTable(
                 name: "DateValues",
-                schema: Schema);
+                schema: _schema.Schema);
 
             migrationBuilder.DropTable(
                 name: "FloatValues",
-                schema: Schema);
+                schema: _schema.Schema);
 
             migrationBuilder.DropTable(
                 name: "GuidValues",
-                schema: Schema);
+                schema: _schema.Schema);
 
             migrationBuilder.DropTable(
                 name: "IntegerValues",
-                schema: Schema);
+                schema: _schema.Schema);
 
             migrationBuilder.DropTable(
                 name: "StringValues",
-                schema: Schema);
+                schema: _schema.Schema);
 
             migrationBuilder.DropTable(
                 name: "Attributes",
-                schema: Schema);
+                schema: _schema.Schema);
 
             migrationBuilder.DropTable(
                 name: "Entities",
-                schema: Schema);
+                schema: _schema.Schema);
         }
     }
 }

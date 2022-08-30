@@ -1,18 +1,22 @@
-﻿using AioCore.Domain.DynamicAggregate;
+﻿using AioCore.Database;
+using AioCore.Domain.DynamicAggregate;
 using AioCore.Shared.ValueObjects;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace AioCore.Domain.DatabaseContexts;
 
-public class DynamicContext : DbContext
+public class DynamicContext : DbContext, IDbContextSchema
 {
-    public static string Schema = "aioc";
+    public string? Schema { get; }
 
-    private readonly AppSettings _appSettings;
-
-    public DynamicContext(DbContextOptions<DynamicContext> options, AppSettings appSettings) : base(options)
+    public DynamicContext(DbContextOptions<DynamicContext> options, 
+        DbContextSchema? contextSchema, IDbContextSchema? schema = null) : base(options)
     {
-        _appSettings = appSettings;
+        Schema = schema?.Schema;
     }
 
     public DbSet<DynamicEntity> Entities { get; set; } = default!;
@@ -33,23 +37,33 @@ public class DynamicContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        modelBuilder.ApplyConfiguration(new DynamicAttributeTypeConfiguration());
-        modelBuilder.ApplyConfiguration(new DynamicDateValueTypeConfiguration());
-        modelBuilder.ApplyConfiguration(new DynamicEntityTypeConfiguration());
-        modelBuilder.ApplyConfiguration(new DynamicFloatValueTypeConfiguration());
-        modelBuilder.ApplyConfiguration(new DynamicGuidValueTypeConfiguration());
-        modelBuilder.ApplyConfiguration(new DynamicIntegerValueTypeConfiguration());
-        modelBuilder.ApplyConfiguration(new DynamicStringValueTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new DynamicAttributeTypeConfiguration(Schema));
+        modelBuilder.ApplyConfiguration(new DynamicDateValueTypeConfiguration(Schema));
+        modelBuilder.ApplyConfiguration(new DynamicEntityTypeConfiguration(Schema));
+        modelBuilder.ApplyConfiguration(new DynamicFloatValueTypeConfiguration(Schema));
+        modelBuilder.ApplyConfiguration(new DynamicGuidValueTypeConfiguration(Schema));
+        modelBuilder.ApplyConfiguration(new DynamicIntegerValueTypeConfiguration(Schema));
+        modelBuilder.ApplyConfiguration(new DynamicStringValueTypeConfiguration(Schema));
     }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    
+    public static DynamicContext GetContext(AppSettings appSettings, string? schema = null)
     {
-        base.OnConfiguring(optionsBuilder);
-        optionsBuilder.UseSqlServer(_appSettings.ConnectionStrings.DefaultConnection, b =>
-        {
-            b.MigrationsHistoryTable("__EFMigrationsHistory", "aioc");
-            b.MigrationsAssembly("AioCore.Migrations");
-            b.EnableRetryOnFailure(15, TimeSpan.FromSeconds(30), null);
-        });
+        var services = new ServiceCollection()
+            .AddDbContext<DynamicContext>(builder => builder.UseSqlServer(
+                    appSettings.ConnectionStrings.DefaultConnection,
+                    b =>
+                    {
+                        b.MigrationsHistoryTable("__EFMigrationsHistory", schema);
+                        b.MigrationsAssembly("AioCore.Migrations");
+                        b.EnableRetryOnFailure(15, TimeSpan.FromSeconds(30), null);
+                    }
+                )
+                .ReplaceService<IModelCacheKeyFactory, DbSchemaAwareModelCacheKeyFactory>()
+                .ReplaceService<IMigrationsAssembly, DbSchemaAwareMigrationAssembly>());
+        
+        if (schema != null) services.AddSingleton<IDbContextSchema>(new DbContextSchema(schema));
+        var serviceProvider = services.BuildServiceProvider();
+
+        return serviceProvider.GetRequiredService<DynamicContext>();
     }
 }

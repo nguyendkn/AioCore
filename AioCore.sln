@@ -26,6 +26,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "_AioCore.Packages", "src\Ai
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AioCore.Blazor", "src\AioCore.Packages\AioCore.Blazor\AioCore.Blazor.csproj", "{09EB944E-D764-467F-93CB-D1710AEA21CF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AioCore.Database", "src\AioCore.Packages\AioCore.Database\AioCore.Database.csproj", "{AE30FBDD-6691-46E9-8ED2-19FAB3568E86}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,7 @@ Global
 		{CA21E42F-D5B1-4A1E-BEE5-F0DBAFA312F5} = {79E28929-E669-4A7B-B8AE-A2CF63ABE89E}
 		{7EF519A3-469E-455E-A869-6D9709507C9B} = {D0A1E053-3C57-45A1-8232-DC30029CFD22}
 		{09EB944E-D764-467F-93CB-D1710AEA21CF} = {D0A1E053-3C57-45A1-8232-DC30029CFD22}
+		{AE30FBDD-6691-46E9-8ED2-19FAB3568E86} = {D0A1E053-3C57-45A1-8232-DC30029CFD22}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{A50B9B9B-3065-4954-B063-C19A7D50E764}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -82,5 +85,9 @@ Global
 		{09EB944E-D764-467F-93CB-D1710AEA21CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09EB944E-D764-467F-93CB-D1710AEA21CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{09EB944E-D764-467F-93CB-D1710AEA21CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE30FBDD-6691-46E9-8ED2-19FAB3568E86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE30FBDD-6691-46E9-8ED2-19FAB3568E86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE30FBDD-6691-46E9-8ED2-19FAB3568E86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE30FBDD-6691-46E9-8ED2-19FAB3568E86}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

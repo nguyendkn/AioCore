@@ -1,5 +1,4 @@
 using AioCore.Read.DynamicQueries;
-using AioCore.Write.DynamicCommands;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,29 +15,29 @@ public class DynamicController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpPost("create")]
-    public async Task<IActionResult> CreateEntity([FromBody] CreateDynamicEntityCommand request)
-    {
-        return Ok(await _mediator.Send(request));
-    }
+    // [HttpPost("create")]
+    // public async Task<IActionResult> CreateEntity([FromBody] CreateDynamicEntityCommand request)
+    // {
+    //     return Ok(await _mediator.Send(request));
+    // }
 
-    [HttpPost("update")]
-    public async Task<IActionResult> UpdateEntity([FromBody] UpdateDynamicEntityCommand request)
-    {
-        return Ok(await _mediator.Send(request));
-    }
+    // [HttpPost("update")]
+    // public async Task<IActionResult> UpdateEntity([FromBody] UpdateDynamicEntityCommand request)
+    // {
+    //     return Ok(await _mediator.Send(request));
+    // }
 
-    [HttpPost("remove")]
-    public async Task<IActionResult> DeleteEntity(RemoveDynamicEntityCommand request)
-    {
-        return Ok(await _mediator.Send(request));
-    }
+    // [HttpPost("remove")]
+    // public async Task<IActionResult> DeleteEntity(RemoveDynamicEntityCommand request)
+    // {
+    //     return Ok(await _mediator.Send(request));
+    // }
 
-    [HttpGet("entity")]
-    public async Task<IActionResult> GetEntity([FromQuery] Guid id)
-    {
-        return Ok(await _mediator.Send(new GetDynamicEntityQuery(id)));
-    }
+    // [HttpGet("entity")]
+    // public async Task<IActionResult> GetEntity([FromQuery] Guid id)
+    // {
+    //     return Ok(await _mediator.Send(new GetDynamicEntityQuery(id)));
+    // }
 
     [HttpPost("filter")]
     public async Task<IActionResult> FilterEntity([FromBody] FilterDynamicEntityQuery request)

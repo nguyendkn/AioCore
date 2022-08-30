@@ -20,6 +20,18 @@
         <FormItem>
             <Input @bind-Value="@context.Keyword"/>
         </FormItem>
+        <FormItem Label="Chọn tên miền phụ">
+            <Select Mode="multiple"
+                    TItem="TenantDomainModel"
+                    TItemValue="Guid"
+                    DataSource="@DraftTenantDomains"
+                    @bind-Values="@SelectedTenantDomains"
+                    ValueName="@nameof(TenantDomainModel.Id)"
+                    LabelName="@nameof(TenantDomainModel.Domain)"
+                    Placeholder="Chọn tên miền phụ" Loading="@_loadingTenantDomains"
+                    DropdownRender="@DropdownTenantDomainRender">
+            </Select>
+        </FormItem>
         <FormItem Label="Chọn nhóm thuê bao">
             <Select TItem="SettingTenantGroup"
                     TItemValue="Guid"
@@ -29,7 +41,7 @@
                     LabelName="@nameof(SettingTenantGroup.Name)"
                     Placeholder="Chọn nhóm" Loading="@_loadingTenantGroups"
                     OnSelectedItemChanged="OnSelectTenantGroup"
-                    DropdownRender="@DropdownRender">
+                    DropdownRender="@DropdownTenantGroupRender">
             </Select>
         </FormItem>
         <Button class="flex ml-auto text-gray-700 bg-white hover:bg-gray-50 hover:text-black" @onclick="OnSubmit">
@@ -40,7 +52,20 @@
 
 @code{
 
-    private RenderFragment DropdownRender(RenderFragment originNode)
+    private RenderFragment DropdownTenantDomainRender(RenderFragment originNode)
+    {
+        return @<Template>
+                   <div>
+                       @originNode
+                       <Divider Style="margin: 4px 0"></Divider>
+                       <div style="display: flex; flex-wrap: nowrap; padding: 8px">
+                           <Input placeholder="'Enter' để thêm tên miền phụ" @bind-Value="@_tenantDomain" OnPressEnter="@OnCreateTenantDomain"/>
+                       </div>
+                   </div>
+               </Template>;
+    }
+
+    private RenderFragment DropdownTenantGroupRender(RenderFragment originNode)
     {
         return @<Template>
                    <div>
@@ -56,11 +81,15 @@
 
     private bool _visible;
     private bool _loadingTenantGroups;
+    private bool _loadingTenantDomains;
     private string? _tenantGroupName;
+    private string? _tenantDomain;
     private Form<TenantDetailModel> _form = new();
     private TenantDetailModel _model = new();
     private List<SettingTenantGroup>? TenantGroups { get; set; }
     private SettingTenantGroup? SelectedTenantGroup { get; set; }
+    private IEnumerable<Guid>? SelectedTenantDomains { get; set; }
+    private List<TenantDomainModel> DraftTenantDomains { get; set; } = new();
 
     [Parameter]
     public bool Visible
@@ -106,6 +135,13 @@
         TenantGroups = response.Data;
         _loadingTenantGroups = false;
     }
+    
+    private async Task FetchTenantDomainAsync(Guid tenantId, int page = 1, int pageSize = 100)
+    {
+        var response = await Mediator.Send(new ListTenantDomainQuery(page, pageSize, tenantId));
+        DraftTenantDomains = response.Data.To<List<TenantDomainModel>>();
+        _loadingTenantDomains = false;
+    }
 
     private async Task OnSubmit()
     {
@@ -113,6 +149,7 @@
         if (validated)
         {
             Visible = false;
+            _model.Domains = DraftTenantDomains;
             var response = await Mediator.Send(_model.To<SubmitTenantCommand>());
             await Submitted.InvokeAsync(response.Success);
             if (response.Success) await Alert.Success(response.Message);
@@ -144,6 +181,19 @@
         _tenantGroupName = string.Empty;
         StateHasChanged();
         await Alert.Success(response.Message);
+    }
+
+    private void OnCreateTenantDomain()
+    {
+        if (string.IsNullOrEmpty(_tenantDomain)) return;
+        DraftTenantDomains.Add(new TenantDomainModel
+        {
+            Id = Guid.NewGuid(),
+            Domain = _tenantDomain,
+            Active = true
+        });
+        _tenantDomain = string.Empty;
+        StateHasChanged();
     }
 
 }

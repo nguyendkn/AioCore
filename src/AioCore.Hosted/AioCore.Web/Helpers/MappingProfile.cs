@@ -32,5 +32,8 @@ public class MappingProfile : Profile
 
         CreateMap<CodeDetailModel, SubmitCodeCommand>();
         CreateMap<SettingCode, CodeDetailModel>();
+
+        CreateMap<TenantDomainModel, SettingTenantDomain>();
+        CreateMap<SettingTenantDomain, TenantDomainModel>();
     }
 }

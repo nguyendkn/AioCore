@@ -6,20 +6,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AioCore.Read.SettingQueries.TenantQueries;
 
-public class ListTenantGroupQuery : IRequest<Response<List<SettingTenantGroup>>>
+public class ListTenantDomainQuery : IRequest<Response<List<SettingTenantDomain>>>
 {
     public int Page { get; set; }
 
     public int PageSize { get; set; }
 
+    public Guid TenantId { get; set; }
 
-    public ListTenantGroupQuery(int page, int pageSize)
+    public ListTenantDomainQuery(int page, int pageSize, Guid tenantId)
     {
         Page = page;
         PageSize = pageSize;
+        TenantId = tenantId;
     }
 
-    internal class Handler : IRequestHandler<ListTenantGroupQuery, Response<List<SettingTenantGroup>>>
+    internal class Handler : IRequestHandler<ListTenantDomainQuery, Response<List<SettingTenantDomain>>>
     {
         private readonly SettingsContext _context;
 
@@ -28,15 +30,16 @@ public class ListTenantGroupQuery : IRequest<Response<List<SettingTenantGroup>>>
             _context = context;
         }
 
-        public async Task<Response<List<SettingTenantGroup>>> Handle(ListTenantGroupQuery request,
+        public async Task<Response<List<SettingTenantDomain>>> Handle(ListTenantDomainQuery request,
             CancellationToken cancellationToken)
         {
-            var tenantGroups = await _context.TenantGroups
+            var tenantGroups = await _context.TenantDomains
+                .Where(x => x.TenantId.Equals(request.TenantId))
                 .OrderBy(x => x.CreatedAt)
                 .Skip((request.Page - 1) * request.PageSize)
                 .Take(request.PageSize)
                 .ToListAsync(cancellationToken);
-            return new Response<List<SettingTenantGroup>>
+            return new Response<List<SettingTenantDomain>>
             {
                 Data = tenantGroups,
                 Success = true

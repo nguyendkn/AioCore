@@ -7,14 +7,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AioCore.Write.SettingCommands.TenantCommands;
 
-public class SubmitTenantGroupCommand : SettingTenantGroup, IRequest<Response<SettingTenantGroup>>
+public class SubmitTenantDomainCommand : SettingTenantDomain, IRequest<Response<SettingTenantDomain>>
 {
-    public SubmitTenantGroupCommand(string name)
+    public SubmitTenantDomainCommand(Guid tenantId, string domain)
     {
-        Name = name;
+        TenantId = tenantId;
+        Domain = domain;
     }
 
-    internal class Handler : IRequestHandler<SubmitTenantGroupCommand, Response<SettingTenantGroup>>
+    internal class Handler : IRequestHandler<SubmitTenantDomainCommand, Response<SettingTenantDomain>>
     {
         private readonly SettingsContext _context;
 
@@ -23,36 +24,36 @@ public class SubmitTenantGroupCommand : SettingTenantGroup, IRequest<Response<Se
             _context = context;
         }
 
-        public async Task<Response<SettingTenantGroup>> Handle(SubmitTenantGroupCommand request,
+        public async Task<Response<SettingTenantDomain>> Handle(SubmitTenantDomainCommand request,
             CancellationToken cancellationToken)
         {
             if (request.Id.Equals(Guid.Empty))
             {
-                var tenantGroupEntityEntry = await _context.TenantGroups.AddAsync(request, cancellationToken);
+                var tenantDomainEntityEntry = await _context.TenantDomains.AddAsync(request, cancellationToken);
                 await _context.SaveChangesAsync(cancellationToken);
-                var settingTenantGroup = tenantGroupEntityEntry.Entity;
-                return new Response<SettingTenantGroup>
+                var settingTenantDomain = tenantDomainEntityEntry.Entity;
+                return new Response<SettingTenantDomain>
                 {
-                    Data = settingTenantGroup,
+                    Data = settingTenantDomain,
                     Message = Messages.CreateDataSuccessful,
                     Success = true
                 };
             }
             else
             {
-                var tenantGroup = await _context.TenantGroups.FirstOrDefaultAsync(
+                var tenantDomain = await _context.TenantDomains.FirstOrDefaultAsync(
                     x => x.Id.Equals(request.Id), cancellationToken);
-                if (tenantGroup is null)
-                    return new Response<SettingTenantGroup>
+                if (tenantDomain is null)
+                    return new Response<SettingTenantDomain>
                     {
                         Message = Messages.DataNotFound,
                         Success = false
                     };
-                tenantGroup.Update(request.Name);
+                tenantDomain.Update(request.Domain);
                 await _context.SaveChangesAsync(cancellationToken);
-                return new Response<SettingTenantGroup>
+                return new Response<SettingTenantDomain>
                 {
-                    Data = tenantGroup,
+                    Data = tenantDomain,
                     Message = Messages.UpdateDataSuccessful,
                     Success = true
                 };

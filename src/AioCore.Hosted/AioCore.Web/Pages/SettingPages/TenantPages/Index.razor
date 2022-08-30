@@ -36,7 +36,20 @@
                                                 <p class="text-sm font-medium text-indigo-600 truncate">@item.Title</p>
                                                 <p class="mt-2 flex items-center text-sm text-gray-500">
                                                     <i class="fa-duotone fa-link mr-1"></i>
-                                                    <span class="truncate">@item.Domain</span>
+                                                    <Dropdown Placement="@Placement.BottomLeft">
+                                                        <Overlay>
+                                                            @_overlayTenantDomains(item.Domains.ToList())
+                                                        </Overlay>
+                                                        <ChildContent>
+                                                            <span class="truncate" @onclick:preventDefault>
+                                                                @item.Domain
+                                                                @if (item.Domains.Any())
+                                                                {
+                                                                    <i class="fa-duotone fa-caret-down ml-1"></i>
+                                                                }
+                                                            </span>
+                                                        </ChildContent>
+                                                    </Dropdown>
                                                 </p>
                                             </div>
                                             <div class="hidden md:block">
@@ -89,6 +102,18 @@
 <TenantDetail @bind-Visible="@_toggleDetail" Title="@Title" Submitted="() => FetchAsync()"/>
 
 @code {
+
+    private RenderFragment _overlayTenantDomains(List<SettingTenantDomain> domains) =>
+        @<Menu>
+            @foreach (var domain in domains)
+            {
+                <MenuItem>
+                    <span>
+                        @domain.Domain
+                    </span>
+                </MenuItem>
+            }
+        </Menu>;
 
     private RenderFragment _overlayMenu(Guid tenantId) =>
         @<Menu>
@@ -148,4 +173,5 @@
         _page = _page == 1 ? 1 : _page - 1;
         await FetchAsync(_page);
     }
+
 }

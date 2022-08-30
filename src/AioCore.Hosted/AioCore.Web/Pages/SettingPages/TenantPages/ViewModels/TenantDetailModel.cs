@@ -21,4 +21,15 @@ public class TenantDetailModel
 
     [DisplayName("Nhóm thuê bao")]
     public Guid GroupId { get; set; }
+
+    public List<TenantDomainModel>? Domains { get; set; }
+}
+
+public class TenantDomainModel
+{
+    public Guid Id { get; set; }
+    
+    public string Domain { get; set; } = default!;
+
+    public bool Active { get; set; }
 }

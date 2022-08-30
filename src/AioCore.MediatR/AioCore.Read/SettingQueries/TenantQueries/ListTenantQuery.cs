@@ -31,6 +31,7 @@ public class ListTenantQuery : IRequest<Response<List<SettingTenant>>>
             CancellationToken cancellationToken)
         {
             var tenants = await _context.Tenants
+                .Include(x=>x.Domains)
                 .Include(x=>x.Group)
                 .OrderByDescending(x=>x.ModifiedAt)
                 .Skip((request.Page - 1) * request.PageSize)

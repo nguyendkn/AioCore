@@ -2,5 +2,5 @@ namespace AioCore.Shared.Common.Constants;
 
 public static class DateTimeFormat
 {
-    public static string FormatXxl = "yyyyMMddhhmmsstt";
+    public static string FormatXxl = "yyyyMMddHHmmsstt";
 }

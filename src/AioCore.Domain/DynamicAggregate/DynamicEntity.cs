@@ -39,6 +39,6 @@ public class DynamicEntityTypeConfiguration : EntityTypeConfiguration<DynamicEnt
     public override void Config(EntityTypeBuilder<DynamicEntity> builder)
     {
         if (!string.IsNullOrWhiteSpace(_schema))
-            builder.ToTable(nameof(DynamicContext.DateValues), _schema);
+            builder.ToTable(nameof(DynamicContext.Entities), _schema);
     }
 }

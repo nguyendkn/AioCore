@@ -4,8 +4,6 @@ using AioCore.Shared.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace AioCore.Domain.DatabaseContexts;
 
@@ -13,8 +11,7 @@ public class DynamicContext : DbContext, IDbContextSchema
 {
     public string? Schema { get; }
 
-    public DynamicContext(DbContextOptions<DynamicContext> options, 
-        DbContextSchema? contextSchema, IDbContextSchema? schema = null) : base(options)
+    public DynamicContext(DbContextOptions<DynamicContext> options, IDbContextSchema schema) : base(options)
     {
         Schema = schema?.Schema;
     }
@@ -45,25 +42,20 @@ public class DynamicContext : DbContext, IDbContextSchema
         modelBuilder.ApplyConfiguration(new DynamicIntegerValueTypeConfiguration(Schema));
         modelBuilder.ApplyConfiguration(new DynamicStringValueTypeConfiguration(Schema));
     }
-    
+
     public static DynamicContext GetContext(AppSettings appSettings, string? schema = null)
     {
-        var services = new ServiceCollection()
-            .AddDbContext<DynamicContext>(builder => builder.UseSqlServer(
-                    appSettings.ConnectionStrings.DefaultConnection,
-                    b =>
-                    {
-                        b.MigrationsHistoryTable("__EFMigrationsHistory", schema);
-                        b.MigrationsAssembly("AioCore.Migrations");
-                        b.EnableRetryOnFailure(15, TimeSpan.FromSeconds(30), null);
-                    }
-                )
-                .ReplaceService<IModelCacheKeyFactory, DbSchemaAwareModelCacheKeyFactory>()
-                .ReplaceService<IMigrationsAssembly, DbSchemaAwareMigrationAssembly>());
-        
-        if (schema != null) services.AddSingleton<IDbContextSchema>(new DbContextSchema(schema));
-        var serviceProvider = services.BuildServiceProvider();
+        var optionsBuilder = new DbContextOptionsBuilder<DynamicContext>()
+            .UseSqlServer(appSettings.ConnectionStrings.DefaultConnection
+                , b =>
+                {
+                    b.MigrationsHistoryTable("__EFMigrationsHistory", schema);
+                    b.MigrationsAssembly("AioCore.Migrations");
+                }
+            )
+            .ReplaceService<IModelCacheKeyFactory, DbSchemaAwareModelCacheKeyFactory>()
+            .ReplaceService<IMigrationsAssembly, DbSchemaAwareMigrationAssembly>();
 
-        return serviceProvider.GetRequiredService<DynamicContext>();
+        return new DynamicContext(optionsBuilder.Options, new DbContextSchema(schema));
     }
 }

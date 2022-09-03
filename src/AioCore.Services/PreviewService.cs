@@ -1,9 +1,9 @@
-using AioCore.Blazor.Template;
 using AioCore.Domain.DatabaseContexts;
 using AioCore.Domain.SettingAggregate;
 using AioCore.Shared.Extensions;
 using AioCore.Shared.SeedWorks;
 using AioCore.Shared.ValueObjects;
+using Fluid;
 using Microsoft.EntityFrameworkCore;
 
 namespace AioCore.Services;
@@ -16,17 +16,15 @@ public interface IPreviewService
 public class PreviewService : IPreviewService
 {
     private readonly SettingsContext _context;
-    private readonly IRazorEngine _razorEngine;
     private readonly AppSettings _appSettings;
     private readonly IHttpClientFactory _httpClient;
     private readonly IClientService _clientService;
 
     public PreviewService(SettingsContext context,
-        IRazorEngine razorEngine, AppSettings appSettings,
-        IHttpClientFactory httpClient, IClientService clientService)
+        AppSettings appSettings, IHttpClientFactory httpClient,
+        IClientService clientService)
     {
         _context = context;
-        _razorEngine = razorEngine;
         _appSettings = appSettings;
         _httpClient = httpClient;
         _clientService = clientService;
@@ -42,10 +40,11 @@ public class PreviewService : IPreviewService
         if (settingCode is null) return string.Empty;
 
         var staticCode = await GetCode(tenant, settingCode);
-        var template = await _razorEngine.CompileAsync(staticCode);
-
-        var actual = await template.RunAsync(new { });
-        return actual;
+        var fluidParser = new FluidParser();
+        if (!fluidParser.TryParse(staticCode, out var template, out var error)) return default!;
+        var context = new TemplateContext(new { });
+        var html = await template.RenderAsync(context);
+        return html;
     }
 
     private async Task<string> GetCode(Entity? tenant, SettingCode code)

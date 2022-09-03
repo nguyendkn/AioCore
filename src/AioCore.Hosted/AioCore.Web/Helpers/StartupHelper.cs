@@ -1,5 +1,4 @@
-﻿using AioCore.Blazor.Template;
-using AioCore.Domain.DatabaseContexts;
+﻿using AioCore.Domain.DatabaseContexts;
 using AioCore.Domain.DatabaseDataSeeds;
 using AioCore.Domain.IdentityAggregate;
 using AioCore.Jobs;
@@ -68,7 +67,6 @@ public static class StartupHelper
     {
         services.AddAiocNotionClient();
         services.AddSingleton<IAvatarService, AvatarService>();
-        services.AddSingleton<IRazorEngine, RazorEngine>();
     }
 
     public static void AddBackgroundServicesAioCore(this IServiceCollection services, AppSettings appSettings)

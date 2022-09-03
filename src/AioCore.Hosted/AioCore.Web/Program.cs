@@ -2,6 +2,9 @@ using AioCore.Jobs;
 using AioCore.Shared.Extensions;
 using AioCore.Shared.ValueObjects;
 using AioCore.Web.Helpers;
+using Fluid;
+using Fluid.MvcViewEngine;
+using Fluid.ViewEngine;
 using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -37,3 +40,4 @@ app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 
 app.Run();
+

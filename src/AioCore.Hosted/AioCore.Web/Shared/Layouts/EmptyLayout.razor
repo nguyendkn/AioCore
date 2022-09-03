@@ -1,2 +1,21 @@
 @inherits LayoutComponentBase
 @Body
+
+@code {
+
+    [Inject]
+    public IJSRuntime JsRuntime { get; set; } = default!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await JsRuntime.InvokeVoidAsync("RemoveElement", "ant-design");
+        await JsRuntime.InvokeVoidAsync("RemoveElement", "tailwindcss");
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+}

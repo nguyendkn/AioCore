@@ -34,7 +34,7 @@ public class NotionJob : ICronJob
 
             var database = sourcePath.First();
             var token = sourcePath.Last();
-            var tmp = await _notionClient.QueryAsync(token, database);
+            var data = await _notionClient.QueryAsync(token, database);
         }
 
         // End Code

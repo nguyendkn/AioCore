@@ -8,12 +8,15 @@ namespace AioCore.Read.SettingQueries.ListFormQueries;
 
 public class ListFormQuery : IRequest<Response<List<SettingForm>>>
 {
+    public Guid TenantId { get; set; }
+    
     public int Page { get; set; }
 
     public int PageSize { get; set; }
 
-    public ListFormQuery(int page, int pageSize)
+    public ListFormQuery(Guid tenantId, int page, int pageSize)
     {
+        TenantId = tenantId;
         Page = page;
         PageSize = pageSize;
     }

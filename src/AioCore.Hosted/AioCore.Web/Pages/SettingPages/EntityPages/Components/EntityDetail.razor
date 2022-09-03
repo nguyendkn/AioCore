@@ -175,6 +175,9 @@
     private string? _entityName;
 
     [Parameter]
+    public Guid TenantId { get; set; }
+
+    [Parameter]
     public bool Visible
     {
         get => _visible;
@@ -214,7 +217,7 @@
 
     private async Task FetchEntitiesAsync(int page = 1, int pageSize = 100)
     {
-        var response = await Mediator.Send(new ListEntityQuery(page, pageSize));
+        var response = await Mediator.Send(new ListEntityQuery(TenantId, page, pageSize));
         Entities = response.Data;
     }
 
@@ -311,7 +314,8 @@
     {
         if (string.IsNullOrEmpty(_entityName)) return;
         var response = await Mediator.Send(new SubmitEntityCommand(
-            SelectedEntity?.Id, SelectedEntity?.Name ?? _entityName, SelectedDataSource, _model?.SourcePath));
+            SelectedEntity?.Id, TenantId, SelectedEntity?.Name ?? _entityName, 
+            SelectedDataSource, _model.SourcePath));
         if (!response.Success) return;
         await FetchEntitiesAsync(1);
         _entityName = string.Empty;

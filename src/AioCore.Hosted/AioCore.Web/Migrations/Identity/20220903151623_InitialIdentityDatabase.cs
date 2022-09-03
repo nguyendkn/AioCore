@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace AioCore.Web.Migrations
+namespace AioCore.Web.Migrations.Identity
 {
-    public partial class InitialDatabaseIdentity : Migration
+    public partial class InitialIdentityDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -18,6 +18,7 @@ namespace AioCore.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ParentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -25,6 +26,12 @@ namespace AioCore.Web.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetRoles", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetRoles_AspNetRoles_ParentId",
+                        column: x => x.ParentId,
+                        principalSchema: "Identity",
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -175,6 +182,12 @@ namespace AioCore.Web.Migrations
                 schema: "Identity",
                 table: "AspNetRoleClaims",
                 column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetRoles_ParentId",
+                schema: "Identity",
+                table: "AspNetRoles",
+                column: "ParentId");
 
             migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",

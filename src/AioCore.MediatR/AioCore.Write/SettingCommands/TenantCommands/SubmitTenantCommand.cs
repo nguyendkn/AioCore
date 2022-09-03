@@ -1,12 +1,9 @@
 using AioCore.Domain.DatabaseContexts;
 using AioCore.Domain.SettingAggregate;
 using AioCore.Shared.Common.Constants;
-using AioCore.Shared.Extensions;
 using AioCore.Shared.SeedWorks;
 using AioCore.Shared.ValueObjects;
-using Humanizer;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace AioCore.Write.SettingCommands.TenantCommands;
 
@@ -23,21 +20,15 @@ public class SubmitTenantCommand : SettingTenant, IRequest<Response<SettingTenan
             _appSettings = appSettings;
         }
 
-        public async Task<Response<SettingTenant?>> Handle(SubmitTenantCommand request,
+        public async Task<Response<SettingTenant>> Handle(SubmitTenantCommand request,
             CancellationToken cancellationToken)
         {
             if (request.Id.Equals(Guid.Empty))
             {
                 var tenantEntityEntry = await _settingsContext.Tenants.AddAsync(request, cancellationToken);
-
-                var schema = $"aioc_" + tenantEntityEntry.Entity.Name.RemoveDiacritics().Underscore() +
-                             $"_{tenantEntityEntry.Entity.CreatedAt.ToString(DateTimeFormat.FormatXxl)}";
-                await using (var dynamicContext = DynamicContext.GetContext(_appSettings, schema))
-                    await dynamicContext.Database.MigrateAsync(cancellationToken);
-
                 await _settingsContext.SaveChangesAsync(cancellationToken);
                 var settingTenant = tenantEntityEntry.Entity;
-                return new Response<SettingTenant?>
+                return new Response<SettingTenant>
                 {
                     Data = settingTenant,
                     Message = Messages.CreateDataSuccessful,

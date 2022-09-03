@@ -16,9 +16,10 @@ public class SubmitEntityCommand : SettingEntity, IRequest<Response<SettingEntit
         ModifiedAt = DateTime.Now;
     }
 
-    public SubmitEntityCommand(Guid? id, string? name, DataSource dataSource, string? sourcePath)
+    public SubmitEntityCommand(Guid? id, Guid tenantId, string? name, DataSource dataSource, string? sourcePath)
     {
         Id = id ?? Guid.Empty;
+        TenantId = tenantId;
         Name = string.IsNullOrEmpty(name) ? Name : name;
         DataSource = dataSource;
         SourcePath = string.IsNullOrEmpty(sourcePath) ? SourcePath : sourcePath;

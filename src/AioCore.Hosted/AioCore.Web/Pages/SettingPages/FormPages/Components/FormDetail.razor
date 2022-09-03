@@ -169,6 +169,9 @@
     private string? _formName;
 
     [Parameter]
+    public Guid TenantId { get; set; }
+    
+    [Parameter]
     public bool Visible
     {
         get => _visible;
@@ -208,7 +211,7 @@
 
     private async Task FetchEntitiesAsync(int page = 1, int pageSize = 100)
     {
-        var response = await Mediator.Send(new ListEntityQuery(page, pageSize));
+        var response = await Mediator.Send(new ListEntityQuery(TenantId, page, pageSize));
         Entities = response.Data;
     }
 
@@ -220,7 +223,7 @@
 
     private async Task FetchFormsAsync(int page = 1, int pageSize = 100)
     {
-        var response = await Mediator.Send(new ListFormQuery(page, pageSize));
+        var response = await Mediator.Send(new ListFormQuery(TenantId, page, pageSize));
         Forms = response.Data;
     }
 

@@ -8,12 +8,15 @@ namespace AioCore.Read.SettingQueries.EntityQueries;
 
 public class ListEntityQuery : IRequest<Response<List<SettingEntity>>>
 {
+    public Guid TenantId { get; set; }
+
     public int Page { get; set; }
 
     public int PageSize { get; set; }
 
-    public ListEntityQuery(int page, int pageSize)
+    public ListEntityQuery(Guid tenantId, int page, int pageSize)
     {
+        TenantId = tenantId;
         Page = page;
         PageSize = pageSize;
     }
@@ -31,6 +34,7 @@ public class ListEntityQuery : IRequest<Response<List<SettingEntity>>>
             CancellationToken cancellationToken)
         {
             var entities = await _context.Entities
+                .Where(x=>x.TenantId.Equals(request.TenantId))
                 .OrderByDescending(x => x.ModifiedAt)
                 .Skip((request.Page - 1) * request.PageSize)
                 .Take(request.PageSize)

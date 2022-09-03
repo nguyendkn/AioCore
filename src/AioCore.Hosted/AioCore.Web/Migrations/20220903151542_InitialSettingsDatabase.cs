@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace AioCore.Web.Migrations.Settings
+namespace AioCore.Web.Migrations
 {
-    public partial class InitialDatabÃasÃáseSettings : Migration
+    public partial class InitialSettingsDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,21 +15,6 @@ namespace AioCore.Web.Migrations.Settings
             migrationBuilder.CreateSequence<int>(
                 name: "Sequence_D14134D2B12E52CA5E1278F73D12928F",
                 schema: "Settings");
-
-            migrationBuilder.CreateTable(
-                name: "Entities",
-                schema: "Settings",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Entities", x => x.Id);
-                });
 
             migrationBuilder.CreateTable(
                 name: "Features",
@@ -59,6 +45,114 @@ namespace AioCore.Web.Migrations.Settings
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TenantGroups", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Tenants",
+                schema: "Settings",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Domain = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Keyword = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    GroupId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tenants", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Tenants_TenantGroups_GroupId",
+                        column: x => x.GroupId,
+                        principalSchema: "Settings",
+                        principalTable: "TenantGroups",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Codes",
+                schema: "Settings",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ParentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    PathType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SaveType = table.Column<int>(type: "int", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Codes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Codes_Codes_ParentId",
+                        column: x => x.ParentId,
+                        principalSchema: "Settings",
+                        principalTable: "Codes",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Codes_Tenants_TenantId",
+                        column: x => x.TenantId,
+                        principalSchema: "Settings",
+                        principalTable: "Tenants",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Entities",
+                schema: "Settings",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DataSource = table.Column<int>(type: "int", nullable: false),
+                    SourcePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Entities", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Entities_Tenants_TenantId",
+                        column: x => x.TenantId,
+                        principalSchema: "Settings",
+                        principalTable: "Tenants",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TenantDomains",
+                schema: "Settings",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Domain = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Active = table.Column<bool>(type: "bit", nullable: false),
+                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TenantDomains", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TenantDomains_Tenants_TenantId",
+                        column: x => x.TenantId,
+                        principalSchema: "Settings",
+                        principalTable: "Tenants",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -109,32 +203,6 @@ namespace AioCore.Web.Migrations.Settings
                 });
 
             migrationBuilder.CreateTable(
-                name: "Tenants",
-                schema: "Settings",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Domain = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Keyword = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    GroupId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Tenants", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Tenants_TenantGroups_GroupId",
-                        column: x => x.GroupId,
-                        principalSchema: "Settings",
-                        principalTable: "TenantGroups",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "FormAttributes",
                 schema: "Settings",
                 columns: table => new
@@ -164,39 +232,6 @@ namespace AioCore.Web.Migrations.Settings
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Codes",
-                schema: "Settings",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ParentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    PathType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SaveType = table.Column<int>(type: "int", nullable: false),
-                    Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Codes", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Codes_Codes_ParentId",
-                        column: x => x.ParentId,
-                        principalSchema: "Settings",
-                        principalTable: "Codes",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Codes_Tenants_TenantId",
-                        column: x => x.TenantId,
-                        principalSchema: "Settings",
-                        principalTable: "Tenants",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Attributes_EntityId_Name",
                 schema: "Settings",
@@ -222,6 +257,12 @@ namespace AioCore.Web.Migrations.Settings
                 column: "TenantId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Entities_TenantId",
+                schema: "Settings",
+                table: "Entities",
+                column: "TenantId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_FormAttributes_AttributeId",
                 schema: "Settings",
                 table: "FormAttributes",
@@ -238,6 +279,12 @@ namespace AioCore.Web.Migrations.Settings
                 schema: "Settings",
                 table: "Forms",
                 column: "EntityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TenantDomains_TenantId",
+                schema: "Settings",
+                table: "TenantDomains",
+                column: "TenantId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tenants_GroupId",
@@ -261,7 +308,7 @@ namespace AioCore.Web.Migrations.Settings
                 schema: "Settings");
 
             migrationBuilder.DropTable(
-                name: "Tenants",
+                name: "TenantDomains",
                 schema: "Settings");
 
             migrationBuilder.DropTable(
@@ -273,11 +320,15 @@ namespace AioCore.Web.Migrations.Settings
                 schema: "Settings");
 
             migrationBuilder.DropTable(
-                name: "TenantGroups",
+                name: "Entities",
                 schema: "Settings");
 
             migrationBuilder.DropTable(
-                name: "Entities",
+                name: "Tenants",
+                schema: "Settings");
+
+            migrationBuilder.DropTable(
+                name: "TenantGroups",
                 schema: "Settings");
 
             migrationBuilder.DropSequence(

@@ -3,6 +3,7 @@ using AioCore.Domain.DatabaseContexts;
 using AioCore.Domain.DatabaseDataSeeds;
 using AioCore.Domain.IdentityAggregate;
 using AioCore.Jobs;
+using AioCore.Mongo;
 using AioCore.Notion;
 using AioCore.Services;
 using AioCore.Services.BackgroundJobs;
@@ -22,20 +23,22 @@ public static class StartupHelper
         services.AddSwaggerGen();
     }
 
-    public static void AddAioContext(this IServiceCollection services, AppSettings configuration)
+    public static void AddAioContext(this IServiceCollection services, AppSettings appSettings)
     {
         services.AddDbContext<SettingsContext>(options =>
         {
-            options.UseSqlServer(configuration.ConnectionStrings.DefaultConnection, b =>
+            options.UseSqlServer(appSettings.ConnectionStrings.DefaultConnection, b =>
             {
                 b.MigrationsHistoryTable("__EFMigrationsHistory", SettingsContext.Schema);
                 b.MigrationsAssembly(Assembly.Name);
                 b.EnableRetryOnFailure(15, TimeSpan.FromSeconds(30), null);
             });
         }, ServiceLifetime.Transient);
+        services.AddMongoContext<DynamicContext>(appSettings.MongoConfigs.ConnectionString,
+            appSettings.MongoConfigs.Database);
         services.AddDbContext<IdentityContext>(options =>
         {
-            options.UseSqlServer(configuration.ConnectionStrings.DefaultConnection, b =>
+            options.UseSqlServer(appSettings.ConnectionStrings.DefaultConnection, b =>
             {
                 b.MigrationsHistoryTable("__EFMigrationsHistory", IdentityContext.Schema);
                 b.MigrationsAssembly(Assembly.Name);

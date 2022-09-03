@@ -1,8 +1,11 @@
-@page "/settings/entity/list"
+@page "/settings/tenants/{tenantId:guid}/entity/list"
 @using MediatR
 @using AioCore.Domain.SettingAggregate
 @using AioCore.Read.SettingQueries.EntityQueries
+@using AioCore.Read.SettingQueries.TenantQueries
+@using AioCore.Shared.ValueObjects
 @layout SettingsLayout
+@inject AppSettings AppSettings
 
 <HeaderComponent Title="Đối tượng" Icon="table-tree">
     <Description>
@@ -28,7 +31,7 @@
                                 <div class="flex items-center px-4 py-4 sm:px-6">
                                     <div class="min-w-0 flex-1 flex items-center">
                                         <div class="flex-shrink-0">
-                                            <img class="h-10 w-10" src="@($"/avatar/100/{item.Id}")" alt="avatar">
+                                            <img class="h-10 w-10" src="@($"{AppSettings.StorageServer}/avatar/100/{item.Id}")" alt="avatar">
                                         </div>
                                         <div class="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
                                             <div>
@@ -88,7 +91,7 @@
     </div>
 </Content>
 
-<EntityDetail @bind-Visible="@_toggleDetail" Title="@Title" Submitted="() => FetchAsync()"/>
+<EntityDetail @bind-Visible="@_toggleDetail" TenantId="@TenantId" Title="@Title" Submitted="() => FetchEntitiesAsync()"/>
 
 @code {
 
@@ -111,14 +114,19 @@
     private bool _toggleDetail;
         private const string Title = "Thông tin đối tượng";
     private List<SettingEntity>? Entities { get; set; }
+    private SettingTenant? Tenant { get; set; }
     private static int _page = 1;
+
+    [Parameter]
+    public Guid TenantId { get; set; }
 
     [Inject]
     public IMediator Mediator { get; set; } = default!;
 
     protected override async Task OnInitializedAsync()
     {
-        await FetchAsync(_page);
+        await FetchTenantAsync(TenantId);
+        await FetchEntitiesAsync(_page);
         await base.OnInitializedAsync();
     }
 
@@ -127,22 +135,28 @@
         _toggleDetail = true;
     }
 
-    private async Task FetchAsync(int page = 1, int pageSize = 8)
+    private async Task FetchTenantAsync(Guid tenantId)
     {
-        var response = await Mediator.Send(new ListEntityQuery(page, pageSize));
+        var response = await Mediator.Send(new GetTenantQuery(tenantId));
+        Tenant = response.Data;
+    }
+
+    private async Task FetchEntitiesAsync(int page = 1, int pageSize = 8)
+    {
+        var response = await Mediator.Send(new ListEntityQuery(TenantId, page, pageSize));
         Entities = response.Data;
     }
 
     private async Task Next()
     {
         _page++;
-        await FetchAsync(_page);
+        await FetchEntitiesAsync(_page);
     }
 
     private async Task Previous()
     {
         _page = _page == 1 ? 1 : _page - 1;
-        await FetchAsync(_page);
+        await FetchEntitiesAsync(_page);
     }
 
 }

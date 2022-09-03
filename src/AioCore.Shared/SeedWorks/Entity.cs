@@ -9,7 +9,7 @@ public class Entity
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public Guid Id { get; set; }
-    
+
     public virtual void ModelCreating<T>(ModelBuilder modelBuilder, string schema) where T : Entity
     {
     }

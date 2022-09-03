@@ -9,18 +9,18 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace AioCore.Web.Migrations.Settings
+namespace AioCore.Web.Migrations
 {
     [DbContext(typeof(SettingsContext))]
-    [Migration("20220829153241_CreateDataSourceSettingTenant")]
-    partial class CreateDataSourceSettingTenant
+    [Migration("20220903151542_InitialSettingsDatabase")]
+    partial class InitialSettingsDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("Settings")
-                .HasAnnotation("ProductVersion", "6.0.7")
+                .HasAnnotation("ProductVersion", "6.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -126,7 +126,15 @@ namespace AioCore.Web.Migrations.Settings
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("SourcePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("TenantId");
 
                     b.ToTable("Entities", "Settings");
                 });
@@ -252,6 +260,35 @@ namespace AioCore.Web.Migrations.Settings
                     b.ToTable("Tenants", "Settings");
                 });
 
+            modelBuilder.Entity("AioCore.Domain.SettingAggregate.SettingTenantDomain", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Domain")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("TenantDomains", "Settings");
+                });
+
             modelBuilder.Entity("AioCore.Domain.SettingAggregate.SettingTenantGroup", b =>
                 {
                     b.Property<Guid>("Id")
@@ -301,6 +338,17 @@ namespace AioCore.Web.Migrations.Settings
                     b.Navigation("Tenant");
                 });
 
+            modelBuilder.Entity("AioCore.Domain.SettingAggregate.SettingEntity", b =>
+                {
+                    b.HasOne("AioCore.Domain.SettingAggregate.SettingTenant", "Tenant")
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Tenant");
+                });
+
             modelBuilder.Entity("AioCore.Domain.SettingAggregate.SettingForm", b =>
                 {
                     b.HasOne("AioCore.Domain.SettingAggregate.SettingEntity", "Entity")
@@ -338,6 +386,17 @@ namespace AioCore.Web.Migrations.Settings
                     b.Navigation("Group");
                 });
 
+            modelBuilder.Entity("AioCore.Domain.SettingAggregate.SettingTenantDomain", b =>
+                {
+                    b.HasOne("AioCore.Domain.SettingAggregate.SettingTenant", "Tenant")
+                        .WithMany("Domains")
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Tenant");
+                });
+
             modelBuilder.Entity("AioCore.Domain.SettingAggregate.SettingCode", b =>
                 {
                     b.Navigation("Child");
@@ -351,6 +410,8 @@ namespace AioCore.Web.Migrations.Settings
             modelBuilder.Entity("AioCore.Domain.SettingAggregate.SettingTenant", b =>
                 {
                     b.Navigation("Codes");
+
+                    b.Navigation("Domains");
                 });
 
             modelBuilder.Entity("AioCore.Domain.SettingAggregate.SettingTenantGroup", b =>

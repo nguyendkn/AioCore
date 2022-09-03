@@ -7,6 +7,7 @@ using AioCore.Shared.ValueObjects;
 using Humanizer;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace AioCore.Write.SettingCommands.TenantCommands;
 
@@ -23,7 +24,7 @@ public class SubmitTenantCommand : SettingTenant, IRequest<Response<SettingTenan
             _appSettings = appSettings;
         }
 
-        public async Task<Response<SettingTenant>> Handle(SubmitTenantCommand request,
+        public async Task<Response<SettingTenant?>> Handle(SubmitTenantCommand request,
             CancellationToken cancellationToken)
         {
             if (request.Id.Equals(Guid.Empty))
@@ -37,7 +38,7 @@ public class SubmitTenantCommand : SettingTenant, IRequest<Response<SettingTenan
 
                 await _settingsContext.SaveChangesAsync(cancellationToken);
                 var settingTenant = tenantEntityEntry.Entity;
-                return new Response<SettingTenant>
+                return new Response<SettingTenant?>
                 {
                     Data = settingTenant,
                     Message = Messages.CreateDataSuccessful,

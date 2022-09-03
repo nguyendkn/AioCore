@@ -52,7 +52,7 @@ public class PreviewService : IPreviewService
     {
         return code.SaveType switch
         {
-            SaveType.File => $"{_appSettings.TenantConfigs.AssemblySavedFolder}\\{tenant?.Id}\\{code.Name}".ReadFile(),
+            SaveType.File => $"{_appSettings.TenantConfigs.AssemblySavedFolder}/{tenant?.Id}/{code.Name}".ReadFile(),
             SaveType.Url => await _httpClient.CreateClient().GetStringAsync(code.Code),
             SaveType.Inline => code.Code,
             _ => string.Empty

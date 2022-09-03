@@ -10,7 +10,7 @@ public interface IClientService
 {
     string? Host();
 
-    Task<SettingTenant> Tenant();
+    Task<SettingTenant?> Tenant();
 }
 
 public class ClientService : IClientService
@@ -26,8 +26,8 @@ public class ClientService : IClientService
 
     public string? Host() => _httpContextAccessor.HttpContext?.Request.Headers[RequestHeaders.Host].ToString();
 
-    public async Task<SettingTenant> Tenant()
+    public async Task<SettingTenant?> Tenant()
     {
-        return await _settingsContext.Tenants.FirstOrDefaultAsync(x => x.Domain.Equals(Host()));
+        return await _settingsContext.Tenants.FirstOrDefaultAsync(x => x != null && x.Domain.Equals(Host()));
     }
 }

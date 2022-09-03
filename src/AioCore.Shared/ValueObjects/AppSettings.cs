@@ -10,6 +10,8 @@ public class AppSettings
     public TenantConfigs TenantConfigs { get; set; } = default!;
     
     public NotionOptions NotionOptions { get; set; } = default!;
+
+    public string? StorageServer { get; set; }
 }
 
 public class ConnectionStrings

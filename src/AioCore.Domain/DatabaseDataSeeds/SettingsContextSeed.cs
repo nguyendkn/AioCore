@@ -1,5 +1,7 @@
 ﻿using AioCore.Domain.DatabaseContexts;
+using AioCore.Domain.SettingAggregate;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Polly;
 using Polly.Retry;
@@ -16,7 +18,6 @@ public class SettingsContextSeed
 
         await policy.ExecuteAsync(async () =>
         {
-            // TODO: CODE HERE
             await context.SaveChangesAsync(true);
         });
     }

@@ -3,7 +3,9 @@
 @using AioCore.Read.SettingQueries.TenantQueries
 @using AioCore.Domain.SettingAggregate
 @using AioCore.Shared.Common.Constants
+@using AioCore.Shared.ValueObjects
 @layout SettingsLayout
+@inject AppSettings AppSettings;
 
 <HeaderComponent Title="Thuê bao" Icon="server">
     <Description>
@@ -29,7 +31,7 @@
                                 <div class="flex items-center px-4 py-4 sm:px-6">
                                     <div class="min-w-0 flex-1 flex items-center">
                                         <div class="flex-shrink-0">
-                                            <img class="h-10 w-10" src="@($"/avatar/100/{item.Id}")" alt="avatar">
+                                            <img class="h-10 w-10" src="@($"{AppSettings.StorageServer}/avatar/100/{item.Id}")" alt="avatar">
                                         </div>
                                         <div class="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
                                             <div>

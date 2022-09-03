@@ -10,6 +10,9 @@
 
     <ItemGroup>
         <None Update="Pages/*.razor.css" CssScope="aioc" />
+        <None Update="Tenants\.gitignore">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
     <Target Name="BuildCss" BeforeTargets="Compile">
         <Exec Command="npm run buildcss:dev" />

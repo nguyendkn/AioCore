@@ -4,10 +4,9 @@ namespace AioCore.Notion;
 
 public static class NotionRegistration
 {
-    public static void AddAiocNotionClient(this IServiceCollection services, NotionOptions notionOptions)
+    public static void AddAiocNotionClient(this IServiceCollection services)
     {
-        var notionClient = new NotionClient(notionOptions);
-        services.AddSingleton(notionOptions);
+        var notionClient = new NotionClient();
         services.AddSingleton<INotionClient>(notionClient);
     }
 }

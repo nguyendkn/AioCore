@@ -29,9 +29,6 @@ public class Name
 
 public class Properties
 {
-    [JsonProperty("Href")] public Href Href { get; set; }
-
-    [JsonProperty("Name")] public Name Name { get; set; }
 }
 
 

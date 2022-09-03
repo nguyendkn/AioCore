@@ -22,10 +22,9 @@ public class GetNotionEntityQuery : IRequest<Response<Dictionary<string, object>
             _notionClient = notionClient;
         }
 
-        public async Task<Response<Dictionary<string, object>>> Handle(GetNotionEntityQuery request,
+        public Task<Response<Dictionary<string, object>>> Handle(GetNotionEntityQuery request,
             CancellationToken cancellationToken)
         {
-            var database = await _notionClient.QueryAsync<Dictionary<string, object>>(request.Database);
             throw new NotImplementedException();
         }
     }

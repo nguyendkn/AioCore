@@ -7,7 +7,6 @@ using AioCore.Shared.ValueObjects;
 using Humanizer;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace AioCore.Write.SettingCommands.TenantCommands;
 

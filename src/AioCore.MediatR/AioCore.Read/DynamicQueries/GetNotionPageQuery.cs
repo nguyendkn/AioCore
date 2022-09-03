@@ -22,15 +22,9 @@ public class GetNotionPageQuery : IRequest<Response<string>>
             _notionClient = notionClient;
         }
 
-        public async Task<Response<string>> Handle(GetNotionPageQuery request, CancellationToken cancellationToken)
+        public Task<Response<string>> Handle(GetNotionPageQuery request, CancellationToken cancellationToken)
         {
-            var page = await _notionClient.GetPageAsync(request.Page);
-            var html = page.ToHtml();
-            return new Response<string>
-            {
-                Data = html,
-                Success = true
-            };
+            throw new NotImplementedException();
         }
     }
 }

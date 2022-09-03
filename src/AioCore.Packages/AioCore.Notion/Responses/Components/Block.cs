@@ -29,7 +29,7 @@ public class Block
 
     [JsonProperty("type")] public string Type { get; set; }
 
-    [JsonProperty("properties")] public Properties Properties { get; set; }
+    [JsonProperty("properties")] public Dictionary<string, Property> Properties { get; set; }
 
     [JsonProperty("url")] public string Url { get; set; }
 

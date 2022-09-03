@@ -61,9 +61,9 @@ public static class StartupHelper
         services.AddScoped<IPreviewService, PreviewService>();
     }
 
-    public static void AddSingletonAioCore(this IServiceCollection services, AppSettings appSettings)
+    public static void AddSingletonAioCore(this IServiceCollection services)
     {
-        services.AddAiocNotionClient(appSettings.NotionOptions);
+        services.AddAiocNotionClient();
         services.AddSingleton<IAvatarService, AvatarService>();
         services.AddSingleton<IRazorEngine, RazorEngine>();
     }

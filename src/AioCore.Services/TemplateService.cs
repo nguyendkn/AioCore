@@ -74,8 +74,7 @@ public class TemplateService : ITemplateService
         var razorEngine = new RazorEngine();
         var compiledTemplate = await razorEngine.CompileAsync(staticCode, builder =>
         {
-            builder.AddAssemblyReferenceByName("System.Collections"); // by name
-            // builder.AddAssemblyReference(typeof(System.Collections.Generic.List<>)); // by type
+            builder.AddAssemblyReferenceByName("System.Collections");
         });
         var result = await compiledTemplate.RunAsync(modelBinding);
         return result;

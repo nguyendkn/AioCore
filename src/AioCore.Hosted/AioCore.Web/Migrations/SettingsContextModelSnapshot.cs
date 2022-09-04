@@ -334,7 +334,7 @@ namespace AioCore.Web.Migrations
                     b.HasOne("AioCore.Domain.SettingAggregate.SettingEntity", "Entity")
                         .WithMany()
                         .HasForeignKey("EntityId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Entity");
@@ -344,12 +344,13 @@ namespace AioCore.Web.Migrations
                 {
                     b.HasOne("AioCore.Domain.SettingAggregate.SettingCode", "Parent")
                         .WithMany("Child")
-                        .HasForeignKey("ParentId");
+                        .HasForeignKey("ParentId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("AioCore.Domain.SettingAggregate.SettingTenant", "Tenant")
                         .WithMany("Codes")
                         .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Parent");
@@ -362,7 +363,7 @@ namespace AioCore.Web.Migrations
                     b.HasOne("AioCore.Domain.SettingAggregate.SettingTenant", "Tenant")
                         .WithMany()
                         .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Tenant");
@@ -373,13 +374,13 @@ namespace AioCore.Web.Migrations
                     b.HasOne("AioCore.Domain.SettingAggregate.SettingCode", "Code")
                         .WithMany("EntityCodes")
                         .HasForeignKey("CodeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("AioCore.Domain.SettingAggregate.SettingEntity", "Entity")
                         .WithMany("EntityCodes")
                         .HasForeignKey("EntityId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Code");
@@ -391,7 +392,8 @@ namespace AioCore.Web.Migrations
                 {
                     b.HasOne("AioCore.Domain.SettingAggregate.SettingEntity", "Entity")
                         .WithMany()
-                        .HasForeignKey("EntityId");
+                        .HasForeignKey("EntityId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Entity");
                 });
@@ -400,12 +402,13 @@ namespace AioCore.Web.Migrations
                 {
                     b.HasOne("AioCore.Domain.SettingAggregate.SettingAttribute", "Attribute")
                         .WithMany()
-                        .HasForeignKey("AttributeId");
+                        .HasForeignKey("AttributeId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("AioCore.Domain.SettingAggregate.SettingForm", "Form")
                         .WithMany("Attributes")
                         .HasForeignKey("FormId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Attribute");
@@ -418,7 +421,7 @@ namespace AioCore.Web.Migrations
                     b.HasOne("AioCore.Domain.SettingAggregate.SettingTenantGroup", "Group")
                         .WithMany("Tenants")
                         .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Group");
@@ -429,7 +432,7 @@ namespace AioCore.Web.Migrations
                     b.HasOne("AioCore.Domain.SettingAggregate.SettingTenant", "Tenant")
                         .WithMany("Domains")
                         .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Tenant");

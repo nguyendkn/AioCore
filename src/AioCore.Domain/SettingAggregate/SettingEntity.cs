@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using AioCore.Shared.SeedWorks;
+using Microsoft.EntityFrameworkCore;
 
 namespace AioCore.Domain.SettingAggregate;
 
@@ -29,6 +30,15 @@ public class SettingEntity : Entity
         DataSource = dataSource;
         SourcePath = string.IsNullOrEmpty(sourcePath) ? SourcePath : sourcePath;
         ModifiedAt = DateTime.Now;
+    }
+
+    public override void ModelCreating<T>(ModelBuilder modelBuilder, string schema)
+    {
+        base.ModelCreating<T>(modelBuilder, schema);
+        modelBuilder.Entity<SettingEntity>()
+            .HasMany(u => u.EntityCodes)
+            .WithOne(u => u.Entity).IsRequired()
+            .OnDelete(DeleteBehavior.NoAction);
     }
 }
 

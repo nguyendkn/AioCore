@@ -42,6 +42,9 @@ public class NotionClient : INotionClient
                     case TitleProperty titleProperty:
                         dictionary.Add(property.Key, titleProperty.Title.FirstOrDefault()?.Text.Content);
                         break;
+                    case RelationProperty relationProperty:
+                        dictionary.Add(property.Key, relationProperty.Relation.FirstOrDefault()?.Id);
+                        break;
                 }
             }
 

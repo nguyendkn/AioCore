@@ -1,0 +1,1860 @@
+@using System.Collections.Generic;
+
+<!DOCTYPE html>
+<html lang="vi" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7" />
+    @(((List<Dictionary<string, object>>)@Model["Posts"]).Where(x=>x["Categories"].Equals(@Model["Categories"][0]["Id"])).ToList()[0]["Title"])
+    <link
+      rel="stylesheet"
+      href="https://file-aioc.web.app/assets/css/app.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://file-aioc.web.app/assets/css/swiper.css"
+    />
+  </head>
+  <body>
+    <div id="background_bg_link"></div>
+    <div class="wrpCm">
+      <header class="wrphdr hdr_contnr_up">
+        <div class="contnr">
+          <div class="hdr">
+            <div id="zone_menu_trai_header"></div>
+            <div class="log">
+              <a
+                href="https://eva.vn/"
+                title="phu nu, tin tuc, eva"
+                class="lgoEva"
+                ><i class="ico-sprt"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+      </header>
+      <div class="after-header" style="height: 50px"></div>
+      <div class="m-wrp clrF mrT10">
+        <div class="m-wrpin">
+          <div class="contnr">
+            <div class="colLt mrR10" id="centerContent">
+              <div class="hm-nws-spcl">
+                <main>
+                  <section>
+                    <div class="brkNs">
+                      <article class="bkNwslt mrR10 clrF">
+                        <div class="img-bk">
+                          <a
+                            class=""
+                            href="https://eva.vn/nuoi-con/con-an-va-gao-khoc-bo-me-tuyet-doi-dung-bo-di-ap-dung-ngay-chieu-4-khong-nay-c13a417706.html"
+                            title="Con ăn vạ, gào khóc, bố mẹ tuyệt đối đừng bỏ đi, áp dụng ngay chiêu “4 không” này"
+                          >
+                            <img
+                              src="https://cdn.eva.vn/upload/1-2020/images/2020-01-03/extra_large/con-an-va-gao-khoc-bo-me-tuyet-doi-dung-bo-di-ma-phai-ap-dung-chieu-4-khong-hieu-qua-nay-conanva-2-1577841736-529-width640height482-1578020664-903-width640height480.jpg"
+                              alt="Con ăn vạ, gào khóc, bố mẹ tuyệt đối đừng bỏ đi, áp dụng ngay chiêu “4 không” này"
+                              class="width-100"
+                            />
+                          </a>
+                        </div>
+                        <header class="lsttit mrT10 mrB10">
+                          <h3>
+                            <a
+                              href="https://eva.vn/nuoi-con/con-an-va-gao-khoc-bo-me-tuyet-doi-dung-bo-di-ap-dung-ngay-chieu-4-khong-nay-c13a417706.html"
+                              title="Con ăn vạ, gào khóc, bố mẹ tuyệt đối đừng bỏ đi, áp dụng ngay chiêu “4 không” này"
+                              class="bkNwslk clrTit bld"
+                              >Con ăn vạ, gào khóc, bố mẹ tuyệt đối đừng bỏ đi,
+                              áp dụng ngay chiêu “4 không” này</a
+                            >
+                            <span class="iconw ico-sprt"></span>
+                          </h3>
+                        </header>
+                        <div class="brkNsSap clrGre pdB10">
+                          Cha mẹ nên đối phó với cơn giận dữ của con và của
+                          chính mình một cách khéo léo để không ảnh hưởng tới
+                          tâm lý của con.
+                        </div>
+                        <div class="tpic pdB10 clrF">
+                          <i class="ico-sprt"></i>
+                          <a
+                            class="sb-tpic clrGre"
+                            href="https://eva.vn/kien-thuc-nuoi-con-p2885c10.html"
+                            title="Kiến thức nuôi con"
+                          >
+                            Kiến thức nuôi con
+                          </a>
+                        </div>
+                      </article>
+                      <div class="bkNwsrt mrL10">
+                        <article class="clrF">
+                          <div class="img-bk">
+                            <a
+                              class=""
+                              href="https://eva.vn/lam-me/than-thuy-ha-khoe-anh-con-gai-dan-mang-nghi-ngo-nguoi-dan-ong-ben-canh-la-cha-be-c10a417880.html"
+                              title="Thân Thúy Hà khoe ảnh con gái, dân mạng nghi ngờ người đàn ông bên cạnh là cha bé"
+                            >
+                              <img
+                                src="https://cdn.eva.vn/upload/1-2020/images/2020-01-02/x-large/ava-1577961230-674-width640height480.jpg"
+                                alt="Thân Thúy Hà khoe ảnh con gái, dân mạng nghi ngờ người đàn ông bên cạnh là cha bé"
+                                class="width-100"
+                              />
+                            </a>
+                          </div>
+                          <header>
+                            <div class="pdB10 pdT5">
+                              <h3>
+                                <a
+                                  href="https://eva.vn/lam-me/than-thuy-ha-khoe-anh-con-gai-dan-mang-nghi-ngo-nguoi-dan-ong-ben-canh-la-cha-be-c10a417880.html"
+                                  title="Thân Thúy Hà khoe ảnh con gái, dân mạng nghi ngờ người đàn ông bên cạnh là cha bé"
+                                  class="clrTit bld"
+                                  >Thân Thúy Hà khoe ảnh con gái, dân mạng nghi
+                                  ngờ người đàn ông bên cạnh là cha bé</a
+                                >
+                              </h3>
+                            </div>
+                          </header>
+                        </article>
+                        <article class="clrF">
+                          <div class="img-bk">
+                            <a
+                              rel="sponsored"
+                              href="https://eva.vn/lam-me/tao-bon-khi-be-an-dam-nguyen-nhan-va-cach-phong-ngua-c10a417579.html"
+                              title="Táo bón khi bé ăn dặm: Nguyên nhân và cách phòng ngừa"
+                            >
+                              <img
+                                src="https://cdn.eva.vn/upload/4-2019/images/2019-12-31/x-large/thumb-1577758450-530-width640height480.jpg"
+                                alt="Táo bón khi bé ăn dặm: Nguyên nhân và cách phòng ngừa"
+                                class="width-100"
+                              />
+                            </a>
+                          </div>
+                          <header>
+                            <div class="pdB10 pdT5">
+                              <h3>
+                                <a
+                                  rel="sponsored"
+                                  href="https://eva.vn/lam-me/tao-bon-khi-be-an-dam-nguyen-nhan-va-cach-phong-ngua-c10a417579.html"
+                                  title="Táo bón khi bé ăn dặm: Nguyên nhân và cách phòng ngừa"
+                                  class="clrTit bld"
+                                  >Táo bón khi bé ăn dặm: Nguyên nhân và cách
+                                  phòng ngừa</a
+                                >
+                              </h3>
+                            </div>
+                          </header>
+                        </article>
+                      </div>
+                    </div>
+                    <div class="pdT10 lin clrF"></div>
+                    <div class="nsLst">
+                      <div class="nsLstIn pdT20 pdB20 clrF">
+                        <article class="Ltrt nsLstlt mrR10">
+                          <header class="nsLstTit pdB10">
+                            <h3>
+                              <a
+                                class="clrTit bld"
+                                href="https://eva.vn/lam-me/hau-cuoi-3-ty-di-bang-duoc-chong-deo-xe-may-ra-shop-le-duong-nhap-hang-ban-nuoi-con-c10a417821.html"
+                                title="Hậu cưới 3 tỷ, Di Băng được chồng đèo xe máy ra shop lề đường nhập hàng bán nuôi con"
+                                >Hậu cưới 3 tỷ, Di Băng được chồng đèo xe máy ra
+                                shop lề đường nhập hàng bán nuôi con</a
+                              >
+                            </h3>
+                          </header>
+                          <div class="evtBx">
+                            <div class="evtBxImg evtBxLt mrR15">
+                              <a
+                                href="https://eva.vn/lam-me/hau-cuoi-3-ty-di-bang-duoc-chong-deo-xe-may-ra-shop-le-duong-nhap-hang-ban-nuoi-con-c10a417821.html"
+                                class=""
+                                title="Hậu cưới 3 tỷ, Di Băng được chồng đèo xe máy ra shop lề đường nhập hàng bán nuôi con"
+                              >
+                                <img
+                                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX6+vqsEtnpAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg=="
+                                  data-original="https://cdn.eva.vn/upload/1-2020/images/2020-01-02/medium/avt-1577942559-705-width640height480.jpg"
+                                  alt="Hậu cưới 3 tỷ, Di Băng được chồng đèo xe máy ra shop lề đường nhập hàng bán nuôi con"
+                                  class="width-100"
+                                />
+                              </a>
+                            </div>
+                            <div class="evtBxRt">
+                              <div class="evtBxsp sp clrGra">
+                                Cưới thời ấy chỉ thua Hà Tăng, đâu ai biết hai
+                                vợ chồng chơi sang một lần chứ sau đó phải thuê
+                                nhà...
+                              </div>
+                              <div class="tpic pdB10 clrF">
+                                <i class="ico-sprt"></i>
+                                <a
+                                  title="Di Băng"
+                                  href="https://eva.vn/di-bang-p1540c20.html"
+                                  class="sb-tpic clrGre"
+                                >
+                                  Di Băng
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        </article>
+                        <article class="Ltrt nsLstrt mrL10">
+                          <header class="nsLstTit pdB10">
+                            <h3>
+                              <a
+                                class="clrTit bld"
+                                href="https://eva.vn/nuoi-con/dau-nam-2020-con-trai-ho-ngoc-ha-chup-anh-voi-hlv-park-hang-seo-bieu-cam-be-gay-chu-y-c13a417790.html"
+                                title="Đầu năm 2020, con trai Hồ Ngọc Hà chụp ảnh với HLV Park Hang-Seo, biểu cảm cực đáng yêu"
+                                >Đầu năm 2020, con trai Hồ Ngọc Hà chụp ảnh với
+                                HLV Park Hang-Seo, biểu cảm cực đáng yêu</a
+                              >
+                            </h3>
+                          </header>
+                          <div class="evtBx">
+                            <div class="evtBxImg evtBxLt mrR15">
+                              <a
+                                href="https://eva.vn/nuoi-con/dau-nam-2020-con-trai-ho-ngoc-ha-chup-anh-voi-hlv-park-hang-seo-bieu-cam-be-gay-chu-y-c13a417790.html"
+                                class=""
+                                title="Đầu năm 2020, con trai Hồ Ngọc Hà chụp ảnh với HLV Park Hang-Seo, biểu cảm cực đáng yêu"
+                              >
+                                <img
+                                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX6+vqsEtnpAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg=="
+                                  data-original="https://cdn.eva.vn/upload/1-2020/images/2020-01-02/medium/ava-1577931237-394-width640height480.jpg"
+                                  alt="Đầu năm 2020, con trai Hồ Ngọc Hà chụp ảnh với HLV Park Hang-Seo, biểu cảm cực đáng yêu"
+                                  class="width-100"
+                                />
+                              </a>
+                            </div>
+                            <div class="evtBxRt">
+                              <div class="evtBxsp sp clrGra">
+                                Chuyến du lịch Thái Lan đầu tiên của mẹ con Hồ
+                                Ngọc Hà đã gặp ngay vị khách VIP - HLV Park
+                                Hang-Seo.
+                              </div>
+                              <div class="tpic pdB10 clrF">
+                                <i class="ico-sprt"></i>
+                                <a
+                                  title="Hồ Ngọc Hà"
+                                  href="https://eva.vn/ho-ngoc-ha-p1501c20.html"
+                                  class="sb-tpic clrGre"
+                                >
+                                  Hồ Ngọc Hà
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        </article>
+                      </div>
+                      <div id="div_bai_viet_trang_chuyen_muc_10_2">
+                        <nav class="clF xemthem txtCent rdMrNxt">
+                          <a
+                            class="clrFeatr txtTrf"
+                            href="javascript:AjaxAction('div_bai_viet_trang_chuyen_muc_10_2', '/ajax/box_bai_viet_trang_chuyen_muc/index/10/pc/11/2/5/0/1/0?aaa', true);"
+                            title="Xem thêm "
+                            >Xem thêm
+                          </a>
+                        </nav>
+                      </div>
+                    </div>
+                  </section>
+                  <section class="newsBx clF mrT20 mrB10 pink-line">
+                    <header class="newsBxTit">
+                      <ul>
+                        <li>
+                          <h2>
+                            <a
+                              class="txtTrf clrFeatr"
+                              href="/tu-van-suc-khoe-tre-em-p2598c10.html"
+                              title="Tư vấn sức khỏe trẻ em"
+                              >Tư vấn sức khỏe trẻ em <i class="bbIco"></i
+                            ></a>
+                          </h2>
+                        </li>
+                      </ul>
+                    </header>
+                    <!--CACHE pc_box_bai_viet_cung_chuyen_muc_listing_template_1_profile_2598-->
+                    <div class="bxbthlt bxbth-cmon Ltrt mrR10">
+                      <article>
+                        <div class="itBthBxImg">
+                          <a
+                            class=""
+                            href="https://eva.vn/goc-chuyen-gia/tre-nho-co-nen-uong-thuoc-tang-chieu-cao-khong-c121a416309.html"
+                            title="Trẻ nhỏ có nên uống thuốc tăng chiều cao không?"
+                          >
+                            <img
+                              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX6+vqsEtnpAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg=="
+                              data-original="https://cdn.eva.vn/upload/4-2019/images/2019-12-19/extra_large/640-1576740054-808-width640height480.jpg"
+                              alt="Trẻ nhỏ có nên uống thuốc tăng chiều cao không?"
+                              class="width-100"
+                            />
+                          </a>
+                        </div>
+                        <header>
+                          <h3>
+                            <a
+                              class="clrTit bld itBthBxTt"
+                              href="https://eva.vn/goc-chuyen-gia/tre-nho-co-nen-uong-thuoc-tang-chieu-cao-khong-c121a416309.html"
+                              title="Trẻ nhỏ có nên uống thuốc tăng chiều cao không?"
+                              >Trẻ nhỏ có nên uống thuốc tăng chiều cao
+                              không?<img
+                                class="icon_chuyen_gia_tu_van"
+                                src="https://cdn.eva.vn/images/2017/icon_chuyen_gia_tu_van.png"
+                                alt="Bài viết được tham khảo ý kiến từ bác sĩ, chuyên gia"
+                                title="Bài viết được tham khảo ý kiến từ bác sĩ, chuyên gia"
+                                height="16"
+                                width="16"
+                            /></a>
+                          </h3>
+                        </header>
+                        <div class="brkNsSap clrGre pdB5 pdT5">
+                          Trẻ nhỏ có nên uống thuốc tăng chiều cao không? Thuốc
+                          tăng chiều cao có hại sức khỏe của con và gây...
+                        </div>
+                        <div class="tpic pdB10 clrF">
+                          <i class="ico-sprt"></i>
+                          <a
+                            class="sb-tpic clrGre"
+                            href="https://eva.vn/tu-van-mang-thai-p2450c85.html"
+                            title="Bài chuyên gia"
+                          >
+                            Bài chuyên gia
+                          </a>
+                        </div>
+                      </article>
+                    </div>
+                    <div class="bxbthlt bxbth-cmon Ltrt mrL10">
+                      <article class="itBthBxLt clrF">
+                        <div class="itBthBxLtImg mrR10">
+                          <a
+                            class=""
+                            href="https://eva.vn/nuoi-con/tre-bi-dau-mat-do-kieng-gi-va-an-gi-nhanh-khoi-c13a416298.html"
+                            title="Trẻ bị đau mắt đỏ kiêng gì và ăn gì nhanh khỏi?"
+                          >
+                            <img
+                              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX6+vqsEtnpAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg=="
+                              data-original="https://cdn.eva.vn/upload/4-2019/images/2019-12-20/medium/dau-hieu-nhan-biet-khi-tre-bi-dau-mat-do-phunutodayvn_1470642206-1576831472-150-width640height480.jpg"
+                              alt="Trẻ bị đau mắt đỏ kiêng gì và ăn gì nhanh khỏi?"
+                              class="width-100"
+                            />
+                          </a>
+                        </div>
+                        <header class="itBthBxLtCt">
+                          <h4>
+                            <a
+                              class="clrTit bld"
+                              href="https://eva.vn/nuoi-con/tre-bi-dau-mat-do-kieng-gi-va-an-gi-nhanh-khoi-c13a416298.html"
+                              title="Trẻ bị đau mắt đỏ kiêng gì và ăn gì nhanh khỏi?"
+                              >Trẻ bị đau mắt đỏ kiêng gì và ăn gì nhanh
+                              khỏi?</a
+                            ><img
+                              class="icon_chuyen_gia_tu_van"
+                              src="https://cdn.eva.vn/images/2017/icon_chuyen_gia_tu_van.png"
+                              alt="Bài viết được tham khảo ý kiến từ bác sĩ, chuyên gia"
+                              title="Bài viết được tham khảo ý kiến từ bác sĩ, chuyên gia"
+                              height="16"
+                              width="16"
+                            />
+                          </h4>
+                        </header>
+                      </article>
+                      <div class="clF lin mrT10 mrB10"></div>
+                      <article class="itBthBxLt clrF">
+                        <div class="itBthBxLtImg mrR10">
+                          <a
+                            class=""
+                            href="https://eva.vn/nuoi-con/tre-ho-co-dom-che-do-dinh-duong-va-cach-cham-soc-giup-be-nhanh-khoi-c13a414122.html"
+                            title="Trẻ ho có đờm: Chế độ dinh dưỡng và cách chăm sóc giúp bé nhanh khỏi"
+                          >
+                            <img
+                              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX6+vqsEtnpAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg=="
+                              data-original="https://cdn.eva.vn/upload/4-2019/images/2019-12-03/medium/167546-tre-so-sinh-bi-ho-co-dom-1575358894-633-width640height480.jpg"
+                              alt="Trẻ ho có đờm: Chế độ dinh dưỡng và cách chăm sóc giúp bé nhanh khỏi"
+                              class="width-100"
+                            />
+                          </a>
+                        </div>
+                        <header class="itBthBxLtCt">
+                          <h4>
+                            <a
+                              class="clrTit bld"
+                              href="https://eva.vn/nuoi-con/tre-ho-co-dom-che-do-dinh-duong-va-cach-cham-soc-giup-be-nhanh-khoi-c13a414122.html"
+                              title="Trẻ ho có đờm: Chế độ dinh dưỡng và cách chăm sóc giúp bé nhanh khỏi"
+                              >Trẻ ho có đờm: Chế độ dinh dưỡng và cách chăm sóc
+                              giúp bé nhanh khỏi</a
+                            ><img
+                              class="icon_chuyen_gia_tu_van"
+                              src="https://cdn.eva.vn/images/2017/icon_chuyen_gia_tu_van.png"
+                              alt="Bài viết được tham khảo ý kiến từ bác sĩ, chuyên gia"
+                              title="Bài viết được tham khảo ý kiến từ bác sĩ, chuyên gia"
+                              height="16"
+                              width="16"
+                            />
+                          </h4>
+                        </header>
+                      </article>
+                      <div class="clF lin mrT10 mrB10"></div>
+                      <article class="itBthBxLt clrF">
+                        <div class="itBthBxLtImg mrR10">
+                          <a
+                            class=""
+                            href="https://eva.vn/an-dam/cach-nau-chao-yen-mach-cho-be-an-dam-it-bi-tao-bon-tang-can-c371a414355.html"
+                            title="Cách nấu cháo yến mạch cho bé ăn dặm ít bị táo bón, tăng cân"
+                          >
+                            <img
+                              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX6+vqsEtnpAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg=="
+                              data-original="https://cdn.eva.vn/upload/4-2019/images/2019-12-02/medium/640-1575260414-413-width640height480.jpg"
+                              alt="Cách nấu cháo yến mạch cho bé ăn dặm ít bị táo bón, tăng cân"
+                              class="width-100"
+                            />
+                          </a>
+                        </div>
+                        <header class="itBthBxLtCt">
+                          <h4>
+                            <a
+                              class="clrTit bld"
+                              href="https://eva.vn/an-dam/cach-nau-chao-yen-mach-cho-be-an-dam-it-bi-tao-bon-tang-can-c371a414355.html"
+                              title="Cách nấu cháo yến mạch cho bé ăn dặm ít bị táo bón, tăng cân"
+                              >Cách nấu cháo yến mạch cho bé ăn dặm ít bị táo
+                              bón, tăng cân</a
+                            ><img
+                              class="icon_chuyen_gia_tu_van"
+                              src="https://cdn.eva.vn/images/2017/icon_chuyen_gia_tu_van.png"
+                              alt="Bài viết được tham khảo ý kiến từ bác sĩ, chuyên gia"
+                              title="Bài viết được tham khảo ý kiến từ bác sĩ, chuyên gia"
+                              height="16"
+                              width="16"
+                            />
+                          </h4>
+                        </header>
+                      </article>
+                      <div class="clF lin mrT10 mrB10"></div>
+                      <article class="itBthBxLt clrF">
+                        <div class="itBthBxLtImg mrR10">
+                          <a
+                            class=""
+                            href="https://eva.vn/tre-so-sinh/nhung-tac-hai-tam-nang-cho-tre-so-sinh-khong-dung-cach-c116a414425.html"
+                            title="Những tác hại tắm nắng cho trẻ sơ sinh không đúng cách"
+                          >
+                            <img
+                              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX6+vqsEtnpAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg=="
+                              data-original="https://cdn.eva.vn/upload/4-2019/images/2019-12-02/medium/640-1575286037-759-width640height480.jpg"
+                              alt="Những tác hại tắm nắng cho trẻ sơ sinh không đúng cách"
+                              class="width-100"
+                            />
+                          </a>
+                        </div>
+                        <header class="itBthBxLtCt">
+                          <h4>
+                            <a
+                              class="clrTit bld"
+                              href="https://eva.vn/tre-so-sinh/nhung-tac-hai-tam-nang-cho-tre-so-sinh-khong-dung-cach-c116a414425.html"
+                              title="Những tác hại tắm nắng cho trẻ sơ sinh không đúng cách"
+                              >Những tác hại tắm nắng cho trẻ sơ sinh không đúng
+                              cách</a
+                            ><img
+                              class="icon_chuyen_gia_tu_van"
+                              src="https://cdn.eva.vn/images/2017/icon_chuyen_gia_tu_van.png"
+                              alt="Bài viết được tham khảo ý kiến từ bác sĩ, chuyên gia"
+                              title="Bài viết được tham khảo ý kiến từ bác sĩ, chuyên gia"
+                              height="16"
+                              width="16"
+                            />
+                          </h4>
+                        </header>
+                      </article>
+                      <div class="clF lin mrT10 mrB10"></div>
+                    </div>
+                    <div class="clrF xemthem txtCent rdMrNxt">
+                      <a
+                        class="clrFeatr txtTrf"
+                        href="/tu-van-suc-khoe-tre-em-p2598c10.html"
+                        title="Xem thêm Tư vấn sức khỏe trẻ em"
+                        >Xem thêm Tư vấn sức khỏe trẻ em</a
+                      >
+                    </div>
+                  </section>
+                  <section class="newsBx clF mrT20 mrB10 pink-line">
+                    <header class="newsBxTit">
+                      <ul>
+                        <li>
+                          <h2>
+                            <a
+                              class="txtTrf clrFeatr"
+                              href="/day-con-c14.html"
+                              title="Dạy con"
+                              >Dạy con <i class="bbIco"></i
+                            ></a>
+                          </h2>
+                        </li>
+                      </ul>
+                    </header>
+                    <!--CACHE pc_box_bai_viet_cung_chuyen_muc_listing_template_1_category_14-->
+                    <div class="bxbthlt bxbth-cmon Ltrt mrR10">
+                      <article>
+                        <div class="itBthBxImg">
+                          <a
+                            class=""
+                            href="https://eva.vn/day-con/khanh-thi-phan-hien-co-the-nam-2020-nay-toi-se-sinh-them-con-c14a417712.html"
+                            title="Khánh Thi – Phan Hiển: Có thể năm 2020 này, tôi sẽ sinh thêm con"
+                          >
+                            <img
+                              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX6+vqsEtnpAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg=="
+                              data-original="https://cdn.eva.vn/upload/1-2020/images/2020-01-01/extra_large/avt1-1577846012-547-width640height480.jpg"
+                              alt="Khánh Thi – Phan Hiển: Có thể năm 2020 này, tôi sẽ sinh thêm con"
+                              class="width-100"
+                            />
+                          </a>
+                        </div>
+                        <header>
+                          <h3>
+                            <a
+                              class="clrTit bld itBthBxTt"
+                              href="https://eva.vn/day-con/khanh-thi-phan-hien-co-the-nam-2020-nay-toi-se-sinh-them-con-c14a417712.html"
+                              title="Khánh Thi – Phan Hiển: Có thể năm 2020 này, tôi sẽ sinh thêm con"
+                              >Khánh Thi – Phan Hiển: Có thể năm 2020 này, tôi
+                              sẽ sinh thêm con</a
+                            >
+                          </h3>
+                        </header>
+                        <div class="brkNsSap clrGre pdB5 pdT5">
+                          Cuộc trò chuyện đầu năm 2020, Khánh Thi trải lòng
+                          nhiều hơn về những thành công mà hai vợ chồng cô...
+                        </div>
+                        <div class="tpic pdB10 clrF">
+                          <i class="ico-sprt"></i>
+                          <a
+                            class="sb-tpic clrGre"
+                            href="https://eva.vn/khanh-thi-p1582c20.html"
+                            title="Khánh Thi"
+                          >
+                            Khánh Thi
+                          </a>
+                        </div>
+                      </article>
+                    </div>
+                    <div class="bxbthlt bxbth-cmon Ltrt mrL10">
+                      <article class="itBthBxLt clrF">
+                        <div class="itBthBxLtImg mrR10">
+                          <a
+                            class=""
+                            href="https://eva.vn/day-con/hotmom-sai-gon-tap-cho-con-10-tuoi-tu-lam-vlog-mot-nam-sau-ket-qua-bat-ngo-c14a417254.html"
+                            title="Hotmom Sài Gòn tập cho con 10 tuổi tự làm Vlog, một năm sau kết quả bất ngờ"
+                          >
+                            <img
+                              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX6+vqsEtnpAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg=="
+                              data-original="https://cdn.eva.vn/upload/4-2019/images/2019-12-30/medium/_dy_1093-1577690004-836-width640height480.jpg"
+                              alt="Hotmom Sài Gòn tập cho con 10 tuổi tự làm Vlog, một năm sau kết quả bất ngờ"
+                              class="width-100"
+                            />
+                          </a>
+                        </div>
+                        <header class="itBthBxLtCt">
+                          <h4>
+                            <a
+                              class="clrTit bld"
+                              href="https://eva.vn/day-con/hotmom-sai-gon-tap-cho-con-10-tuoi-tu-lam-vlog-mot-nam-sau-ket-qua-bat-ngo-c14a417254.html"
+                              title="Hotmom Sài Gòn tập cho con 10 tuổi tự làm Vlog, một năm sau kết quả bất ngờ"
+                              >Hotmom Sài Gòn tập cho con 10 tuổi tự làm Vlog,
+                              một năm sau kết quả bất ngờ</a
+                            >
+                          </h4>
+                        </header>
+                      </article>
+                      <div class="clF lin mrT10 mrB10"></div>
+                      <article class="itBthBxLt clrF">
+                        <div class="itBthBxLtImg mrR10">
+                          <a
+                            class=""
+                            href="https://eva.vn/day-con/bi-xi-xao-vi-de-lien-6-con-gai-ong-bo-giup-con-lam-nen-dieu-ai-cung-kham-phuc-c14a416966.html"
+                            title="Bị xì xào vì đẻ liền 6 con gái, ông bố giúp con làm nên điều ai cũng khâm phục"
+                          >
+                            <img
+                              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX6+vqsEtnpAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg=="
+                              data-original="https://cdn.eva.vn/upload/4-2019/images/2019-12-27/medium/df-1577413955-573-width640height480.jpg"
+                              alt="Bị xì xào vì đẻ liền 6 con gái, ông bố giúp con làm nên điều ai cũng khâm phục"
+                              class="width-100"
+                            />
+                          </a>
+                        </div>
+                        <header class="itBthBxLtCt">
+                          <h4>
+                            <a
+                              class="clrTit bld"
+                              href="https://eva.vn/day-con/bi-xi-xao-vi-de-lien-6-con-gai-ong-bo-giup-con-lam-nen-dieu-ai-cung-kham-phuc-c14a416966.html"
+                              title="Bị xì xào vì đẻ liền 6 con gái, ông bố giúp con làm nên điều ai cũng khâm phục"
+                              >Bị xì xào vì đẻ liền 6 con gái, ông bố giúp con
+                              làm nên điều ai cũng khâm phục</a
+                            >
+                          </h4>
+                        </header>
+                      </article>
+                      <div class="clF lin mrT10 mrB10"></div>
+                      <article class="itBthBxLt clrF">
+                        <div class="itBthBxLtImg mrR10">
+                          <a
+                            class=""
+                            href="https://eva.vn/day-con/mot-thoi-gay-thuong-nho-3-dien-vien-nhat-ky-vang-anh-gio-lam-bo-me-cuc-kheo-c14a417143.html"
+                            title="Một thời gây thương nhớ, 3 diễn viên Nhật Ký Vàng Anh giờ làm bố mẹ cực khéo"
+                          >
+                            <img
+                              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX6+vqsEtnpAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg=="
+                              data-original="https://cdn.eva.vn/upload/4-2019/images/2019-12-27/medium/ak-1577411632-988-width640height480.jpg"
+                              alt="Một thời gây thương nhớ, 3 diễn viên Nhật Ký Vàng Anh giờ làm bố mẹ cực khéo"
+                              class="width-100"
+                            />
+                          </a>
+                        </div>
+                        <header class="itBthBxLtCt">
+                          <h4>
+                            <a
+                              class="clrTit bld"
+                              href="https://eva.vn/day-con/mot-thoi-gay-thuong-nho-3-dien-vien-nhat-ky-vang-anh-gio-lam-bo-me-cuc-kheo-c14a417143.html"
+                              title="Một thời gây thương nhớ, 3 diễn viên Nhật Ký Vàng Anh giờ làm bố mẹ cực khéo"
+                              >Một thời gây thương nhớ, 3 diễn viên Nhật Ký Vàng
+                              Anh giờ làm bố mẹ cực khéo</a
+                            >
+                          </h4>
+                        </header>
+                      </article>
+                      <div class="clF lin mrT10 mrB10"></div>
+                      <article class="itBthBxLt clrF">
+                        <div class="itBthBxLtImg mrR10">
+                          <a
+                            class=""
+                            href="https://eva.vn/day-con/3-quan-diem-nuoi-day-con-cua-nu-dien-vien-noi-tieng-xu-trung-khi-nha-co-2-con-trai-c14a417026.html"
+                            title="3 quan điểm nuôi dạy con của nữ diễn viên nổi tiếng xứ Trung khi nhà có 2 con trai"
+                          >
+                            <img
+                              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX6+vqsEtnpAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg=="
+                              data-original="https://cdn.eva.vn/upload/4-2019/images/2019-12-26/medium/cach-nuoi-day-con-cua-dien-vien-ho-kha-khi-trong-nha-co-2-dua-tre-8639898a770140459612cbf294a35d22-1577326178-505-width640height828-1577350181-783-width640height480.jpg"
+                              alt="3 quan điểm nuôi dạy con của nữ diễn viên nổi tiếng xứ Trung khi nhà có 2 con trai"
+                              class="width-100"
+                            />
+                          </a>
+                        </div>
+                        <header class="itBthBxLtCt">
+                          <h4>
+                            <a
+                              class="clrTit bld"
+                              href="https://eva.vn/day-con/3-quan-diem-nuoi-day-con-cua-nu-dien-vien-noi-tieng-xu-trung-khi-nha-co-2-con-trai-c14a417026.html"
+                              title="3 quan điểm nuôi dạy con của nữ diễn viên nổi tiếng xứ Trung khi nhà có 2 con trai"
+                              >3 quan điểm nuôi dạy con của nữ diễn viên nổi
+                              tiếng xứ Trung khi nhà có 2 con trai</a
+                            >
+                          </h4>
+                        </header>
+                      </article>
+                      <div class="clF lin mrT10 mrB10"></div>
+                    </div>
+                    <div class="clrF xemthem txtCent rdMrNxt">
+                      <a
+                        class="clrFeatr txtTrf"
+                        href="/day-con-c14.html"
+                        title="Xem thêm Dạy con"
+                        >Xem thêm Dạy con</a
+                      >
+                    </div>
+                  </section>
+                  <section class="newsBx clF mrT20 mrB10 pink-line">
+                    <header class="newsBxTit">
+                      <ul>
+                        <li>
+                          <h2>
+                            <a
+                              class="txtTrf clrFeatr"
+                              href="/an-dam-c371.html"
+                              title="Ăn dặm"
+                              >Ăn dặm <i class="bbIco"></i
+                            ></a>
+                          </h2>
+                        </li>
+                      </ul>
+                    </header>
+                    <!--CACHE pc_box_bai_viet_cung_chuyen_muc_listing_template_1_category_371-->
+                    <div class="bxbthlt bxbth-cmon Ltrt mrR10">
+                      <article>
+                        <div class="itBthBxImg">
+                          <a
+                            rel="sponsored"
+                            class=""
+                            href="https://eva.vn/an-dam/cho-be-an-dam-organic-nhung-luu-y-vang-me-can-ghi-nho-c371a417627.html"
+                            title="Cho bé “ăn dặm Organic” – những lưu ý vàng mẹ cần ghi nhớ"
+                          >
+                            <img
+                              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX6+vqsEtnpAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg=="
+                              data-original="https://cdn.eva.vn/upload/4-2019/images/2019-12-31/extra_large/jhj-1577774314-217-width640height480.jpg"
+                              alt="Cho bé “ăn dặm Organic” – những lưu ý vàng mẹ cần ghi nhớ"
+                              class="width-100"
+                            />
+                          </a>
+                        </div>
+                        <header>
+                          <h3>
+                            <a
+                              rel="sponsored"
+                              class="clrTit bld itBthBxTt"
+                              href="https://eva.vn/an-dam/cho-be-an-dam-organic-nhung-luu-y-vang-me-can-ghi-nho-c371a417627.html"
+                              title="Cho bé “ăn dặm Organic” – những lưu ý vàng mẹ cần ghi nhớ"
+                              >Cho bé “ăn dặm Organic” – những lưu ý vàng mẹ cần
+                              ghi nhớ <span class="iconw ico-sprt"></span
+                            ></a>
+                          </h3>
+                        </header>
+                        <div class="brkNsSap clrGre pdB5 pdT5">
+                          Cho bé “ăn dặm Organic” đang là xu hướng chăm con mới
+                          của mẹ Việt hiện đại. Để thành công với phương...
+                        </div>
+                      </article>
+                    </div>
+                    <div class="bxbthlt bxbth-cmon Ltrt mrL10">
+                      <article class="itBthBxLt clrF">
+                        <div class="itBthBxLtImg mrR10">
+                          <a
+                            class=""
+                            href="https://eva.vn/an-dam/10-nguyen-nhan-tre-bieng-an-va-cach-khac-phuc-hieu-qua-c371a417010.html"
+                            title="10 nguyên nhân trẻ biếng ăn và cách khắc phục hiệu quả"
+                          >
+                            <img
+                              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX6+vqsEtnpAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg=="
+                              data-original="https://cdn.eva.vn/upload/4-2019/images/2019-12-26/medium/1577299239-676-thumbnail.jpg"
+                              alt="10 nguyên nhân trẻ biếng ăn và cách khắc phục hiệu quả"
+                              class="width-100"
+                            />
+                          </a>
+                        </div>
+                        <header class="itBthBxLtCt">
+                          <h4>
+                            <a
+                              class="clrTit bld"
+                              href="https://eva.vn/an-dam/10-nguyen-nhan-tre-bieng-an-va-cach-khac-phuc-hieu-qua-c371a417010.html"
+                              title="10 nguyên nhân trẻ biếng ăn và cách khắc phục hiệu quả"
+                              >10 nguyên nhân trẻ biếng ăn và cách khắc phục
+                              hiệu quả</a
+                            >
+                          </h4>
+                        </header>
+                      </article>
+                      <div class="clF lin mrT10 mrB10"></div>
+                      <article class="itBthBxLt clrF">
+                        <div class="itBthBxLtImg mrR10">
+                          <a
+                            class=""
+                            href="https://eva.vn/an-dam/cach-nau-chao-yen-mach-cho-be-an-dam-it-bi-tao-bon-tang-can-c371a414355.html"
+                            title="Cách nấu cháo yến mạch cho bé ăn dặm ít bị táo bón, tăng cân"
+                          >
+                            <img
+                              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX6+vqsEtnpAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg=="
+                              data-original="https://cdn.eva.vn/upload/4-2019/images/2019-12-02/medium/640-1575260414-413-width640height480.jpg"
+                              alt="Cách nấu cháo yến mạch cho bé ăn dặm ít bị táo bón, tăng cân"
+                              class="width-100"
+                            />
+                          </a>
+                        </div>
+                        <header class="itBthBxLtCt">
+                          <h4>
+                            <a
+                              class="clrTit bld"
+                              href="https://eva.vn/an-dam/cach-nau-chao-yen-mach-cho-be-an-dam-it-bi-tao-bon-tang-can-c371a414355.html"
+                              title="Cách nấu cháo yến mạch cho bé ăn dặm ít bị táo bón, tăng cân"
+                              >Cách nấu cháo yến mạch cho bé ăn dặm ít bị táo
+                              bón, tăng cân</a
+                            ><img
+                              class="icon_chuyen_gia_tu_van"
+                              src="https://cdn.eva.vn/images/2017/icon_chuyen_gia_tu_van.png"
+                              alt="Bài viết được tham khảo ý kiến từ bác sĩ, chuyên gia"
+                              title="Bài viết được tham khảo ý kiến từ bác sĩ, chuyên gia"
+                              height="16"
+                              width="16"
+                            />
+                          </h4>
+                        </header>
+                      </article>
+                      <div class="clF lin mrT10 mrB10"></div>
+                      <article class="itBthBxLt clrF">
+                        <div class="itBthBxLtImg mrR10">
+                          <a
+                            class=""
+                            href="https://eva.vn/an-dam/3-kieu-an-dam-cua-be-me-tuong-bo-nhung-bac-si-lac-dau-nhat-la-mon-dau-tien-c371a413162.html"
+                            title='3 kiểu ăn dặm của bé mẹ tưởng bổ nhưng bác sĩ "lắc đầu", nhất là món đầu tiên'
+                          >
+                            <img
+                              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX6+vqsEtnpAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg=="
+                              data-original="https://cdn.eva.vn/upload/4-2019/images/2019-11-21/medium/a1_hybq-1574309965-844-width640height480.jpg"
+                              alt='3 kiểu ăn dặm của bé mẹ tưởng bổ nhưng bác sĩ "lắc đầu", nhất là món đầu tiên'
+                              class="width-100"
+                            />
+                          </a>
+                        </div>
+                        <header class="itBthBxLtCt">
+                          <h4>
+                            <a
+                              class="clrTit bld"
+                              href="https://eva.vn/an-dam/3-kieu-an-dam-cua-be-me-tuong-bo-nhung-bac-si-lac-dau-nhat-la-mon-dau-tien-c371a413162.html"
+                              title='3 kiểu ăn dặm của bé mẹ tưởng bổ nhưng bác sĩ "lắc đầu", nhất là món đầu tiên'
+                              >3 kiểu ăn dặm của bé mẹ tưởng bổ nhưng bác sĩ
+                              &quot;lắc đầu&quot;, nhất là món đầu tiên</a
+                            >
+                          </h4>
+                        </header>
+                      </article>
+                      <div class="clF lin mrT10 mrB10"></div>
+                      <article class="itBthBxLt clrF">
+                        <div class="itBthBxLtImg mrR10">
+                          <a
+                            class=""
+                            href="https://eva.vn/an-dam/4-cach-nau-chao-oc-heo-cho-be-an-dam-giau-dinh-duong-c371a412019.html"
+                            title="4 cách nấu cháo óc heo cho bé ăn dặm giàu dinh dưỡng"
+                          >
+                            <img
+                              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX6+vqsEtnpAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg=="
+                              data-original="https://cdn.eva.vn/upload/4-2019/images/2019-11-18/medium/chao-oc-heo-dau-ha-lan-1024x683-1574070328-662-width640height480.jpg"
+                              alt="4 cách nấu cháo óc heo cho bé ăn dặm giàu dinh dưỡng"
+                              class="width-100"
+                            />
+                          </a>
+                        </div>
+                        <header class="itBthBxLtCt">
+                          <h4>
+                            <a
+                              class="clrTit bld"
+                              href="https://eva.vn/an-dam/4-cach-nau-chao-oc-heo-cho-be-an-dam-giau-dinh-duong-c371a412019.html"
+                              title="4 cách nấu cháo óc heo cho bé ăn dặm giàu dinh dưỡng"
+                              >4 cách nấu cháo óc heo cho bé ăn dặm giàu dinh
+                              dưỡng</a
+                            >
+                          </h4>
+                        </header>
+                      </article>
+                      <div class="clF lin mrT10 mrB10"></div>
+                    </div>
+                    <div class="clrF xemthem txtCent rdMrNxt">
+                      <a
+                        class="clrFeatr txtTrf"
+                        href="/an-dam-c371.html"
+                        title="Xem thêm Ăn dặm"
+                        >Xem thêm Ăn dặm</a
+                      >
+                    </div>
+                  </section>
+                  <section class="newsBx clF mrT20 mrB10 pink-line">
+                    <header class="newsBxTit">
+                      <ul>
+                        <li>
+                          <h2>
+                            <a
+                              class="txtTrf clrFeatr"
+                              href="/truyen-co-tich-cho-be-p2607c10.html"
+                              title="Truyện cổ tích"
+                              >Truyện cổ tích <i class="bbIco"></i
+                            ></a>
+                          </h2>
+                        </li>
+                      </ul>
+                    </header>
+                    <!--CACHE pc_box_bai_viet_cung_chuyen_muc_listing_template_1_profile_2607-->
+                    <div class="bxbthlt bxbth-cmon Ltrt mrR10">
+                      <article>
+                        <div class="itBthBxImg">
+                          <a
+                            class=""
+                            href="https://eva.vn/day-con/truyen-co-tich-cho-be-tam-cam-c14a403847.html"
+                            title="Truyện cổ tích cho bé: Tấm Cám"
+                          >
+                            <img
+                              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX6+vqsEtnpAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg=="
+                              data-original="https://cdn.eva.vn/upload/3-2019/images/2019-08-29/extra_large/avt-chu---n-min-1567047809-250-width640height480.png"
+                              alt="Truyện cổ tích cho bé: Tấm Cám"
+                              class="width-100"
+                            />
+                          </a>
+                        </div>
+                        <header>
+                          <h3>
+                            <a
+                              class="clrTit bld itBthBxTt"
+                              href="https://eva.vn/day-con/truyen-co-tich-cho-be-tam-cam-c14a403847.html"
+                              title="Truyện cổ tích cho bé: Tấm Cám"
+                              >Truyện cổ tích cho bé: Tấm Cám</a
+                            >
+                          </h3>
+                        </header>
+                        <div class="brkNsSap clrGre pdB5 pdT5">
+                          Ngày xửa ngày xưa, có hai chị em cùng cha khác mẹ.
+                          Người chị tên là Tấm còn em là Cám. Mẹ của Tấm đã...
+                        </div>
+                        <div class="tpic pdB10 clrF">
+                          <i class="ico-sprt"></i>
+                          <a
+                            class="sb-tpic clrGre"
+                            href="https://eva.vn/truyen-co-tich-cho-be-p2607c10.html"
+                            title="Truyện cổ tích cho bé"
+                          >
+                            Truyện cổ tích cho bé
+                          </a>
+                        </div>
+                      </article>
+                    </div>
+                    <div class="bxbthlt bxbth-cmon Ltrt mrL10">
+                      <article class="itBthBxLt clrF">
+                        <div class="itBthBxLtImg mrR10">
+                          <a
+                            class=""
+                            href="https://eva.vn/lam-me/truyen-co-tich-co-be-quang-khan-do-c10a390754.html"
+                            title="Truyện cổ tích cô bé quàng khăn đỏ"
+                          >
+                            <img
+                              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX6+vqsEtnpAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg=="
+                              data-original="https://cdn.eva.vn/upload/2-2019/images/2019-05-02/medium/1556787804-487-thumbnail.jpg"
+                              alt="Truyện cổ tích cô bé quàng khăn đỏ"
+                              class="width-100"
+                            />
+                          </a>
+                        </div>
+                        <header class="itBthBxLtCt">
+                          <h4>
+                            <a
+                              class="clrTit bld"
+                              href="https://eva.vn/lam-me/truyen-co-tich-co-be-quang-khan-do-c10a390754.html"
+                              title="Truyện cổ tích cô bé quàng khăn đỏ"
+                              >Truyện cổ tích cô bé quàng khăn đỏ</a
+                            >
+                          </h4>
+                        </header>
+                      </article>
+                      <div class="clF lin mrT10 mrB10"></div>
+                      <article class="itBthBxLt clrF">
+                        <div class="itBthBxLtImg mrR10">
+                          <a
+                            class=""
+                            href="https://eva.vn/lam-me/truyen-co-tich-ve-loai-nguoi-c10a391641.html"
+                            title="Truyện cổ tích về loài người"
+                          >
+                            <img
+                              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX6+vqsEtnpAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg=="
+                              data-original="https://cdn.eva.vn/upload/2-2019/images/2019-05-10/medium/1557472229-410-thumbnail.jpg"
+                              alt="Truyện cổ tích về loài người"
+                              class="width-100"
+                            />
+                          </a>
+                        </div>
+                        <header class="itBthBxLtCt">
+                          <h4>
+                            <a
+                              class="clrTit bld"
+                              href="https://eva.vn/lam-me/truyen-co-tich-ve-loai-nguoi-c10a391641.html"
+                              title="Truyện cổ tích về loài người"
+                              >Truyện cổ tích về loài người</a
+                            >
+                          </h4>
+                        </header>
+                      </article>
+                      <div class="clF lin mrT10 mrB10"></div>
+                      <article class="itBthBxLt clrF">
+                        <div class="itBthBxLtImg mrR10">
+                          <a
+                            class=""
+                            href="https://eva.vn/lam-me/truyen-co-tich-son-tinh-thuy-tinh-c10a391640.html"
+                            title="Truyện cổ tích Sơn Tinh Thủy Tinh"
+                          >
+                            <img
+                              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX6+vqsEtnpAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg=="
+                              data-original="https://cdn.eva.vn/upload/2-2019/images/2019-05-10/medium/1557471775-910-thumbnail.jpg"
+                              alt="Truyện cổ tích Sơn Tinh Thủy Tinh"
+                              class="width-100"
+                            />
+                          </a>
+                        </div>
+                        <header class="itBthBxLtCt">
+                          <h4>
+                            <a
+                              class="clrTit bld"
+                              href="https://eva.vn/lam-me/truyen-co-tich-son-tinh-thuy-tinh-c10a391640.html"
+                              title="Truyện cổ tích Sơn Tinh Thủy Tinh"
+                              >Truyện cổ tích Sơn Tinh Thủy Tinh</a
+                            >
+                          </h4>
+                        </header>
+                      </article>
+                      <div class="clF lin mrT10 mrB10"></div>
+                      <article class="itBthBxLt clrF">
+                        <div class="itBthBxLtImg mrR10">
+                          <a
+                            class=""
+                            href="https://eva.vn/lam-me/truyen-co-tich-nang-tien-ca-c10a390756.html"
+                            title="Truyện cổ tích nàng tiên cá"
+                          >
+                            <img
+                              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX6+vqsEtnpAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg=="
+                              data-original="https://cdn.eva.vn/upload/2-2019/images/2019-05-02/medium/1556788533-391-thumbnail.jpg"
+                              alt="Truyện cổ tích nàng tiên cá"
+                              class="width-100"
+                            />
+                          </a>
+                        </div>
+                        <header class="itBthBxLtCt">
+                          <h4>
+                            <a
+                              class="clrTit bld"
+                              href="https://eva.vn/lam-me/truyen-co-tich-nang-tien-ca-c10a390756.html"
+                              title="Truyện cổ tích nàng tiên cá"
+                              >Truyện cổ tích nàng tiên cá</a
+                            >
+                          </h4>
+                        </header>
+                      </article>
+                      <div class="clF lin mrT10 mrB10"></div>
+                    </div>
+                    <div class="clrF xemthem txtCent rdMrNxt">
+                      <a
+                        class="clrFeatr txtTrf"
+                        href="/truyen-co-tich-cho-be-p2607c10.html"
+                        title="Xem thêm Truyện cổ tích"
+                        >Xem thêm Truyện cổ tích</a
+                      >
+                    </div>
+                  </section>
+                  <section class="newsBx clF mrT20 mrB10 pink-line">
+                    <header class="newsBxTit">
+                      <ul>
+                        <li>
+                          <h2>
+                            <a
+                              class="txtTrf clrFeatr"
+                              href="/sao-viet-day-con-p2470c10.html"
+                              title="Sao Việt và Con"
+                              >Sao Việt và Con <i class="bbIco"></i
+                            ></a>
+                          </h2>
+                        </li>
+                      </ul>
+                    </header>
+                    <!--CACHE pc_box_bai_viet_cung_chuyen_muc_listing_template_1_profile_2470-->
+                    <div class="bxbthlt bxbth-cmon Ltrt mrR10">
+                      <article>
+                        <div class="itBthBxImg">
+                          <a
+                            class=""
+                            href="https://eva.vn/lam-me/than-thuy-ha-khoe-anh-con-gai-dan-mang-nghi-ngo-nguoi-dan-ong-ben-canh-la-cha-be-c10a417880.html"
+                            title="Thân Thúy Hà khoe ảnh con gái, dân mạng nghi ngờ người đàn ông bên cạnh là cha bé"
+                          >
+                            <img
+                              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX6+vqsEtnpAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg=="
+                              data-original="https://cdn.eva.vn/upload/1-2020/images/2020-01-02/extra_large/ava-1577961230-674-width640height480.jpg"
+                              alt="Thân Thúy Hà khoe ảnh con gái, dân mạng nghi ngờ người đàn ông bên cạnh là cha bé"
+                              class="width-100"
+                            />
+                          </a>
+                        </div>
+                        <header>
+                          <h3>
+                            <a
+                              class="clrTit bld itBthBxTt"
+                              href="https://eva.vn/lam-me/than-thuy-ha-khoe-anh-con-gai-dan-mang-nghi-ngo-nguoi-dan-ong-ben-canh-la-cha-be-c10a417880.html"
+                              title="Thân Thúy Hà khoe ảnh con gái, dân mạng nghi ngờ người đàn ông bên cạnh là cha bé"
+                              >Thân Thúy Hà khoe ảnh con gái, dân mạng nghi ngờ
+                              người đàn ông bên cạnh là cha bé</a
+                            >
+                          </h3>
+                        </header>
+                        <div class="brkNsSap clrGre pdB5 pdT5">
+                          Cô bé rất ngoan ngoãn và thích thú khi được ngồi chơi
+                          cùng với người đàn ông đó.
+                        </div>
+                        <div class="tpic pdB10 clrF">
+                          <i class="ico-sprt"></i>
+                          <a
+                            class="sb-tpic clrGre"
+                            href="https://eva.vn/than-thuy-ha-p1135c20.html"
+                            title="Thân Thúy Hà"
+                          >
+                            Thân Thúy Hà
+                          </a>
+                        </div>
+                      </article>
+                    </div>
+                    <div class="bxbthlt bxbth-cmon Ltrt mrL10">
+                      <article class="itBthBxLt clrF">
+                        <div class="itBthBxLtImg mrR10">
+                          <a
+                            class=""
+                            href="https://eva.vn/nuoi-con/it-khi-len-song-con-trai-le-quyen-gay-ngo-ngang-vi-gio-da-cao-lon-phong-phao-c13a417878.html"
+                            title="Ít khi lên sóng, con trai Lệ Quyên giờ đã cao lớn phổng phao, đẹp trai giống bố"
+                          >
+                            <img
+                              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX6+vqsEtnpAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg=="
+                              data-original="https://cdn.eva.vn/upload/1-2020/images/2020-01-02/medium/m-1577959947-984-width640height480.jpg"
+                              alt="Ít khi lên sóng, con trai Lệ Quyên giờ đã cao lớn phổng phao, đẹp trai giống bố"
+                              class="width-100"
+                            />
+                          </a>
+                        </div>
+                        <header class="itBthBxLtCt">
+                          <h4>
+                            <a
+                              class="clrTit bld"
+                              href="https://eva.vn/nuoi-con/it-khi-len-song-con-trai-le-quyen-gay-ngo-ngang-vi-gio-da-cao-lon-phong-phao-c13a417878.html"
+                              title="Ít khi lên sóng, con trai Lệ Quyên giờ đã cao lớn phổng phao, đẹp trai giống bố"
+                              >Ít khi lên sóng, con trai Lệ Quyên giờ đã cao lớn
+                              phổng phao, đẹp trai giống bố</a
+                            >
+                          </h4>
+                        </header>
+                      </article>
+                      <div class="clF lin mrT10 mrB10"></div>
+                      <article class="itBthBxLt clrF">
+                        <div class="itBthBxLtImg mrR10">
+                          <a
+                            class=""
+                            href="https://eva.vn/lang-sao/vo-chong-lan-khue-khoe-anh-nam-moi-ai-cung-rang-ro-trai-nguoc-voi-nhan-vat-nay-c20a417801.html"
+                            title="Vợ chồng Lan Khuê khoe ảnh năm mới, cả hai rạng rỡ trái ngược với quý tử đầu lòng"
+                          >
+                            <img
+                              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX6+vqsEtnpAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg=="
+                              data-original="https://cdn.eva.vn/upload/1-2020/images/2020-01-02/medium/b2-1577933014-858-width640height480.jpg"
+                              alt="Vợ chồng Lan Khuê khoe ảnh năm mới, cả hai rạng rỡ trái ngược với quý tử đầu lòng"
+                              class="width-100"
+                            />
+                          </a>
+                        </div>
+                        <header class="itBthBxLtCt">
+                          <h4>
+                            <a
+                              class="clrTit bld"
+                              href="https://eva.vn/lang-sao/vo-chong-lan-khue-khoe-anh-nam-moi-ai-cung-rang-ro-trai-nguoc-voi-nhan-vat-nay-c20a417801.html"
+                              title="Vợ chồng Lan Khuê khoe ảnh năm mới, cả hai rạng rỡ trái ngược với quý tử đầu lòng"
+                              >Vợ chồng Lan Khuê khoe ảnh năm mới, cả hai rạng
+                              rỡ trái ngược với quý tử đầu lòng</a
+                            >
+                          </h4>
+                        </header>
+                      </article>
+                      <div class="clF lin mrT10 mrB10"></div>
+                      <article class="itBthBxLt clrF">
+                        <div class="itBthBxLtImg mrR10">
+                          <a
+                            class=""
+                            href="https://eva.vn/nuoi-con/dau-nam-2020-con-trai-ho-ngoc-ha-chup-anh-voi-hlv-park-hang-seo-bieu-cam-be-gay-chu-y-c13a417790.html"
+                            title="Đầu năm 2020, con trai Hồ Ngọc Hà chụp ảnh với HLV Park Hang-Seo, biểu cảm cực đáng yêu"
+                          >
+                            <img
+                              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX6+vqsEtnpAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg=="
+                              data-original="https://cdn.eva.vn/upload/1-2020/images/2020-01-02/medium/ava-1577931237-394-width640height480.jpg"
+                              alt="Đầu năm 2020, con trai Hồ Ngọc Hà chụp ảnh với HLV Park Hang-Seo, biểu cảm cực đáng yêu"
+                              class="width-100"
+                            />
+                          </a>
+                        </div>
+                        <header class="itBthBxLtCt">
+                          <h4>
+                            <a
+                              class="clrTit bld"
+                              href="https://eva.vn/nuoi-con/dau-nam-2020-con-trai-ho-ngoc-ha-chup-anh-voi-hlv-park-hang-seo-bieu-cam-be-gay-chu-y-c13a417790.html"
+                              title="Đầu năm 2020, con trai Hồ Ngọc Hà chụp ảnh với HLV Park Hang-Seo, biểu cảm cực đáng yêu"
+                              >Đầu năm 2020, con trai Hồ Ngọc Hà chụp ảnh với
+                              HLV Park Hang-Seo, biểu cảm cực đáng yêu</a
+                            >
+                          </h4>
+                        </header>
+                      </article>
+                      <div class="clF lin mrT10 mrB10"></div>
+                      <article class="itBthBxLt clrF">
+                        <div class="itBthBxLtImg mrR10">
+                          <a
+                            class=""
+                            href="https://eva.vn/lam-me/khanh-thi-phan-hien-co-the-nam-2020-nay-toi-se-sinh-them-con-c10a417712.html"
+                            title="Khánh Thi – Phan Hiển: Có thể năm 2020 này, tôi sẽ sinh thêm con"
+                          >
+                            <img
+                              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX6+vqsEtnpAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg=="
+                              data-original="https://cdn.eva.vn/upload/1-2020/images/2020-01-01/medium/avt1-1577846012-547-width640height480.jpg"
+                              alt="Khánh Thi – Phan Hiển: Có thể năm 2020 này, tôi sẽ sinh thêm con"
+                              class="width-100"
+                            />
+                          </a>
+                        </div>
+                        <header class="itBthBxLtCt">
+                          <h4>
+                            <a
+                              class="clrTit bld"
+                              href="https://eva.vn/lam-me/khanh-thi-phan-hien-co-the-nam-2020-nay-toi-se-sinh-them-con-c10a417712.html"
+                              title="Khánh Thi – Phan Hiển: Có thể năm 2020 này, tôi sẽ sinh thêm con"
+                              >Khánh Thi – Phan Hiển: Có thể năm 2020 này, tôi
+                              sẽ sinh thêm con</a
+                            >
+                          </h4>
+                        </header>
+                      </article>
+                      <div class="clF lin mrT10 mrB10"></div>
+                    </div>
+                    <div class="clrF xemthem txtCent rdMrNxt">
+                      <a
+                        class="clrFeatr txtTrf"
+                        href="/sao-viet-day-con-p2470c10.html"
+                        title="Xem thêm Sao Việt và Con"
+                        >Xem thêm Sao Việt và Con</a
+                      >
+                    </div>
+                  </section>
+                </main>
+                <div class="clrF line"></div>
+              </div>
+            </div>
+            <aside class="colRt mrL10">
+              <div class="colRtin">
+                <div id="right_ads">
+                  <section class="ads_unit pdB10">
+                    <header class="pkBxTit">
+                      <span class="colr-wht bld txtUpca"
+                        >Tin tức thị trường
+                      </span>
+                    </header>
+                    <div class="infort">
+                      <div class="infortin">
+                        <div class="mrT10"></div>
+                        <div id="itemp_pr_2015_4t1_0">
+                          <article class="infobx-cmon pdB10 clrF">
+                            <div class="imgFlt mrR10">
+                              <a
+                                rel="sponsored"
+                                class=""
+                                href="https://eva.vn/tin-tuc-cho-me/ba-me-6-con-vua-xinh-dep-lai-con-la-doanh-nhan-thanh-dat-c298a417468.html"
+                                title="Bà mẹ 6 con vừa xinh đẹp lại còn là doanh nhân thành đạt"
+                              >
+                                <img
+                                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX6+vqsEtnpAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg=="
+                                  data-original="https://cdn.eva.vn/upload/4-2019/images/2019-12-30/thumbnail/ghj-1577676135-490-width640height480.jpg"
+                                  class="width-100"
+                                  alt="Bà mẹ 6 con vừa xinh đẹp lại còn là doanh nhân thành đạt"
+                                />
+                              </a>
+                            </div>
+                            <header class="cntFlt">
+                              <a
+                                rel="sponsored"
+                                class="clrTit info-links"
+                                href="https://eva.vn/tin-tuc-cho-me/ba-me-6-con-vua-xinh-dep-lai-con-la-doanh-nhan-thanh-dat-c298a417468.html"
+                                title="Bà mẹ 6 con vừa xinh đẹp lại còn là doanh nhân thành đạt"
+                                >Bà mẹ 6 con vừa xinh đẹp lại còn là doanh nhân
+                                thành đạt</a
+                              >
+                            </header>
+                          </article>
+                        </div>
+                        <div id="itemp_pr_2015_4t1_1">
+                          <article class="infobx-cmon pdB10 clrF">
+                            <div class="imgFlt mrR10">
+                              <a
+                                rel="sponsored"
+                                class=""
+                                href="https://eva.vn/an-dam/cho-be-an-dam-organic-nhung-luu-y-vang-me-can-ghi-nho-c371a417627.html"
+                                title="Cho bé “ăn dặm Organic” – những lưu ý vàng mẹ cần ghi nhớ"
+                              >
+                                <img
+                                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX6+vqsEtnpAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg=="
+                                  data-original="https://cdn.eva.vn/upload/4-2019/images/2019-12-31/thumbnail/jhj-1577774314-217-width640height480.jpg"
+                                  class="width-100"
+                                  alt="Cho bé “ăn dặm Organic” – những lưu ý vàng mẹ cần ghi nhớ"
+                                />
+                              </a>
+                            </div>
+                            <header class="cntFlt">
+                              <a
+                                rel="sponsored"
+                                class="clrTit info-links"
+                                href="https://eva.vn/an-dam/cho-be-an-dam-organic-nhung-luu-y-vang-me-can-ghi-nho-c371a417627.html"
+                                title="Cho bé “ăn dặm Organic” – những lưu ý vàng mẹ cần ghi nhớ"
+                                >Cho bé “ăn dặm Organic” – những lưu ý vàng mẹ
+                                cần ghi nhớ</a
+                              >
+                            </header>
+                          </article>
+                        </div>
+                        <div id="itemp_pr_2015_4t1_2">
+                          <article class="infobx-cmon pdB10 clrF">
+                            <div class="imgFlt mrR10">
+                              <a
+                                rel="sponsored"
+                                class=""
+                                href="https://eva.vn/tin-tuc-cho-me/chon-tung-duong-chat-toi-uu-tu-tu-nhien-bi-kip-cho-be-thong-minh-c298a417499.html"
+                                title="Chọn từng dưỡng chất tối ưu từ tự nhiên: Bí kíp cho bé thông minh"
+                              >
+                                <img
+                                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX6+vqsEtnpAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg=="
+                                  data-original="https://cdn.eva.vn/upload/4-2019/images/2019-12-30/thumbnail/fg-1577688264-740-width640height480.jpg"
+                                  class="width-100"
+                                  alt="Chọn từng dưỡng chất tối ưu từ tự nhiên: Bí kíp cho bé thông minh"
+                                />
+                              </a>
+                            </div>
+                            <header class="cntFlt">
+                              <a
+                                rel="sponsored"
+                                class="clrTit info-links"
+                                href="https://eva.vn/tin-tuc-cho-me/chon-tung-duong-chat-toi-uu-tu-tu-nhien-bi-kip-cho-be-thong-minh-c298a417499.html"
+                                title="Chọn từng dưỡng chất tối ưu từ tự nhiên: Bí kíp cho bé thông minh"
+                                >Chọn từng dưỡng chất tối ưu từ tự nhiên: Bí kíp
+                                cho bé thông minh</a
+                              >
+                            </header>
+                          </article>
+                        </div>
+                        <div id="itemp_pr_2015_4t1_3">
+                          <article class="infobx-cmon pdB10 clrF">
+                            <div class="imgFlt mrR10">
+                              <a
+                                rel="sponsored"
+                                class=""
+                                href="https://eva.vn/tin-tuc-cho-me/vu-thi-hai-ba-me-4-con-xinh-dep-gioi-giang-co-su-nghiep-dang-mo-uoc-c298a417866.html"
+                                title="Vũ Thị Hài - bà mẹ 4 con xinh đẹp, giỏi giang, có sự nghiệp đáng mơ ước"
+                              >
+                                <img
+                                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX6+vqsEtnpAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg=="
+                                  data-original="https://cdn.eva.vn/upload/1-2020/images/2020-01-02/thumbnail/untitled-1-1577957126-704-width640height480.jpg"
+                                  class="width-100"
+                                  alt="Vũ Thị Hài - bà mẹ 4 con xinh đẹp, giỏi giang, có sự nghiệp đáng mơ ước"
+                                />
+                              </a>
+                            </div>
+                            <header class="cntFlt">
+                              <a
+                                rel="sponsored"
+                                class="clrTit info-links"
+                                href="https://eva.vn/tin-tuc-cho-me/vu-thi-hai-ba-me-4-con-xinh-dep-gioi-giang-co-su-nghiep-dang-mo-uoc-c298a417866.html"
+                                title="Vũ Thị Hài - bà mẹ 4 con xinh đẹp, giỏi giang, có sự nghiệp đáng mơ ước"
+                                >Vũ Thị Hài - bà mẹ 4 con xinh đẹp, giỏi giang,
+                                có sự nghiệp đáng mơ ước</a
+                              >
+                            </header>
+                          </article>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                  <div class="clrF"></div>
+                  <section class="sknb_op1812">
+                    <header>
+                      <span class="txt"></span>
+                    </header>
+                    <div class="list">
+                      <div class="inner">
+                        <article class="flex">
+                          <span class="icoDot"></span>
+                          <a
+                            href="https://eva.vn/eva-top-pick-2019-p3645c73.html?eva_click_from=banner-evatoppick"
+                            title="Những scandal rúng động showbiz 2019"
+                            >Những scandal rúng động showbiz 2019</a
+                          >
+                        </article>
+                        <article class="flex">
+                          <span class="icoDot"></span>
+                          <a
+                            href="https://eva.vn/tin-tuc/nhan-so-tien-thuong-khung-tuyet-dung-se-danh-de-tra-no-not-so-tien-xay-nha-cho-bo-me-c73a416164.html"
+                            title="eMagazine - Chuyên đề đặc biệt"
+                            >eMagazine - Chuyên đề đặc biệt</a
+                          >
+                        </article>
+                        <article class="flex">
+                          <span class="icoDot"></span>
+                          <a
+                            href="https://eva.vn/dinh-duong-vang-cho-suc-khoe-p3598c399.html"
+                            title="Sức khỏe người cao tuổi"
+                            >Sức khỏe người cao tuổi</a
+                          >
+                        </article>
+                        <article class="flex">
+                          <span class="icoDot"></span>
+                          <a
+                            href="https://eva.vn/nuoi-con-khong-khang-sinh-p3591c10.html?"
+                            title="Nuôi con không kháng sinh"
+                            >Nuôi con không kháng sinh</a
+                          >
+                        </article>
+                        <article class="flex">
+                          <span class="icoDot"></span>
+                          <a
+                            href="https://eva.vn/nan-theo-duoi-dieu-tot-nhat-vi-con-p3487c10.html"
+                            title="NAN - Theo đuổi điều tốt nhất vì con"
+                            >NAN - Theo đuổi điều tốt nhất vì con</a
+                          >
+                        </article>
+                      </div>
+                    </div>
+                  </section>
+                  <section>
+                    <div class="pdB10">
+                      <header class="pkBxTit">
+                        <span class="txtUpca bld"
+                          ><a href="/tinh-yeu-gioi-tinh-c3.html" title="Eva Yêu"
+                            >Eva Yêu</a
+                          ></span
+                        >
+                      </header>
+                      <div class="infort">
+                        <div class="infortin">
+                          <article class="infobx-cmon pdB10 pdT10 clrF">
+                            <div class="imgFlt mrR10">
+                              <a
+                                class=""
+                                href="https://eva.vn/tinh-yeu-gioi-tinh/yeu-nhau-anh-cho-di-du-lich-nhu-com-bua-ngay-cuoi-toi-xe-vay-vut-guoc-chay-voi-c3a417897.html"
+                                title="Yêu nhau anh cho đi du lịch như cơm bữa, ngày cưới tôi xé váy vứt guốc chạy vội"
+                              >
+                                <img
+                                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX6+vqsEtnpAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg=="
+                                  data-original="https://cdn.eva.vn/upload/1-2020/images/2020-01-03/thumbnail/1578020015-609-thumbnail.jpg"
+                                  alt="Eva Yêu - Yêu nhau anh cho đi du lịch như cơm bữa, ngày cưới tôi xé váy vứt guốc chạy vội"
+                                  class="width-100"
+                                />
+                              </a>
+                            </div>
+                            <header class="cntFlt">
+                              <a
+                                href="https://eva.vn/tinh-yeu-gioi-tinh/yeu-nhau-anh-cho-di-du-lich-nhu-com-bua-ngay-cuoi-toi-xe-vay-vut-guoc-chay-voi-c3a417897.html"
+                                title="Yêu nhau anh cho đi du lịch như cơm bữa, ngày cưới tôi xé váy vứt guốc chạy vội"
+                                class="clrTit info-links"
+                                >Yêu nhau anh cho đi du lịch như cơm bữa, ngày
+                                cưới tôi xé váy vứt guốc chạy vội</a
+                              >
+                              <span class="iconw ico-sprt"></span>
+                            </header>
+                          </article>
+                          <article class="infobx-cmon pdB10 pdT10 clrF">
+                            <div class="imgFlt mrR10">
+                              <a
+                                class=""
+                                href="https://eva.vn/tinh-yeu-gioi-tinh/vi-yeu-cu-dam-dau-toi-bat-chap-do-vo-yeu-nguoi-cu-cua-ban-than-c3a417889.html"
+                                title='Vì yêu cứ đâm đầu, tôi bất chấp "đổ vỏ" yêu người cũ của bạn thân'
+                              >
+                                <img
+                                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX6+vqsEtnpAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg=="
+                                  data-original="https://cdn.eva.vn/upload/1-2020/images/2020-01-02/thumbnail/1577964073-18-thumbnail.jpg"
+                                  alt='Eva Yêu - Vì yêu cứ đâm đầu, tôi bất chấp "đổ vỏ" yêu người cũ của bạn thân'
+                                  class="width-100"
+                                />
+                              </a>
+                            </div>
+                            <header class="cntFlt">
+                              <a
+                                href="https://eva.vn/tinh-yeu-gioi-tinh/vi-yeu-cu-dam-dau-toi-bat-chap-do-vo-yeu-nguoi-cu-cua-ban-than-c3a417889.html"
+                                title='Vì yêu cứ đâm đầu, tôi bất chấp "đổ vỏ" yêu người cũ của bạn thân'
+                                class="clrTit info-links"
+                                >Vì yêu cứ đâm đầu, tôi bất chấp &#34;đổ vỏ&#34;
+                                yêu người cũ của bạn thân</a
+                              >
+                            </header>
+                          </article>
+                          <article class="infobx-cmon pdB10 pdT10 clrF">
+                            <div class="imgFlt mrR10">
+                              <a
+                                class=""
+                                href="https://eva.vn/tinh-yeu-gioi-tinh/ra-mat-nha-ban-gai-anh-re-em-thi-tham-2-tu-nhay-cam-khien-toi-kinh-hai-c3a417745.html"
+                                title="Ra mắt nhà bạn gái, anh rể em thì thầm 2 từ nhạy cảm khiến tôi kinh hãi"
+                              >
+                                <img
+                                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX6+vqsEtnpAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg=="
+                                  data-original="https://cdn.eva.vn/upload/1-2020/images/2020-01-01/thumbnail/1516073029-501-vo-nhap-vien-toi-chet-lang-khi-nghe-duoc-loi-thi-tham-cua-con-gai-chong-chet-lang-1515921884-width640height362-1577867849-870-width640height480.jpg"
+                                  alt="Eva Yêu - Ra mắt nhà bạn gái, anh rể em thì thầm 2 từ nhạy cảm khiến tôi kinh hãi"
+                                  class="width-100"
+                                />
+                              </a>
+                            </div>
+                            <header class="cntFlt">
+                              <a
+                                href="https://eva.vn/tinh-yeu-gioi-tinh/ra-mat-nha-ban-gai-anh-re-em-thi-tham-2-tu-nhay-cam-khien-toi-kinh-hai-c3a417745.html"
+                                title="Ra mắt nhà bạn gái, anh rể em thì thầm 2 từ nhạy cảm khiến tôi kinh hãi"
+                                class="clrTit info-links"
+                                >Ra mắt nhà bạn gái, anh rể em thì thầm 2 từ
+                                nhạy cảm khiến tôi kinh hãi</a
+                              >
+                            </header>
+                          </article>
+                          <article class="infobx-cmon pdB10 pdT10 clrF">
+                            <div class="imgFlt mrR10">
+                              <a
+                                class=""
+                                href="https://eva.vn/tinh-yeu-gioi-tinh/can-trong-vi-nu-hon-cung-gay-benh-phong-the-c3a417854.html"
+                                title="Cẩn trọng vì nụ hôn cũng gây bệnh phòng the"
+                              >
+                                <img
+                                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX6+vqsEtnpAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg=="
+                                  data-original="https://cdn.eva.vn/upload/1-2020/images/2020-01-02/thumbnail/1577954605-500-thumbnail.jpg"
+                                  alt="Eva Yêu - Cẩn trọng vì nụ hôn cũng gây bệnh phòng the"
+                                  class="width-100"
+                                />
+                              </a>
+                            </div>
+                            <header class="cntFlt">
+                              <a
+                                href="https://eva.vn/tinh-yeu-gioi-tinh/can-trong-vi-nu-hon-cung-gay-benh-phong-the-c3a417854.html"
+                                title="Cẩn trọng vì nụ hôn cũng gây bệnh phòng the"
+                                class="clrTit info-links"
+                                >Cẩn trọng vì nụ hôn cũng gây bệnh phòng the</a
+                              >
+                            </header>
+                          </article>
+                          <article class="infobx-cmon pdB10 pdT10 clrF">
+                            <div class="imgFlt mrR10">
+                              <a
+                                class=""
+                                href="https://eva.vn/tinh-yeu-gioi-tinh/a-hau-khien-ty-phu-bo-con-yeu-say-dam-4-nam-chua-duoc-cuoi-song-tan-tien-kho-tin-c3a417835.html"
+                                title="Á hậu khiến tỷ phú bỏ con yêu say đắm: 4 năm chưa được cưới, sống tằn tiện khó tin"
+                              >
+                                <img
+                                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX6+vqsEtnpAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg=="
+                                  data-original="https://cdn.eva.vn/upload/1-2020/images/2020-01-02/thumbnail/page333333333333333333-1577944045-346-width640height480.jpg"
+                                  alt="Eva Yêu - Á hậu khiến tỷ phú bỏ con yêu say đắm: 4 năm chưa được cưới, sống tằn tiện khó tin"
+                                  class="width-100"
+                                />
+                              </a>
+                            </div>
+                            <header class="cntFlt">
+                              <a
+                                href="https://eva.vn/tinh-yeu-gioi-tinh/a-hau-khien-ty-phu-bo-con-yeu-say-dam-4-nam-chua-duoc-cuoi-song-tan-tien-kho-tin-c3a417835.html"
+                                title="Á hậu khiến tỷ phú bỏ con yêu say đắm: 4 năm chưa được cưới, sống tằn tiện khó tin"
+                                class="clrTit info-links"
+                                >Á hậu khiến tỷ phú bỏ con yêu say đắm: 4 năm
+                                chưa được cưới, sống tằn tiện khó tin</a
+                              >
+                            </header>
+                          </article>
+                          <article class="infobx-cmon pdB10 pdT10 clrF">
+                            <div class="imgFlt mrR10">
+                              <a
+                                class=""
+                                href="https://eva.vn/tinh-yeu-gioi-tinh/dem-tan-hon-me-duoi-anh-ra-ngoai-khang-khang-mang-chan-goi-vao-ngu-voi-toi-c3a417709.html"
+                                title="Đêm tân hôn mẹ đuổi anh ra ngoài, khăng khăng mang chăn gối vào ngủ với tôi"
+                              >
+                                <img
+                                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX6+vqsEtnpAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg=="
+                                  data-original="https://cdn.eva.vn/upload/1-2020/images/2020-01-01/thumbnail/11-3-1577844578-691-width640height480.jpg"
+                                  alt="Eva Yêu - Đêm tân hôn mẹ đuổi anh ra ngoài, khăng khăng mang chăn gối vào ngủ với tôi"
+                                  class="width-100"
+                                />
+                              </a>
+                            </div>
+                            <header class="cntFlt">
+                              <a
+                                href="https://eva.vn/tinh-yeu-gioi-tinh/dem-tan-hon-me-duoi-anh-ra-ngoai-khang-khang-mang-chan-goi-vao-ngu-voi-toi-c3a417709.html"
+                                title="Đêm tân hôn mẹ đuổi anh ra ngoài, khăng khăng mang chăn gối vào ngủ với tôi"
+                                class="clrTit info-links"
+                                >Đêm tân hôn mẹ đuổi anh ra ngoài, khăng khăng
+                                mang chăn gối vào ngủ với tôi</a
+                              >
+                            </header>
+                          </article>
+                          <nav class="rdMr prfStr txtCent clrF mrB10 pdT10">
+                            <a
+                              href="/tinh-yeu-gioi-tinh-c3.html"
+                              title="Eva Yêu"
+                              class="btn btnDf txtTrf"
+                              >Xem thêm Eva Yêu</a
+                            >
+                          </nav>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                  <div id="subRight"></div>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+      <nav class="hdr_contnr_up" style="float: right" id="menu_header_right">
+        <div class="hdrRtIn">
+          <div class="contnr">
+            <div class="tpmnRt">
+              <ul>
+                @foreach(var item in @Model["Categories"]) {
+                  <li>
+                      <a
+                        class="clrWh txtUpca"
+                        href=@item["Href"]
+                        title="Eva tám"
+                        >@item["Name"]</a
+                      >
+                      <div
+                        class="mnc2hdr"
+                        id="div_menu_c2_header_66"
+                      ></div>
+                  </li>
+                }
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <footer class="ft-wrp clrF">
+        <div class="ft-seo">
+          <div class="contnr">
+            <div class="ft-men2">
+              <a
+                rel="nofollow"
+                class="imgGt"
+                href="http://baogia.eva.vn/"
+                title="Giới thiệu"
+                target="_blank"
+                >Giới thiệu</a
+              >|<a href="javascript:openContact()" title="Góp ý">Góp ý</a>|<a
+                href="#"
+                title="Đầu trang"
+                >Đầu trang</a
+              >|<a
+                class="imgQc"
+                rel="nofollow"
+                href="http://baogia.eva.vn/"
+                title="BÁO GIÁ QUẢNG CÁO"
+                target="_blank"
+                >BÁO GIÁ QUẢNG CÁO</a
+              >
+            </div>
+          </div>
+        </div>
+        <div class="footerSeo-chanTrang"></div>
+        <div class="ft-btm">
+          <div class="contnr">
+            <div class="copyRt txtCent">
+              <div class="newFooter contnr">
+                <div class="newFooterRow2 flex">
+                  <div class="col col1">
+                    <div class="mrB40">
+                      <div class="tit bld mrB10">TRỤ SỞ HÀ NỘI</div>
+
+                      <div class="txtInfo">
+                        <p>Tầng 16, Toà nhà Geleximco , 36 Hoàng Cầu</p>
+
+                        <p>Phường Ô chợ Dừa, Quận Đống Đa, TP Hà Nội.</p>
+
+                        <p>Điện thoại: 0243 512 1806</p>
+
+                        <p>Fax: 0243 512 1804</p>
+                      </div>
+                      <a class="viewMap bld" rel="nofollow" target="_blank"
+                        ><img
+                          alt=""
+                          src="https://cdn.eva.vn/images/responsive/footer-map-icon.jpg"
+                        />
+                        XEM BẢN ĐỒ</a
+                      >
+                    </div>
+
+                    <div>
+                      <div class="tit bld mrB10">
+                        VĂN PHÒNG ĐẠI DIỆN TP.HỒ CHÍ MINH
+                      </div>
+
+                      <div class="txtInfo">
+                        <p>
+                          Tầng 7 - Toà nhà Việt Úc - 402 Nguyễn Thị Minh Khai
+                        </p>
+
+                        <p>Phường 5 , Quận 3 , Tp.Hồ Chí Minh</p>
+                      </div>
+                      <a class="viewMap bld" rel="nofollow" target="_blank"
+                        ><img
+                          alt=""
+                          src="https://cdn.eva.vn/images/responsive/footer-map-icon.jpg"
+                        />
+                        XEM BẢN ĐỒ</a
+                      >
+                    </div>
+                  </div>
+
+                  <div class="col col2">
+                    <div class="mrB20">
+                      <div class="tit bld mrB10">
+                        CHỊU TRÁCH NHIỆM QUẢN LÝ NỘI DUNG
+                      </div>
+
+                      <div class="txtInfo">
+                        <p>Bà Nguyễn Hồng Thuý</p>
+                      </div>
+                    </div>
+
+                    <div class="mrB20">
+                      <div class="tit bld mrB10">HỢP TÁC TRUYỀN THÔNG</div>
+
+                      <div class="txtInfo">
+                        <p>
+                          <a href="mailto:marketing@eva.vn"
+                            ><img
+                              alt=""
+                              src="https://cdn.eva.vn/images/responsive/footer-mail-copy.jpg"
+                            />
+                            marketing@eva.vn</a
+                          >
+                        </p>
+                      </div>
+                    </div>
+
+                    <div>
+                      <div class="tit bld mrB10">LIÊN HỆ QUẢNG CÁO</div>
+
+                      <div class="txtInfo">
+                        <p>
+                          <a href="tel:0903 288 624"
+                            ><img
+                              alt=""
+                              src="https://cdn.eva.vn/images/responsive/footer-phone.jpg"
+                            />
+                            0903 288 624
+                          </a>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col col3">
+                    <div class="mrB10 inbl">
+                      <img
+                        alt=""
+                        src="https://cdn.eva.vn/images/responsive/footer-24h.png"
+                      />
+                    </div>
+
+                    <div class="txtInfo">
+                      <p class="copyRight mrB20">
+                        Copyright 2004-2017 Eva.vn , all rights reserved.
+                      </p>
+
+                      <p class="mrB20">
+                        Tầng 12, Toà nhà Geleximco, 36 Hoàng Cầu Phường Ô Chợ
+                        Dừa, Quận Đống Đa, TP Hà Nội.
+                      </p>
+
+                      <p>
+                        Giấy phép số: 351/GP-TTĐT ngày cấp 5/2/2015. SỞ THÔNG
+                        TIN VÀ TRUYỀN THÔNG TP HÀ NỘI
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="blurLayer displaynone">
+                <div class="chtg contnr">
+                  <div class="inner">
+                    <div class="bigTit">Câu hỏi thường gặp</div>
+
+                    <div class="smallTit bld colorPink">
+                      <span class="number">1</span> Tôi có thể đóng góp nội dung
+                      gì cho Eva.vn?
+                    </div>
+
+                    <p>
+                      Bạn có thể đóng góp nội dung liên quan đến các Chủ
+                      đề/Chuyên mục sau:
+                    </p>
+
+                    <div class="mrT20 mrB60 flex link">
+                      <div>
+                        <a href="javascript:void(0)">Eva Tám</a>
+                        <a href="javascript:void(0)">Mẹ chồng - Nàng dâu</a>
+                        <a href="javascript:void(0)">Chuyện vợ chồng</a>
+                        <a href="javascript:void(0)">Bà bầu</a>
+                        <a href="javascript:void(0)">Làm mẹ</a>
+                      </div>
+
+                      <div>
+                        <a href="javascript:void(0)">Giải trí</a>
+                        <a href="javascript:void(0)">Thời trang</a>
+                        <a href="javascript:void(0)">Làm đẹp</a>
+                        <a href="javascript:void(0)">Chuyện tình yêu</a>
+                      </div>
+
+                      <div>
+                        <a href="javascript:void(0)">Sắc màu cuộc sống</a>
+                        <a href="javascript:void(0)">Làm bếp/Ẩm thực</a>
+                        <a href="javascript:void(0)">Sức khoẻ</a>
+                        <a href="javascript:void(0)">Nhà đẹp</a>
+                      </div>
+                    </div>
+
+                    <div class="mrB60">
+                      <div class="smallTit bld colorPink">
+                        <span class="number">2</span> Nội dung của tôi sẽ gửi về
+                        đâu?
+                      </div>
+
+                      <p>
+                        Sau khi chuẩn bị thông tin/nội dung phù hợp với chuyên
+                        mục lựa chọn, bạn hãy đóng góp cho chúng tôi vào địa chỉ
+                        email sau:
+                        <a class="colorPink" href="mailto:banbientap@eva.vn"
+                          ><i>banbientap@eva.vn</i></a
+                        >
+                      </p>
+                    </div>
+
+                    <div class="mrB60">
+                      <div class="smallTit bld colorPink">
+                        <span class="number">3</span> Làm thế nào để tôi biết
+                        nội dung đóng góp của mình được sử dụng?
+                      </div>
+
+                      <p>
+                        Sau khi tiếp nhận nội dung bạn đóng góp tại hộp thư
+                        trên, Ban Biên tập Eva.vn sẽ xét duyệt.
+                      </p>
+
+                      <p>
+                        Nếu phù hợp với định hướng nội dung của Eva.vn, chúng
+                        tôi sẽ biên tập lại, đăng tải trên Eva.vn và gửi email
+                        thông báo cho bạn.
+                      </p>
+                    </div>
+
+                    <div class="mrB60">
+                      <div class="smallTit bld colorPink">
+                        <span class="number">4</span> Quyền lợi của tôi khi nội
+                        dung mình đóng góp được đăng tải?
+                      </div>
+
+                      <p>
+                        Mọi thông tin về quyền lợi, Ban Biên tập sẽ trao đổi với
+                        bạn trong email phản hồi.
+                      </p>
+                    </div>
+
+                    <div class="mrB60">
+                      <div class="smallTit bld colorPink">
+                        <span class="number">5</span> Sau bao lâu thì tôi nhận
+                        được email phản hồi?
+                      </div>
+
+                      <p>
+                        Ban Biên tập sẽ phản hồi bạn trong vòng 24h (giờ hành
+                        chính) kể từ khi nhận được email đóng góp của Quý độc
+                        giả.
+                      </p>
+                    </div>
+
+                    <div class="mrB60">
+                      <div class="smallTit bld colorPink txtThanks">
+                        Xin chân thành cảm ơn!
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+      <div class="clear"></div>
+    </div>
+    <script src="https://file-aioc.web.app/assets/js/app.js"></script>
+    <script
+      async
+      src="https://file-aioc.web.app/assets/js/jquery.min.js"
+    ></script>
+    <script
+      async
+      src="https://file-aioc.web.app/assets/js/common.min.js"
+    ></script>
+    <script
+      async
+      src="https://file-aioc.web.app/assets/js/swiper.min.js"
+    ></script>
+    <script
+      async
+      src="https://cdn.eva.vn/js/eva-js-load-sau-pc.min.js?v=2019110718"
+    ></script>
+  </body>
+</html>

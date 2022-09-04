@@ -40,6 +40,7 @@ public class NotionJob : ICronJob
             var database = sourcePath.First();
             var token = sourcePath.Last();
             var data = await _notionClient.QueryAsync(token, database);
+            if (data is null) continue;
             foreach (var dictionary in data)
             {
                 var id = dictionary.FirstOrDefault(x => x.Key.Equals("Id")).Value.ToString();

@@ -14,7 +14,7 @@ public class SettingsContext : DbContext
     public DbSet<SettingAttribute> Attributes { get; set; } = default!;
 
     public DbSet<SettingCode> Codes { get; set; } = default!;
-    
+
     public DbSet<SettingEntity> Entities { get; set; } = default!;
 
     public DbSet<SettingEntityCode> EntityCodes { get; set; } = default!;
@@ -28,13 +28,17 @@ public class SettingsContext : DbContext
     public DbSet<SettingTenant> Tenants { get; set; } = default!;
 
     public DbSet<SettingTenantDomain> TenantDomains { get; set; } = default!;
-    
+
     public DbSet<SettingTenantGroup> TenantGroups { get; set; } = default!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.HasDefaultSchema(Schema);
+        foreach (var relationship in modelBuilder.Model.GetEntityTypes()
+                     .SelectMany(e => e.GetForeignKeys()))
+            relationship.DeleteBehavior = DeleteBehavior.Restrict;
+
         new SettingAttribute().ModelCreating<SettingAttribute>(modelBuilder, Schema);
     }
 }

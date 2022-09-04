@@ -1,10 +1,12 @@
+using System.Collections.Concurrent;
 using AioCore.Domain.DatabaseContexts;
 using AioCore.Domain.SettingAggregate;
 using AioCore.Shared.Extensions;
 using AioCore.Shared.SeedWorks;
 using AioCore.Shared.ValueObjects;
 using Microsoft.EntityFrameworkCore;
-using Scriban;
+using MongoDB.Driver;
+using RazorEngineCore;
 
 namespace AioCore.Services;
 
@@ -15,43 +17,68 @@ public interface ITemplateService
 
 public class TemplateService : ITemplateService
 {
-    private readonly SettingsContext _context;
+    private readonly SettingsContext _settingsContext;
+    private readonly DynamicContext _dynamicContext;
     private readonly AppSettings _appSettings;
     private readonly IHttpClientFactory _httpClient;
     private readonly IClientService _clientService;
 
     public TemplateService(
-        SettingsContext context,
+        SettingsContext settingsContext,
         AppSettings appSettings,
         IHttpClientFactory httpClient,
-        IClientService clientService)
+        IClientService clientService,
+        DynamicContext dynamicContext)
     {
-        _context = context;
+        _settingsContext = settingsContext;
         _appSettings = appSettings;
         _httpClient = httpClient;
         _clientService = clientService;
+        _dynamicContext = dynamicContext;
     }
 
     public async Task<string> Render(string? pathType = null, bool indexPage = false)
     {
         var domain = _clientService.Host();
         if (string.IsNullOrEmpty(domain)) return string.Empty;
-        var tenant = await _context.Tenants.Include(x => x!.Codes)
+        var tenant = await _settingsContext.Tenants.Include(x => x!.Codes)
+            .ThenInclude(x => x.EntityCodes).ThenInclude(x => x.Entity)
             .FirstOrDefaultAsync(y => y.Domain.Equals(domain));
         var settingCode = tenant?.Codes.FirstOrDefault(x => x.PathType.Equals(indexPage ? "index" : pathType));
         if (settingCode is null) return string.Empty;
 
         var staticCode = await GetCode(tenant, settingCode);
-        var template = Template.ParseLiquid(staticCode);
-        
+
         // Start - Build models
-        
-        
-        
+
+        var entities = settingCode.EntityCodes.Select(x => x.Entity).ToList();
+        var entityIds = entities.Select(x => x.Id);
+        var entitiesData = await _dynamicContext.Entities.Where(
+                x => entityIds.Contains(x.EntityId))
+            .ToListAsync();
+
+        var modelBinding = new Dictionary<string, List<Dictionary<string, object>>>();
+        foreach (var group in entitiesData.GroupBy(x => x.EntityId))
+        {
+            var entity = entities.FirstOrDefault(x => x.Id.Equals(group.Key));
+            var dictionary = group.OrderByDescending(x => x.CreatedAt).ToList()
+                .Select(x => x.Data!).ToList();
+            if (entity is not null && dictionary.Any())
+            {
+                modelBinding.TryAdd(entity.Name, dictionary.ToList());
+            }
+        }
+
         // End - Build models
-        
-        var htmlCode = await template.RenderAsync(new { });
-        return htmlCode;
+
+        var razorEngine = new RazorEngine();
+        var compiledTemplate = await razorEngine.CompileAsync(staticCode, builder =>
+        {
+            builder.AddAssemblyReferenceByName("System.Collections"); // by name
+            // builder.AddAssemblyReference(typeof(System.Collections.Generic.List<>)); // by type
+        });
+        var result = await compiledTemplate.RunAsync(modelBinding);
+        return result;
     }
 
     private async Task<string> GetCode(Entity? tenant, SettingCode code)

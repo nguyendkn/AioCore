@@ -70,7 +70,7 @@ namespace AioCore.Web.Migrations
                         principalSchema: "Settings",
                         principalTable: "TenantGroups",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -96,14 +96,15 @@ namespace AioCore.Web.Migrations
                         column: x => x.ParentId,
                         principalSchema: "Settings",
                         principalTable: "Codes",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Codes_Tenants_TenantId",
                         column: x => x.TenantId,
                         principalSchema: "Settings",
                         principalTable: "Tenants",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -128,7 +129,7 @@ namespace AioCore.Web.Migrations
                         principalSchema: "Settings",
                         principalTable: "Tenants",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -152,7 +153,7 @@ namespace AioCore.Web.Migrations
                         principalSchema: "Settings",
                         principalTable: "Tenants",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -177,7 +178,35 @@ namespace AioCore.Web.Migrations
                         principalSchema: "Settings",
                         principalTable: "Entities",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EntityCodes",
+                schema: "Settings",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EntityId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CodeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EntityCodes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EntityCodes_Codes_CodeId",
+                        column: x => x.CodeId,
+                        principalSchema: "Settings",
+                        principalTable: "Codes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_EntityCodes_Entities_EntityId",
+                        column: x => x.EntityId,
+                        principalSchema: "Settings",
+                        principalTable: "Entities",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -199,7 +228,8 @@ namespace AioCore.Web.Migrations
                         column: x => x.EntityId,
                         principalSchema: "Settings",
                         principalTable: "Entities",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -222,14 +252,15 @@ namespace AioCore.Web.Migrations
                         column: x => x.AttributeId,
                         principalSchema: "Settings",
                         principalTable: "Attributes",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_FormAttributes_Forms_FormId",
                         column: x => x.FormId,
                         principalSchema: "Settings",
                         principalTable: "Forms",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -261,6 +292,18 @@ namespace AioCore.Web.Migrations
                 schema: "Settings",
                 table: "Entities",
                 column: "TenantId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EntityCodes_CodeId",
+                schema: "Settings",
+                table: "EntityCodes",
+                column: "CodeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EntityCodes_EntityId",
+                schema: "Settings",
+                table: "EntityCodes",
+                column: "EntityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_FormAttributes_AttributeId",
@@ -296,7 +339,7 @@ namespace AioCore.Web.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Codes",
+                name: "EntityCodes",
                 schema: "Settings");
 
             migrationBuilder.DropTable(
@@ -309,6 +352,10 @@ namespace AioCore.Web.Migrations
 
             migrationBuilder.DropTable(
                 name: "TenantDomains",
+                schema: "Settings");
+
+            migrationBuilder.DropTable(
+                name: "Codes",
                 schema: "Settings");
 
             migrationBuilder.DropTable(

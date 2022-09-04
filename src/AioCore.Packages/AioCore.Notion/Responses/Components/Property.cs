@@ -7,6 +7,7 @@ using Newtonsoft.Json.Converters;
 namespace AioCore.Notion.Responses.Components;
 
 [JsonConverter(typeof(JsonSubtypes), "type")]
+[JsonSubtypes.KnownSubType(typeof(RelationProperty), PropertyType.Relation)]
 [JsonSubtypes.KnownSubType(typeof(RichTextProperty), PropertyType.RichText)]
 [JsonSubtypes.KnownSubType(typeof(TitleProperty), PropertyType.Title)]
 public class Property

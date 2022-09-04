@@ -28,6 +28,6 @@ public class ClientService : IClientService
 
     public async Task<SettingTenant?> Tenant()
     {
-        return await _settingsContext.Tenants.FirstOrDefaultAsync(x => x != null && x.Domain.Equals(Host()));
+        return await _settingsContext.Tenants.FirstOrDefaultAsync(x => x.Domain.Equals(Host()));
     }
 }

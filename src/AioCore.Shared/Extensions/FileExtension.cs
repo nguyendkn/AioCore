@@ -21,6 +21,7 @@ public static class FileExtension
 
     public static string ReadFile(this string path)
     {
+        if (!File.Exists(path)) return string.Empty;
         using var streamWriter = new StreamReader(path);
         var formatted = streamWriter.ReadToEnd();
         streamWriter.Dispose();

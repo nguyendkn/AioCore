@@ -27,6 +27,8 @@ public class SettingCode : Entity
 
     [ForeignKey(nameof(TenantId))]
     public SettingTenant Tenant { get; set; } = default!;
+    
+    public ICollection<SettingEntityCode> EntityCodes { get; set; } = default!;
 
     public void Update(string name, string code)
     {

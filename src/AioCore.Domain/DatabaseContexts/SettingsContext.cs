@@ -17,6 +17,8 @@ public class SettingsContext : DbContext
     
     public DbSet<SettingEntity> Entities { get; set; } = default!;
 
+    public DbSet<SettingEntityCode> EntityCodes { get; set; } = default!;
+
     public DbSet<SettingFeature> Features { get; set; } = default!;
 
     public DbSet<SettingForm> Forms { get; set; } = default!;

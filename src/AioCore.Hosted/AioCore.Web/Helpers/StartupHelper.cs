@@ -60,7 +60,7 @@ public static class StartupHelper
     {
         services.AddScoped<IClientService, ClientService>();
         services.AddScoped<IAlertService, AlertService>();
-        services.AddScoped<IPreviewService, PreviewService>();
+        services.AddScoped<ITemplateService, TemplateService>();
     }
 
     public static void AddSingletonAioCore(this IServiceCollection services)

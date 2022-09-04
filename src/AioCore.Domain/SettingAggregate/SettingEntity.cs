@@ -21,6 +21,8 @@ public class SettingEntity : Entity
     [ForeignKey(nameof(TenantId))]
     public SettingTenant Tenant { get; set; } = default!;
 
+    public ICollection<SettingEntityCode> EntityCodes { get; set; } = default!;
+
     public void Update(string? name, DataSource dataSource, string? sourcePath)
     {
         Name = string.IsNullOrEmpty(name) ? Name : name;

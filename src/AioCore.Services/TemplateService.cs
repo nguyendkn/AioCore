@@ -3,25 +3,27 @@ using AioCore.Domain.SettingAggregate;
 using AioCore.Shared.Extensions;
 using AioCore.Shared.SeedWorks;
 using AioCore.Shared.ValueObjects;
-using Fluid;
 using Microsoft.EntityFrameworkCore;
+using Scriban;
 
 namespace AioCore.Services;
 
-public interface IPreviewService
+public interface ITemplateService
 {
-    Task<string> Preview(string? pathType = null, bool indexPage = false);
+    Task<string> Render(string? pathType = null, bool indexPage = false);
 }
 
-public class PreviewService : IPreviewService
+public class TemplateService : ITemplateService
 {
     private readonly SettingsContext _context;
     private readonly AppSettings _appSettings;
     private readonly IHttpClientFactory _httpClient;
     private readonly IClientService _clientService;
 
-    public PreviewService(SettingsContext context,
-        AppSettings appSettings, IHttpClientFactory httpClient,
+    public TemplateService(
+        SettingsContext context,
+        AppSettings appSettings,
+        IHttpClientFactory httpClient,
         IClientService clientService)
     {
         _context = context;
@@ -30,7 +32,7 @@ public class PreviewService : IPreviewService
         _clientService = clientService;
     }
 
-    public async Task<string> Preview(string? pathType = null, bool indexPage = false)
+    public async Task<string> Render(string? pathType = null, bool indexPage = false)
     {
         var domain = _clientService.Host();
         if (string.IsNullOrEmpty(domain)) return string.Empty;
@@ -40,11 +42,16 @@ public class PreviewService : IPreviewService
         if (settingCode is null) return string.Empty;
 
         var staticCode = await GetCode(tenant, settingCode);
-        var fluidParser = new FluidParser();
-        if (!fluidParser.TryParse(staticCode, out var template, out var error)) return default!;
-        var context = new TemplateContext(new { });
-        var html = await template.RenderAsync(context);
-        return html;
+        var template = Template.ParseLiquid(staticCode);
+        
+        // Start - Build models
+        
+        
+        
+        // End - Build models
+        
+        var htmlCode = await template.RenderAsync(new { });
+        return htmlCode;
     }
 
     private async Task<string> GetCode(Entity? tenant, SettingCode code)

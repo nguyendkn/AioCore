@@ -10,6 +10,9 @@
 
     <ItemGroup>
         <None Update="Pages/*.razor.css" CssScope="aioc" />
+        <None Update="Views\.gitignore">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
         <None Update="Tenants\.gitignore">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>

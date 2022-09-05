@@ -18,6 +18,8 @@ public class SettingCode : Entity
 
     public string Code { get; set; } = "// Code Empty";
 
+    public bool Singled { get; set; } = false!;
+
     [ForeignKey(nameof(ParentId))] public SettingCode? Parent { get; set; }
 
     public List<SettingCode> Child { get; set; } = default!;

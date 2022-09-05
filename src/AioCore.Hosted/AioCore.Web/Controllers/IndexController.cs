@@ -18,7 +18,7 @@ public class IndexController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> Index()
     {
-        var htmlCode = await _templateService.Render("index", true);
+        var htmlCode = await _templateService.Render("index", indexPage: true);
         return await Task.FromResult(new ContentResult
         {
             ContentType = "text/html",
@@ -27,11 +27,10 @@ public class IndexController : ControllerBase
         });
     }
 
-    [HttpGet("{slug}")]
-    public async Task<IActionResult> Index(string slug)
+    [HttpGet("{first}/{second}")]
+    public async Task<IActionResult> Index(string first, string second)
     {
-        var pathType = slug.Split("/").FirstOrDefault();
-        var htmlCode = await _templateService.Render(pathType);
+        var htmlCode = await _templateService.Render(first, second);
         return await Task.FromResult(new ContentResult
         {
             ContentType = "text/html",

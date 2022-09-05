@@ -12,7 +12,7 @@ namespace AioCore.Services;
 
 public interface ITemplateService
 {
-    Task<string> Render(string? pathType = null, bool indexPage = false);
+    Task<string> Render(string? pathType = null, string? recordValue = null, bool indexPage = false);
 }
 
 public class TemplateService : ITemplateService
@@ -37,7 +37,7 @@ public class TemplateService : ITemplateService
         _dynamicContext = dynamicContext;
     }
 
-    public async Task<string> Render(string? pathType = null, bool indexPage = false)
+    public async Task<string> Render(string? pathType = null, string? recordValue = null, bool indexPage = false)
     {
         var domain = _clientService.Host();
         if (string.IsNullOrEmpty(domain)) return string.Empty;
@@ -56,8 +56,8 @@ public class TemplateService : ITemplateService
         var entitiesData = await _dynamicContext.Entities.Where(
                 x => entityIds.Contains(x.EntityId))
             .ToListAsync();
-
         var modelBinding = new Dictionary<string, List<Dictionary<string, object>>>();
+
         foreach (var group in entitiesData.GroupBy(x => x.EntityId))
         {
             var entity = entities.FirstOrDefault(x => x.Id.Equals(group.Key));
@@ -72,10 +72,8 @@ public class TemplateService : ITemplateService
         // End - Build models
 
         var razorEngine = new RazorEngine();
-        var compiledTemplate = await razorEngine.CompileAsync(staticCode, builder =>
-        {
-            builder.AddAssemblyReferenceByName("System.Collections");
-        });
+        var compiledTemplate = await razorEngine.CompileAsync(staticCode,
+            builder => { builder.AddAssemblyReferenceByName("System.Collections"); });
         var result = await compiledTemplate.RunAsync(modelBinding);
         return result;
     }

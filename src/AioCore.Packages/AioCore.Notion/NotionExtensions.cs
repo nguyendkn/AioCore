@@ -59,8 +59,24 @@ public static class NotionExtensions
     private static void TransformImage(Block block, StringBuilder sb)
     {
         if (block is null) return;
-        sb.Append("<div class=\"aioc-image-block\">").AppendImage(block.Image).AppendLine("</div>");
+        switch (block.Image.Type)
+        {
+            case Image.ExternalType:
+                sb.Append("<div class=\"aioc-image-block\">").AppendImage(block.Image).AppendLine("</div>");
+                break;
+            case Image.FileType:
+                sb.Append("<div class=\"aioc-image-block\">").AppendImage(block.Image.File.Url).AppendLine("</div>");
+                break;
+        }
+        
         Append(block.Heading2?.RichText, sb).AppendLine("</h2>");
+    }
+    
+    private static StringBuilder AppendImage(this StringBuilder sb, string imageUrl)
+    {
+        if (string.IsNullOrEmpty(imageUrl)) return sb;
+        sb.Append("<img style=\"width: 100%\"").Append(" src=\"").Append(imageUrl).Append("\"/>");
+        return sb;
     }
 
     private static StringBuilder AppendImage(this StringBuilder sb, Image image)
@@ -91,7 +107,7 @@ public static class NotionExtensions
         if (line == null)
             return sb;
 
-        sb.Append("<div class=\"aioc-line\">");
+        sb.Append("<div class=\"aioc-line\" style=\"margin: 10px 0;\">");
         var tag = line.HasAttribute ? (line.Href != null ? "a" : "span") : null;
 
         if (tag != null)

@@ -1,6 +1,7 @@
 using System.Collections.Concurrent;
 using AioCore.Domain.DatabaseContexts;
 using AioCore.Domain.SettingAggregate;
+using AioCore.Notion;
 using AioCore.Shared.Extensions;
 using AioCore.Shared.SeedWorks;
 using AioCore.Shared.ValueObjects;
@@ -22,19 +23,22 @@ public class TemplateService : ITemplateService
     private readonly AppSettings _appSettings;
     private readonly IHttpClientFactory _httpClient;
     private readonly IClientService _clientService;
+    private readonly INotionClient _notionClient;
 
     public TemplateService(
         SettingsContext settingsContext,
         AppSettings appSettings,
         IHttpClientFactory httpClient,
         IClientService clientService,
-        DynamicContext dynamicContext)
+        DynamicContext dynamicContext,
+        INotionClient notionClient)
     {
         _settingsContext = settingsContext;
         _appSettings = appSettings;
         _httpClient = httpClient;
         _clientService = clientService;
         _dynamicContext = dynamicContext;
+        _notionClient = notionClient;
     }
 
     public async Task<string> Render(string? pathType = null, string? recordValue = null, bool indexPage = false)
@@ -58,6 +62,17 @@ public class TemplateService : ITemplateService
             .ToListAsync();
         var modelBinding = new Dictionary<string, List<Dictionary<string, object>>>();
 
+        var singleRecord = entitiesData.FirstOrDefault(x => x.Data is not null && x.Data
+            .Select(y => y.Value.ToString()).Any(z => !string.IsNullOrEmpty(z) && z.Equals(recordValue)));
+        if (singleRecord?.Data != null)
+        {
+            var id = singleRecord.Data.FirstOrDefault(x => x.Key.Equals("Id")).Value.ToString();
+            var settingEntity = entities.FirstOrDefault(x => x.Id.Equals(singleRecord.EntityId));
+            var page = await _notionClient.GetPageAsync(settingEntity?.SourcePath?.Split('|').Last(), id);
+            singleRecord.Data["StaticHtml"] = page.ToHtml();
+            modelBinding.Add("SingleValue", new List<Dictionary<string, object>> { singleRecord.Data });
+        }
+
         foreach (var group in entitiesData.GroupBy(x => x.EntityId))
         {
             var entity = entities.FirstOrDefault(x => x.Id.Equals(group.Key));
@@ -70,7 +85,6 @@ public class TemplateService : ITemplateService
         }
 
         // End - Build models
-
         var razorEngine = new RazorEngine();
         var compiledTemplate = await razorEngine.CompileAsync(staticCode,
             builder => { builder.AddAssemblyReferenceByName("System.Collections"); });

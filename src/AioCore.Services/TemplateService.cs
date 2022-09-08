@@ -1,7 +1,8 @@
 using System.Collections.Concurrent;
 using AioCore.Domain.DatabaseContexts;
 using AioCore.Domain.SettingAggregate;
-using AioCore.Notion;
+using AioCore.Services.NotionService;
+using AioCore.Services.NotionService.Responses._Globals;
 using AioCore.Shared.Extensions;
 using AioCore.Shared.SeedWorks;
 using AioCore.Shared.ValueObjects;
@@ -67,8 +68,10 @@ public class TemplateService : ITemplateService
         if (singleRecord?.Data != null)
         {
             var id = singleRecord.Data.FirstOrDefault(x => x.Key.Equals("Id")).Value.ToString();
+            if (string.IsNullOrEmpty(id)) return default!;
             var settingEntity = entities.FirstOrDefault(x => x.Id.Equals(singleRecord.EntityId));
             var page = await _notionClient.GetPageAsync(settingEntity?.SourcePath?.Split('|').Last(), id);
+            if (page is null) return default!;
             singleRecord.Data["StaticHtml"] = page.ToHtml();
             modelBinding.Add("SingleValue", new List<Dictionary<string, object>> { singleRecord.Data });
         }

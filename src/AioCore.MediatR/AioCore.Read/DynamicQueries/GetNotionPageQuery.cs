@@ -1,4 +1,4 @@
-using AioCore.Notion;
+using AioCore.Services.NotionService;
 using AioCore.Shared.SeedWorks;
 using MediatR;
 

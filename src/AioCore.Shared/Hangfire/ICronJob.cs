@@ -1,6 +1,6 @@
 using Hangfire;
 
-namespace AioCore.Jobs;
+namespace AioCore.Shared.Hangfire;
 
 [AutomaticRetry(Attempts = 0)]
 public interface ICronJob

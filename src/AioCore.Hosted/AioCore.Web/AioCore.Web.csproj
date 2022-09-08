@@ -33,7 +33,6 @@
     <ItemGroup>
       <ProjectReference Include="..\..\AioCore.MediatR\AioCore.Read\AioCore.Read.csproj" />
       <ProjectReference Include="..\..\AioCore.MediatR\AioCore.Write\AioCore.Write.csproj" />
-      <ProjectReference Include="..\..\AioCore.Migrations\AioCore.Migrations.csproj" />
     </ItemGroup>
 
 </Project>

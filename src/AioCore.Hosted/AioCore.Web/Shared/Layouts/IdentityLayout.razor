@@ -1,27 +1,11 @@
 ﻿@inherits LayoutComponentBase
 
-<link rel="stylesheet" href="/css/identity/iofrm-style.css"/>
-<link rel="stylesheet" href="/css/identity/iofrm-default-style.css"/>
-<link rel="stylesheet" href="/css/identity/iofrm-theme7.css"/>
-<link rel="stylesheet" href="/css/identity/app.css"/>
-
-<div class="form-body">
-    <div class="row">
-        <div class="img-holder">
-            <div class="bg"></div>
-            <div class="info-holder">
-                <img src="/images/side-vector.svg" alt="aioc"/>
-            </div>
-            <div class="footer-copyright">
-                <img src="/images/copyright-white.png" alt="aioc"/>
-            </div>
+<div class="bg-no-repeat bg-cover bg-center relative" style="background-image: url(https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1951&amp;q=80);"><div class="absolute bg-gradient-to-b from-green-500 to-green-400 opacity-75 inset-0 z-0"></div>
+  <div class="min-h-screen sm:flex sm:flex-row mx-0 justify-center">
+      <div class="flex justify-center self-center  z-10">
+        <div class="p-12 bg-white mx-auto rounded-2xl w-100 ">
+            @Body
         </div>
-        <div class="form-holder">
-            <div class="form-content">
-                <div class="form-items">
-                    @Body
-                </div>
-            </div>
-        </div>
-    </div>
+      </div>
+  </div>
 </div>

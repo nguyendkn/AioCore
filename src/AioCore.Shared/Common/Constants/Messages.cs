@@ -2,6 +2,7 @@
 
 public static class Messages
 {
+    public const string UserNotFound = "Người dùng không tồn tại";
     public const string TenantNotFound = "Không tìm thấy thuê bao";
     public const string EntityNotFound = "Không tìm thấy đối tượng";
     public const string UnspecifiedException = "Xuất hiện lỗi không xác định";

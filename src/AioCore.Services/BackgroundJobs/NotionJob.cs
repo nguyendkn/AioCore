@@ -1,9 +1,9 @@
 using AioCore.Domain.DatabaseContexts;
 using AioCore.Domain.DynamicAggregate;
 using AioCore.Domain.SettingAggregate;
-using AioCore.Jobs;
 using AioCore.Services.NotionService;
 using AioCore.Shared.Extensions;
+using AioCore.Shared.Hangfire;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 

@@ -1,8 +1,6 @@
-using System.Collections.Concurrent;
 using AioCore.Domain.DatabaseContexts;
 using AioCore.Domain.SettingAggregate;
 using AioCore.Services.NotionService;
-using AioCore.Services.NotionService.Responses._Globals;
 using AioCore.Shared.Extensions;
 using AioCore.Shared.SeedWorks;
 using AioCore.Shared.ValueObjects;

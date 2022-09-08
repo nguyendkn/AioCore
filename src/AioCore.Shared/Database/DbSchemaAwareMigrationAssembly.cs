@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Migrations.Internal;
 
-namespace AioCore.Database;
+namespace AioCore.Shared.Database;
 
 #pragma warning disable EF1001
 public class DbSchemaAwareMigrationAssembly : MigrationsAssembly

@@ -1,0 +1,103 @@
+﻿@page "/static/identity/login"
+@using MediatR
+@using Microsoft.AspNetCore.Identity
+@using AioCore.Domain.IdentityAggregate
+@using AioCore.Shared.Common.Constants
+@using AioCore.Web.MiddleWares
+@using AioCore.Web.Pages.IdentityPages.LoginPage.ViewModels
+@using Microsoft.EntityFrameworkCore
+@layout IdentityLayout
+
+<div class="mb-4">
+    <h3 class="font-semibold text-2xl text-gray-800">Đăng nhập</h3>
+    <p class="text-gray-500">Nhập tài khoản đăng nhập hệ thống của bạn</p>
+</div>
+<div class="space-y-5">
+    @if (!string.IsNullOrEmpty(_errorMessage))
+    {
+        <div class="alert-danger">
+            <p>@_errorMessage</p>
+        </div>
+    }
+    <div class="space-y-2">
+        <label class="text-sm font-medium text-gray-700 tracking-wide">Email</label>
+        <input @bind="@_loginModel.Email" @bind:event="oninput" class=" w-full text-base px-4 py-2 border  border-gray-300 rounded-lg focus:outline-none focus:border-green-400" placeholder="Nhập email">
+    </div>
+    <div class="space-y-2">
+        <label class="mb-5 text-sm font-medium text-gray-700 tracking-wide">
+            Password
+        </label>
+        <input @bind="@_loginModel.Password" @bind:event="oninput" class="w-full content-center text-base px-4 py-2 border  border-gray-300 rounded-lg focus:outline-none focus:border-green-400" placeholder="Nhập mật khẩu">
+    </div>
+    <div class="flex items-center justify-between">
+        <div class="flex items-center">
+            <input id="remember_me" name="remember_me" type="checkbox" class="h-4 w-4 bg-blue-500 focus:ring-blue-400 border-gray-300 rounded">
+            <label for="remember_me" class="ml-2 block text-sm text-gray-800">
+                Ghi nhớ mật khẩu
+            </label>
+        </div>
+        <div class="text-sm">
+            <a href="#" class="text-green-400 hover:text-green-500">
+                Quên mật khẩu?
+            </a>
+        </div>
+    </div>
+    <div>
+        <button @onclick="@OnSubmit" type="submit" class="w-full flex justify-center bg-green-400  hover:bg-green-500 text-gray-100 p-3  rounded-full tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500">
+            Đăng nhập
+        </button>
+    </div>
+</div>
+<div class="pt-5 text-center text-gray-400 text-xs">
+    <span>
+        Copyright © 2022
+        <a href="#" target="_blank" title="AIOC" class="text-green hover:text-green-500 ">AIOC</a>
+    </span>
+</div>
+
+@code {
+
+    private string? _errorMessage;
+    private readonly LoginModel _loginModel = new();
+
+    [Inject]
+    private IMediator Mediator { get; set; } = default!;
+
+    [Inject]
+    private UserManager<User> UserManager { get; set; } = default!;
+
+    [Inject]
+    private SignInManager<User> SignInManager { get; set; } = default!;
+
+    [Inject]
+    private NavigationManager NavigationManager { get; set; } = default!;
+
+    private async void OnSubmit()
+    {
+        var user = await UserManager.FindByEmailAsync(_loginModel.Email);
+        if (user == null)
+        {
+            _errorMessage = Messages.UserNotFound;
+            return;
+        }
+        if (await SignInManager.CanSignInAsync(user))
+        {
+            var result = await SignInManager.CheckPasswordSignInAsync(user, _loginModel.Password, true);
+            if (result == SignInResult.Success)
+            {
+                var key = Guid.NewGuid();
+                CookieLoginMiddleware.Logins[key] = _loginModel;
+                NavigationManager.NavigateTo("/static/setting/index", true);
+            }
+            else
+            {
+                _errorMessage = "Login failed. Check your password.";
+            }
+        }
+        else
+        {
+            _errorMessage = "Your account is blocked";
+        }
+    }
+
+}

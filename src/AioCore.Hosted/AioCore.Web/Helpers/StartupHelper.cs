@@ -1,14 +1,15 @@
 ﻿using AioCore.Domain.DatabaseContexts;
 using AioCore.Domain.DatabaseDataSeeds;
 using AioCore.Domain.IdentityAggregate;
-using AioCore.Jobs;
 using AioCore.Mongo;
 using AioCore.Services;
 using AioCore.Services.BackgroundJobs;
 using AioCore.Services.NotionService;
 using AioCore.Shared.Extensions;
+using AioCore.Shared.Hangfire;
 using AioCore.Shared.ValueObjects;
 using AioCore.Web.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace AioCore.Web.Helpers;
@@ -82,12 +83,14 @@ public static class StartupHelper
         app.UseSwaggerUI();
     }
 
-    public static void UseAioCoreDatabase(this WebApplication app)
+    public static void UseAioCoreDatabase(this WebApplication app, AppSettings appSettings)
     {
         app.MigrateDatabase<IdentityContext>((context, appServices) =>
         {
             var logger = appServices.GetService<ILogger<IdentityContextSeed>>();
-            IdentityContextSeed.SeedAsync(context, logger).Wait();
+            var userManager = appServices.GetRequiredService<UserManager<User>>();
+            var roleManager = appServices.GetRequiredService<RoleManager<Role>>();
+            IdentityContextSeed.SeedAsync(appSettings, userManager, roleManager, logger).Wait();
         });
         app.MigrateDatabase<SettingsContext>((context, appServices) =>
         {

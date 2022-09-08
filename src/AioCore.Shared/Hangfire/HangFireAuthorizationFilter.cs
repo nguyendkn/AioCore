@@ -1,7 +1,7 @@
 using Hangfire.Annotations;
 using Hangfire.Dashboard;
 
-namespace AioCore.Jobs;
+namespace AioCore.Shared.Hangfire;
 
 public class HangFireAuthorizationFilter : IDashboardAuthorizationFilter
 {

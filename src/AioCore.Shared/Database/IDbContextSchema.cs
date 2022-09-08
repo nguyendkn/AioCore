@@ -1,4 +1,4 @@
-namespace AioCore.Database;
+namespace AioCore.Shared.Database;
 
 public interface IDbContextSchema
 {

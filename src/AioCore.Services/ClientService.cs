@@ -10,6 +10,8 @@ public interface IClientService
 {
     string? Host();
 
+    bool IsAdmin();
+
     Task<SettingTenant?> Tenant();
 }
 
@@ -17,14 +19,21 @@ public class ClientService : IClientService
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly SettingsContext _settingsContext;
+    private readonly IdentityContext _identityContext;
 
-    public ClientService(IHttpContextAccessor httpContextAccessor, SettingsContext settingsContext)
+    public ClientService(IHttpContextAccessor httpContextAccessor, SettingsContext settingsContext, IdentityContext identityContext)
     {
         _httpContextAccessor = httpContextAccessor;
         _settingsContext = settingsContext;
+        _identityContext = identityContext;
     }
 
     public string? Host() => _httpContextAccessor.HttpContext?.Request.Headers[RequestHeaders.Host].ToString();
+    
+    public bool IsAdmin()
+    {
+        throw new NotImplementedException();
+    }
 
     public async Task<SettingTenant?> Tenant()
     {

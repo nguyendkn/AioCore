@@ -11,6 +11,10 @@ public class AppSettings
     public string? StorageServer { get; set; }
 
     public MongoConfigs MongoConfigs { get; set; } = default!;
+
+    public DefaultUser DefaultUser { get; set; } = default!;
+
+    public List<DefaultRole> DefaultRoles { get; set; } = default!;
 }
 
 public class ConnectionStrings
@@ -23,6 +27,22 @@ public class MongoConfigs
     public string ConnectionString { get; set; } = default!;
 
     public string Database { get; set; } = default!;
+}
+
+public class DefaultUser
+{
+    public string Email { get; set; } = default!;
+
+    public string FullName { get; set; } = default!;
+
+    public string Password { get; set; } = default!;
+    
+    public string PhoneNumber { get; set; } = default!;
+}
+
+public class DefaultRole
+{
+    public string Name { get; set; } = default!;
 }
 
 public class TenantConfigs

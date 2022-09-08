@@ -1,7 +1,8 @@
-using AioCore.Jobs;
 using AioCore.Shared.Extensions;
+using AioCore.Shared.Hangfire;
 using AioCore.Shared.ValueObjects;
 using AioCore.Web.Helpers;
+using AioCore.Web.MiddleWares;
 using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,11 +26,12 @@ services.AddBackgroundServicesAioCore(appSettings);
 services.AddMediatR(typeof(AioCore.Read.Assembly));
 services.AddMediatR(typeof(AioCore.Write.Assembly));
 var app = builder.Build();
-app.UseAioCoreDatabase();
+app.UseAioCoreDatabase(appSettings);
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseMiddleware<CookieLoginMiddleware>();
 app.UseAioController();
 app.UseJobs(environment);
 app.UseHangfire();

@@ -1,8 +1,8 @@
-namespace AioCore.Database;
+namespace AioCore.Shared.Database;
 
 public class DbContextSchema : IDbContextSchema
 {
-    public string? Schema { get; }
+    public string Schema { get; }
     
     public DbContextSchema(string schema)
     {

@@ -1,4 +1,4 @@
-namespace AioCore.Jobs;
+namespace AioCore.Shared.Hangfire;
 
 public class HangfireJob
 {

@@ -2,7 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
-namespace AioCore.Database;
+namespace AioCore.Shared.Database;
 
 public class DbSchemaAwareModelCacheKeyFactory : IModelCacheKeyFactory
 {

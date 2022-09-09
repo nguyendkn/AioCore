@@ -1,6 +1,5 @@
 using AioCore.Domain.DatabaseContexts;
 using AioCore.Domain.SettingAggregate;
-using AioCore.Services;
 using AioCore.Shared.Extensions;
 using AioCore.Shared.SeedWorks;
 using AioCore.Shared.ValueObjects;
@@ -29,14 +28,11 @@ public class ListCodeQuery : IRequest<Response<List<SettingCode>>>
     {
         private readonly SettingsContext _context;
         private readonly UserClaimsValue _userClaims;
-        private readonly IClientService _clientService;
 
         public Handler(SettingsContext context,
-            AuthenticationStateProvider stateProvider,
-            IClientService clientService)
+            AuthenticationStateProvider stateProvider)
         {
             _context = context;
-            _clientService = clientService;
             _userClaims = stateProvider.UserClaims();
         }
 
@@ -47,7 +43,7 @@ public class ListCodeQuery : IRequest<Response<List<SettingCode>>>
                 .Include(x => x.Child)
                 .Include(x => x.Parent)
                 .Where(x => _userClaims.IsAdmin &&
-                            (x.Tenant.Domain.Equals(_clientService.Host()) ||
+                            (x.Tenant.Domain.Equals(_userClaims.Host) ||
                              x.TenantId.Equals(request.TenantId)))
                 .OrderBy(x => x.CreatedAt)
                 .Skip((request.Page - 1) * request.PageSize)

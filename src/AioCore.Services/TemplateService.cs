@@ -4,6 +4,7 @@ using AioCore.Services.NotionService;
 using AioCore.Shared.Extensions;
 using AioCore.Shared.SeedWorks;
 using AioCore.Shared.ValueObjects;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
 using RazorEngineCore;
@@ -22,7 +23,7 @@ public class TemplateService : ITemplateService
     private readonly AppSettings _appSettings;
     private readonly IHttpClientFactory _httpClient;
     private readonly INotionClient _notionClient;
-    private readonly IClientService _clientService;
+    private readonly UserClaimsValue _userClaims;
 
     public TemplateService(
         SettingsContext settingsContext,
@@ -30,23 +31,22 @@ public class TemplateService : ITemplateService
         IHttpClientFactory httpClient,
         DynamicContext dynamicContext,
         INotionClient notionClient,
-        IClientService clientService)
+        AuthenticationStateProvider stateProvider)
     {
         _settingsContext = settingsContext;
         _appSettings = appSettings;
         _httpClient = httpClient;
-        _clientService = clientService;
         _dynamicContext = dynamicContext;
         _notionClient = notionClient;
+        _userClaims = stateProvider.UserClaims();
     }
 
     public async Task<string> Render(string? pathType = null, string? recordValue = null, bool indexPage = false)
     {
-        var domain = _clientService.Host();
-        if (string.IsNullOrEmpty(domain)) return string.Empty;
+        if (string.IsNullOrEmpty(_userClaims.Host)) return string.Empty;
         var tenant = await _settingsContext.Tenants.Include(x => x!.Codes)
             .ThenInclude(x => x.EntityCodes).ThenInclude(x => x.Entity)
-            .FirstOrDefaultAsync(y => y.Domain.Equals(domain));
+            .FirstOrDefaultAsync(y => y.Domain.Equals(_userClaims.Host));
         var settingCode = tenant?.Codes.FirstOrDefault(x => x.PathType.Equals(indexPage ? "index" : pathType));
         if (settingCode is null) return string.Empty;
 

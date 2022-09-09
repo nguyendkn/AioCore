@@ -1,47 +1,21 @@
-using AioCore.Read.DynamicQueries;
-using MediatR;
+using AioCore.Services.GraphQueries;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AioCore.Web.Controllers;
 
 [ApiController]
-[Route("api/[controller]/[action]")]
 public class DynamicController : ControllerBase
 {
-    private readonly IMediator _mediator;
+    private readonly IGraphService _graphService;
 
-    public DynamicController(IMediator mediator)
+    public DynamicController(IGraphService graphService)
     {
-        _mediator = mediator;
+        _graphService = graphService;
     }
 
-    // [HttpPost("create")]
-    // public async Task<IActionResult> CreateEntity([FromBody] CreateDynamicEntityCommand request)
-    // {
-    //     return Ok(await _mediator.Send(request));
-    // }
-
-    // [HttpPost("update")]
-    // public async Task<IActionResult> UpdateEntity([FromBody] UpdateDynamicEntityCommand request)
-    // {
-    //     return Ok(await _mediator.Send(request));
-    // }
-
-    // [HttpPost("remove")]
-    // public async Task<IActionResult> DeleteEntity(RemoveDynamicEntityCommand request)
-    // {
-    //     return Ok(await _mediator.Send(request));
-    // }
-
-    // [HttpGet("entity")]
-    // public async Task<IActionResult> GetEntity([FromQuery] Guid id)
-    // {
-    //     return Ok(await _mediator.Send(new GetDynamicEntityQuery(id)));
-    // }
-
-    [HttpPost("filter")]
-    public async Task<IActionResult> FilterEntity([FromBody] FilterDynamicEntityQuery request)
+    [HttpPost("graph")]
+    public async Task<IActionResult> Submit([FromBody] GraphRequest request)
     {
-        return Ok(await _mediator.Send(request));
+        return Ok(await _graphService.ExecuteAsync(request));
     }
 }

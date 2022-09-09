@@ -4,16 +4,19 @@ using AioCore.Domain.IdentityAggregate;
 using AioCore.Mongo;
 using AioCore.Services;
 using AioCore.Services.BackgroundJobs;
+using AioCore.Services.GraphQueries;
 using AioCore.Services.NotionService;
 using AioCore.Shared.Extensions;
 using AioCore.Shared.Hangfire;
 using AioCore.Shared.ValueObjects;
 using AioCore.Web.Providers;
 using AioCore.Web.Services;
+using JsonSubTypes;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Converters;
 
 namespace AioCore.Web.Helpers;
 
@@ -22,7 +25,12 @@ public static class StartupHelper
     public static void AddAioController(this IServiceCollection services)
     {
         services.AddHttpClient();
-        services.AddControllers();
+        services.AddControllers().AddNewtonsoftJson(options =>
+        {
+            options.SerializerSettings.Converters.Add(new StringEnumConverter());
+            options.SerializerSettings.Converters.Add(new JsonSubtypes());
+        });
+        services.AddSwaggerGenNewtonsoftSupport();
         services.AddSwaggerGen();
     }
 
@@ -61,7 +69,6 @@ public static class StartupHelper
 
     public static void AddScopedAioCore(this IServiceCollection services)
     {
-        services.AddScoped<IClientService, ClientService>();
         services.AddScoped<IAlertService, AlertService>();
         services.AddScoped<ITemplateService, TemplateService>();
         services.AddScoped<IClaimsTransformation, ClaimsTransformation>();
@@ -78,6 +85,7 @@ public static class StartupHelper
     {
         services.AddAiocHangfire(appSettings.ConnectionStrings.DefaultConnection);
         services.AddScoped<ICronJob, NotionJob>();
+        services.AddScoped<IGraphService, GraphService>();
     }
 
     public static void UseAioController(this WebApplication app)

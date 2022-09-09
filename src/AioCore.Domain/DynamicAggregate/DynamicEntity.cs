@@ -8,7 +8,7 @@ public class DynamicEntity : MongoDocument
 
     public Guid TenantId { get; set; }
 
-    public Dictionary<string, object>? Data { get; set; }
+    public Dictionary<string, object> Data { get; set; } = default!;
 
     public DateTime CreatedAt { get; set; } = DateTime.Now;
 

@@ -1,5 +1,3 @@
-using Newtonsoft.Json;
-
 namespace AioCore.Shared.ValueObjects;
 
 public class UserClaimsValue

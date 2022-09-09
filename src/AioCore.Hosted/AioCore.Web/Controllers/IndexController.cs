@@ -27,15 +27,15 @@ public class IndexController : ControllerBase
         });
     }
 
-    [HttpGet("{first}/{second}")]
-    public async Task<IActionResult> Index(string first, string second)
-    {
-        var htmlCode = await _templateService.Render(first, second);
-        return await Task.FromResult(new ContentResult
-        {
-            ContentType = "text/html",
-            StatusCode = (int)HttpStatusCode.OK,
-            Content = htmlCode
-        });
-    }
+    // [HttpGet("{first}/{second}")]
+    // public async Task<IActionResult> Index(string first, string second)
+    // {
+    //     var htmlCode = await _templateService.Render(first, second);
+    //     return await Task.FromResult(new ContentResult
+    //     {
+    //         ContentType = "text/html",
+    //         StatusCode = (int)HttpStatusCode.OK,
+    //         Content = htmlCode
+    //     });
+    // }
 }

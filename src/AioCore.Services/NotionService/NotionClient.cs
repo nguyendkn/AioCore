@@ -26,7 +26,7 @@ public class NotionClient : INotionClient
         var response = await client.ExecuteAsync(request);
 
         if (string.IsNullOrEmpty(response.Content)) return default!;
-        var databaseResponse = JsonConvert.DeserializeObject<Responses._Globals.Database>(response.Content);
+        var databaseResponse = JsonConvert.DeserializeObject<Database>(response.Content);
         var blocks = databaseResponse?.Results;
         if (blocks is null) return default!;
         foreach (var block in blocks)

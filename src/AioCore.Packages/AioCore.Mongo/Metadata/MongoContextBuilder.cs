@@ -1,5 +1,6 @@
 using System.Reflection;
 using AioCore.Mongo.Abstracts;
+using AioCore.Shared.ValueObjects;
 using MongoDB.Driver;
 
 namespace AioCore.Mongo.Metadata;
@@ -12,9 +13,14 @@ public class MongoContextBuilder : IMongoContextBuilder
     private readonly IDictionary<Type, object> _entityToBuilderMap =
         new Dictionary<Type, object>();
 
-    public MongoContextBuilder(IMongoDatabase database)
+    private readonly MongoConfigs _mongoConfigs;
+
+    public MongoContextBuilder(
+        IMongoDatabase database,
+        MongoConfigs mongoConfigs)
     {
         Database = database;
+        _mongoConfigs = mongoConfigs;
     }
 
     public void Entity<TEntity>(Action<EntityTypeBuilder<TEntity>> action) where TEntity : class
@@ -48,7 +54,7 @@ public class MongoContextBuilder : IMongoContextBuilder
         foreach (var (name, type) in contextProperties)
         {
             var mongoSet = typeof(MongoSet<>).MakeGenericType(type);
-            var dbSet = Activator.CreateInstance(mongoSet, Database);
+            var dbSet = Activator.CreateInstance(mongoSet, Database, _mongoConfigs);
             context.GetType().GetProperty(name)?.SetValue(context, dbSet);
         }
 

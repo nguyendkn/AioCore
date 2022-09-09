@@ -21,16 +21,16 @@ public class TemplateService : ITemplateService
     private readonly DynamicContext _dynamicContext;
     private readonly AppSettings _appSettings;
     private readonly IHttpClientFactory _httpClient;
-    private readonly IClientService _clientService;
     private readonly INotionClient _notionClient;
+    private readonly IClientService _clientService;
 
     public TemplateService(
         SettingsContext settingsContext,
         AppSettings appSettings,
         IHttpClientFactory httpClient,
-        IClientService clientService,
         DynamicContext dynamicContext,
-        INotionClient notionClient)
+        INotionClient notionClient,
+        IClientService clientService)
     {
         _settingsContext = settingsContext;
         _appSettings = appSettings;

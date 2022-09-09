@@ -8,7 +8,10 @@ using AioCore.Services.NotionService;
 using AioCore.Shared.Extensions;
 using AioCore.Shared.Hangfire;
 using AioCore.Shared.ValueObjects;
+using AioCore.Web.Providers;
 using AioCore.Web.Services;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -34,8 +37,7 @@ public static class StartupHelper
                 b.EnableRetryOnFailure(15, TimeSpan.FromSeconds(30), null);
             });
         }, ServiceLifetime.Transient);
-        services.AddMongoContext<DynamicContext>(appSettings.MongoConfigs.ConnectionString,
-            appSettings.MongoConfigs.Database);
+        services.AddMongoContext<DynamicContext>(appSettings.MongoConfigs);
         services.AddDbContext<IdentityContext>(options =>
         {
             options.UseSqlServer(appSettings.ConnectionStrings.DefaultConnection, b =>
@@ -62,6 +64,8 @@ public static class StartupHelper
         services.AddScoped<IClientService, ClientService>();
         services.AddScoped<IAlertService, AlertService>();
         services.AddScoped<ITemplateService, TemplateService>();
+        services.AddScoped<IClaimsTransformation, ClaimsTransformation>();
+        services.AddScoped<AuthenticationStateProvider, StateProvider<User>>();
     }
 
     public static void AddSingletonAioCore(this IServiceCollection services)

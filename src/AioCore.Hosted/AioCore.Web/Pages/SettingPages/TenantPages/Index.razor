@@ -120,13 +120,13 @@
     private RenderFragment _overlayMenu(Guid tenantId) =>
         @<Menu>
             <MenuItem>
-                <NavLink href="@(string.Format(SettingFeatures.Builder, tenantId))" class="text-green-600 text-xs">
+                <NavLink href="@(string.Format(SystemFeatures.Builder, tenantId))" class="text-green-600 text-xs">
                     <i class="fa-duotone fa-table-layout"></i>
                     Giao diện
                 </NavLink>
             </MenuItem>
             <MenuItem>
-                <NavLink href="@(string.Format(SettingFeatures.Entities, tenantId))" class="text-yellow-600 text-xs">
+                <NavLink href="@(string.Format(SystemFeatures.Entities, tenantId))" class="text-yellow-600 text-xs">
                     <i class="fa-duotone fa-table-tree"></i>
                     Đối tượng
                 </NavLink>

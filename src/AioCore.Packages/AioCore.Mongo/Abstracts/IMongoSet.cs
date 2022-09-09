@@ -1,11 +1,12 @@
 using System.Linq.Expressions;
+using AioCore.Shared.ValueObjects;
 using MongoDB.Driver;
 
 namespace AioCore.Mongo.Abstracts;
 
 public interface IMongoSet<TEntity>
 {
-    IMongoCollection<TEntity> Collection(string connectionString, string database);
+    IMongoCollection<TEntity> Collection(string name);
 
     Task<TEntity> AddAsync(TEntity entity);
 

@@ -3,6 +3,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using AioCore.Mongo.Abstracts;
 using AioCore.Mongo.Attributes;
+using AioCore.Shared.ValueObjects;
 using Humanizer;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -13,17 +14,18 @@ public class MongoSet<TEntity> : IQueryable<TEntity>, IMongoSet<TEntity>
     where TEntity : MongoDocument
 {
     private readonly IMongoDatabase _database;
-    private readonly string _collectionName;
+    private readonly MongoConfigs _mongoConfigs;
     private readonly IMongoCollection<TEntity> _collection;
 
-    public MongoSet(IMongoDatabase database)
+    public MongoSet(IMongoDatabase database, MongoConfigs mongoConfigs)
     {
         _database = database;
-        _collectionName = typeof(TEntity).Name.Pluralize();
-        _collection = database.GetCollection<TEntity>(_collectionName);
+        _mongoConfigs = mongoConfigs;
+        var collectionName = typeof(TEntity).Name.Pluralize();
+        _collection = database.GetCollection<TEntity>(collectionName);
     }
 
-    IEnumerator GetEnumerator() 
+    IEnumerator GetEnumerator()
         => _collection.AsQueryable().GetEnumerator();
 
     IEnumerator<TEntity> IEnumerable<TEntity>.GetEnumerator()
@@ -41,11 +43,10 @@ public class MongoSet<TEntity> : IQueryable<TEntity>, IMongoSet<TEntity>
     IQueryProvider IQueryable.Provider
         => _collection.AsQueryable().Provider;
 
-    public IMongoCollection<TEntity> Collection(string connectionString, string database)
+    public IMongoCollection<TEntity> Collection(string name)
     {
-        var settings = MongoClientSettings.FromConnectionString(connectionString);
-        var client = new MongoClient(settings);
-        return client.GetDatabase(database).GetCollection<TEntity>(_collectionName);
+        var settings = MongoClientSettings.FromConnectionString(_mongoConfigs.ConnectionString);
+        return new MongoClient(settings).GetDatabase(_mongoConfigs.Database).GetCollection<TEntity>(name);
     }
 
     public async Task<TEntity> AddAsync(TEntity entity)
@@ -61,8 +62,8 @@ public class MongoSet<TEntity> : IQueryable<TEntity>, IMongoSet<TEntity>
 
     public async Task<bool> UpdateAsync(object id, TEntity entity)
     {
-        var record = await _collection.ReplaceOneAsync(x => x!.Id.Equals(id), entity);
-        return record.IsAcknowledged;
+        var replaceOneResult = await _collection.ReplaceOneAsync(x => x!.Id.Equals(id), entity);
+        return replaceOneResult.IsAcknowledged;
     }
 
     public async Task<bool> RemoveAsync(object id)
@@ -99,7 +100,7 @@ public class MongoSet<TEntity> : IQueryable<TEntity>, IMongoSet<TEntity>
         return Where(expression, string.Empty);
     }
 
-    public IFindFluent<TEntity, TEntity> Where(Expression<Func<TEntity, bool>> expression, string? keyword)
+    private IFindFluent<TEntity, TEntity> Where(Expression<Func<TEntity, bool>> expression, string? keyword)
     {
         var builder = Builders<TEntity>.Filter;
         var text = Builders<TEntity>.Filter.Text(keyword ?? string.Empty);

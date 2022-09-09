@@ -1,0 +1,18 @@
+﻿@page
+@using AioCore.Domain.IdentityAggregate
+@attribute [IgnoreAntiforgeryToken]
+@inject SignInManager<User> SignInManager
+
+@functions {
+
+    public async Task<IActionResult> OnPost()
+    {
+        if (SignInManager.IsSignedIn(User))
+        {
+            await SignInManager.SignOutAsync();
+        }
+
+        return Redirect("~/");
+    }
+
+}

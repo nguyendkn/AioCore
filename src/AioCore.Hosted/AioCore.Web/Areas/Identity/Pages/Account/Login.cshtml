@@ -1,0 +1,44 @@
+﻿@page
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model AioCore.Web.Areas.Identity.Pages.Account.LoginModel
+
+<div class="mb-4">
+    <h3 class="font-semibold text-2xl text-gray-800">Đăng nhập</h3>
+    <p class="text-gray-500">Nhập tài khoản đăng nhập hệ thống của bạn</p>
+</div>
+<div class="space-y-5">
+    <form id="account" method="post">
+        <div class="my-3.5">
+            <label asp-for="Input.Email" class="text-sm font-medium text-gray-700 tracking-wide"></label>
+            <input asp-for="Input.Email" class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-400" autocomplete="email"/>
+        </div>
+        <div class="my-3.5">
+            <label asp-for="Input.Password" class="mb-5 text-sm font-medium text-gray-700 tracking-wide"></label>
+            <input asp-for="Input.Password" class="w-full content-center text-base px-4 py-2 border  border-gray-300 rounded-lg focus:outline-none focus:border-green-400" autocomplete="current-password" aria-required="true"/>
+        </div>
+        <div class="flex items-center justify-between my-3.5">
+            <div class="flex items-center">
+                <label asp-for="Input.RememberMe" class="ml-2 block text-sm text-gray-800">
+                    <input class="h-4 w-4 bg-blue-500 focus:ring-blue-400 border-gray-300 rounded" asp-for="Input.RememberMe"/>
+                    @Html.DisplayNameFor(m => m.Input.RememberMe)
+                </label>
+            </div>
+            <div class="text-sm">
+                <a href="#" class="text-green-400 hover:text-green-500">
+                    Quên mật khẩu?
+                </a>
+            </div>
+        </div>
+        <div>
+            <button type="submit" class="w-full flex justify-center bg-green-400  hover:bg-green-500 text-gray-100 p-3  rounded-full tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500">
+                Đăng nhập
+            </button>
+        </div>
+    </form>
+</div>
+<div class="pt-5 text-center text-gray-400 text-xs">
+    <span>
+        Copyright © 2022
+        <a href="#" target="_blank" title="AIOC" class="text-green hover:text-green-500 ">AIOC</a>
+    </span>
+</div>

@@ -1,7 +1,8 @@
 namespace AioCore.Shared.Common.Constants;
 
-public static class SettingFeatures
+public static class SystemFeatures
 {
+    public const string Home = "/static/setting/index";
     public const string Tenants = "/static/settings/tenant/list";
     public const string Entities = "/static/settings/tenants/{0}/entity/list";
     public const string Forms = "/static/settings/form/list";

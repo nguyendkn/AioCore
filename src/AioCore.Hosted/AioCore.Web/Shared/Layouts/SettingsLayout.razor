@@ -1,4 +1,6 @@
 @using AioCore.Shared.Common.Constants
+@using AioCore.Shared.Extensions
+@using AioCore.Shared.ValueObjects
 @inherits LayoutComponentBase
 
 <Layout>
@@ -13,7 +15,7 @@
                 </MenuItem>
             </Tooltip>
             <div class="space-grow"></div>
-            <Popover ContentTemplate="@_settingsMenu" Placement="@Placement.Right" Trigger="@(new[] { Trigger.Hover })">
+            <Popover ContentTemplate="@SettingsMenu" Placement="@Placement.Right" Trigger="@(new[] { Trigger.Hover })">
                 <MenuItem Key="Features">
                     <i class="fa-light fa-gear"></i>
                 </MenuItem>
@@ -27,9 +29,20 @@
 
 @code {
 
-    private readonly RenderFragment _settingsMenu =
+    [Inject]
+    private AuthenticationStateProvider? StateProvider { get; set; }
+
+    private UserClaimsValue? _userClaims = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _userClaims = StateProvider?.UserClaims();
+        await base.OnInitializedAsync();
+    }
+
+    private RenderFragment SettingsMenu =>
         @<div class="grid grid-rows-4 grid-flow-col gap-4">
-            <NavLink href="@SettingFeatures.Tenants" class="submenu cursor-pointer">
+            <NavLink href="@SystemFeatures.Tenants" class="submenu cursor-pointer">
                 <div class="p-1 flex">
                     <i class="fa-duotone fa-server text-xl text-red-600 w-5"></i>
                     <div class="p-0 px-3">
@@ -38,7 +51,7 @@
                     </div>
                 </div>
             </NavLink>
-            <NavLink href="@SettingFeatures.Entities" class="submenu cursor-pointer">
+            <NavLink href="@string.Format(SystemFeatures.Entities, _userClaims?.TenantId)" class="submenu cursor-pointer">
                 <div class="p-1 flex">
                     <i class="fa-duotone fa-table-tree text-xl text-orange-600 w-5"></i>
                     <div class="p-0 px-3">
@@ -47,7 +60,7 @@
                     </div>
                 </div>
             </NavLink>
-            <NavLink href="@SettingFeatures.Forms" class="submenu cursor-pointer">
+            <NavLink href="@SystemFeatures.Forms" class="submenu cursor-pointer">
                 <div class="p-1 flex">
                     <i class="fa-duotone fa-rectangle-list text-xl text-yellow-600 w-5"></i>
                     <div class="p-0 px-3">
@@ -56,7 +69,7 @@
                     </div>
                 </div>
             </NavLink>
-            <NavLink href="@SettingFeatures.Features" class="submenu cursor-pointer">
+            <NavLink href="@SystemFeatures.Features" class="submenu cursor-pointer">
                 <div class="p-1 flex">
                     <i class="fa-duotone fa-list-tree text-xl text-blue-600 w-5"></i>
                     <div class="p-0 px-3">

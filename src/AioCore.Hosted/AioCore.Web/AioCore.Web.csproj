@@ -35,4 +35,8 @@
       <ProjectReference Include="..\..\AioCore.MediatR\AioCore.Write\AioCore.Write.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Pages\IdentityPages" />
+    </ItemGroup>
+
 </Project>

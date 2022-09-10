@@ -38,6 +38,10 @@ public class GraphService : IGraphService
                     var gatherThanQuery = "{" + field + ": {$gt: '" + gatherThanFilterType.Value + "'}}";
                     builder.AppendLine(gatherThanQuery);
                     break;
+                case GreaterThanOrEqualFilterType gatherThanFilterType:
+                    var gatherThanOrEqualQuery = "{" + field + ": {$gte: '" + gatherThanFilterType.Value + "'}}";
+                    builder.AppendLine(gatherThanOrEqualQuery);
+                    break;
                 case InFilterType inFilterType:
                     var inQuery = "{" + field + ": {$in: '" + inFilterType.Arguments.Serialize() + "'}}";
                     builder.AppendLine(inQuery);
@@ -45,6 +49,10 @@ public class GraphService : IGraphService
                 case LessThanFilterType lessThanFilterType:
                     var lessThanQuery = "{" + field + ": {$lt: '" + lessThanFilterType.Value + "'}}";
                     builder.AppendLine(lessThanQuery);
+                    break;
+                case LessThanOrEqualFilterType lessThanOrEqualFilterType:
+                    var lessThanOrEqualQuery = "{" + field + ": {$lte: '" + lessThanOrEqualFilterType.Value + "'}}";
+                    builder.AppendLine(lessThanOrEqualQuery);
                     break;
                 case NotEqualFilterType notEqualFilterType:
                     var notEqualQuery = "{" + field + ": {$ne: '" + notEqualFilterType.Value + "'}}";

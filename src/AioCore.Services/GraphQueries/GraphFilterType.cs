@@ -11,11 +11,15 @@ public enum GraphFilterType
 
     [EnumMember(Value = "eq")] Equal,
 
-    [EnumMember(Value = "gte")] GatherThan,
+    [EnumMember(Value = "gt")] GatherThan,
+    
+    [EnumMember(Value = "gte")] GatherThanOrEqual,
 
     [EnumMember(Value = "in")] In,
 
     [EnumMember(Value = "lt")] LessThan,
+    
+    [EnumMember(Value = "lte")] LessThanOrEqual,
     
     [EnumMember(Value = "ne")] NotEqual,
 

@@ -79,6 +79,7 @@ public static class StartupHelper
     {
         services.AddAiocNotionClient();
         services.AddSingleton<IAvatarService, AvatarService>();
+        services.AddSingleton<IClientService, ClientService>();
     }
 
     public static void AddBackgroundServicesAioCore(this IServiceCollection services, AppSettings appSettings)

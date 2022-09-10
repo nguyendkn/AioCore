@@ -15,9 +15,10 @@ public static class StateProviderExtension
             FullName = claims.FirstOrDefault(x => x.Type.Equals(nameof(UserClaimsValue.FullName)))?.Value,
             UserName = claims.FirstOrDefault(x => x.Type.Equals(nameof(UserClaimsValue.UserName)))?.Value,
             Email = claims.FirstOrDefault(x => x.Type.Equals(nameof(UserClaimsValue.Email)))?.Value,
-            Roles = claims.FirstOrDefault(x => x.Type.Equals(nameof(UserClaimsValue.Roles)))?.Value.Deserialize<List<string>>(),
-            Host = claims.FirstOrDefault(x => x.Type.Equals(nameof(UserClaimsValue.Host)))?.Value ?? string.Empty,
-            TenantId = claims.FirstOrDefault(x => x.Type.Equals(nameof(UserClaimsValue.TenantId)))?.Value.ToGuid() ?? Guid.Empty,
+            Roles = claims.FirstOrDefault(x => x.Type.Equals(nameof(UserClaimsValue.Roles)))?.Value
+                .Deserialize<List<string>>(),
+            TenantId = claims.FirstOrDefault(x => x.Type.Equals(nameof(UserClaimsValue.TenantId)))?.Value.ToGuid() ??
+                       Guid.Empty,
         };
     }
 }

@@ -1,2 +1,29 @@
 ﻿@inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
 @Body
+
+<AuthorizeView>
+    <Authorized>
+        @Body
+    </Authorized>
+</AuthorizeView>
+
+@code {
+
+    [CascadingParameter]
+    protected Task<AuthenticationState>? AuthState { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        if (AuthState != null)
+        {
+            var user = (await AuthState).User;
+            if (user.Identity is {IsAuthenticated: false })
+            {
+                NavigationManager.NavigateTo($"Identity/Account/Login?returnUrl={Uri.EscapeDataString(NavigationManager.Uri)}");
+            }
+        }
+    }
+
+}

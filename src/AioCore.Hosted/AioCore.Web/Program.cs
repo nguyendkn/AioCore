@@ -2,6 +2,7 @@ using AioCore.Shared.Extensions;
 using AioCore.Shared.Hangfire;
 using AioCore.Shared.ValueObjects;
 using AioCore.Web.Helpers;
+using AioCore.Web.MiddleWares;
 using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -31,6 +32,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseAioController();
+app.UseStaticRender();
 app.UseJobs(environment);
 app.UseHangfire();
 app.MapBlazorHub();

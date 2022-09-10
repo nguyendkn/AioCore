@@ -39,4 +39,10 @@
       <Folder Include="Pages\IdentityPages" />
     </ItemGroup>
 
+    <ItemGroup>
+      <AdditionalFiles Include="Pages\SettingPages\ViewPages\Components\ViewDetail.razor" />
+      <AdditionalFiles Include="Pages\SettingPages\ViewPages\Index.razor" />
+      <AdditionalFiles Include="Pages\SettingPages\ViewPages\_Imports.razor" />
+    </ItemGroup>
+
 </Project>

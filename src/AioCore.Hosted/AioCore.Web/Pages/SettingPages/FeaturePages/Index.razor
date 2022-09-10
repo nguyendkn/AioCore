@@ -1,6 +1,159 @@
-﻿@page "/static/setting/feature"
-<h3>Index</h3>
+﻿@page "/static/settings/feature/list"
+@using AioCore.Shared.ValueObjects
+@using AioCore.Domain.SettingAggregate
+@using AioCore.Read.SettingQueries.EntityQueries
+@using AioCore.Read.SettingQueries.TenantQueries
+@using MediatR
+@layout SettingsLayout
+@inject AppSettings AppSettings
+
+<HeaderComponent Title="Chức năng" Icon="table-tree">
+    <Description>
+        <p class="text-sm text-gray-500">Cấu hình chức năng của hệ thống</p>
+        <p class="text-sm text-gray-500">Tùy chỉnh điều hướng chức năng trên menu</p>
+    </Description>
+    <Action>
+        <Button @onclick="@Open" class="flex justify-center items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+            Chức năng
+        </Button>
+    </Action>
+</HeaderComponent>
+<Content>
+    <div class="w-[1024px] mx-auto my-10 bg-white main mb-2">
+        <div class="bg-white shadow overflow-hidden sm:rounded-md">
+            <ul role="list" class="divide-y divide-gray-200">
+                @if (Entities != null && Entities.Count != 0)
+                {
+                    foreach (var item in Entities)
+                    {
+                        <li>
+                            <a href="#" class="block hover:bg-gray-50">
+                                <div class="flex items-center px-4 py-4 sm:px-6">
+                                    <div class="min-w-0 flex-1 flex items-center">
+                                        <div class="flex-shrink-0">
+                                            <img class="h-10 w-10" src="@($"{AppSettings.StorageServer}/avatar/100/{item.Id}")" alt="avatar">
+                                        </div>
+                                        <div class="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
+                                            <div>
+                                                <p class="text-sm font-medium text-indigo-600 truncate">@item.Name</p>
+                                                <p class="mt-2 flex items-center text-sm text-gray-500">
+                                                    <i class="fa-duotone fa-file-import mr-1"></i>
+                                                    <span class="truncate">@item.DataSource</span>
+                                                </p>
+                                            </div>
+                                            <div class="hidden md:block">
+                                                <div>
+                                                    <p class="text-sm text-gray-900">
+                                                        Ngày tạo:
+                                                        <time class="font-bold" datetime="@item.CreatedAt.ToString("dd/MM/yyyy")">
+                                                            @item.CreatedAt.ToString("dd/MM/yyyy")
+                                                        </time>
+                                                    </p>
+                                                    <p class="text-sm text-gray-900">
+                                                        Cập nhật lúc:
+                                                        <time class="font-bold" datetime="@item.ModifiedAt.ToString("dd/MM/yyyy hh:mm tt")">
+                                                            @item.ModifiedAt.ToString("dd/MM/yyyy hh:mm tt")
+                                                        </time>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <Dropdown Placement="@Placement.BottomLeft">
+                                            <Overlay>
+                                                @_overlayMenu
+                                            </Overlay>
+                                            <ChildContent>
+                                                <Button Size="@AntSizeLDSType.Small">...</Button>
+                                            </ChildContent>
+                                        </Dropdown>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    }
+                }
+                else
+                {
+                    <Empty Description="false"/>
+                }
+            </ul>
+        </div>
+    </div>
+    <div class="flex w-[1024px] mx-auto">
+        <Button @onclick="Previous" class="ml-auto text-gray-700 bg-white hover:bg-gray-50 hover:text-black w-16 block text-center mr-0.5">
+            <i class="fa-duotone fa-caret-left"></i>
+        </Button>
+        <Button @onclick="Next" class="text-gray-700 bg-white hover:bg-gray-50 hover:text-black w-16 block text-center ml-0.5">
+            <i class="fa-duotone fa-caret-right"></i>
+        </Button>
+    </div>
+</Content>
 
 @code {
-    
+
+    private readonly RenderFragment _overlayMenu =
+        @<Menu>
+            <MenuItem>
+                <a href="#" class="text-blue-600 text-xs">
+                    <i class="fa-duotone fa-pen-to-square"></i>
+                    Chỉnh sửa
+                </a>
+            </MenuItem>
+            <MenuItem>
+                <a href="#" class="text-red-600 text-xs">
+                    <i class="fa-duotone fa-trash-can mr-1"></i>
+                    Xóa
+                </a>
+            </MenuItem>
+        </Menu>;
+
+    private bool _toggleDetail;
+        private const string Title = "Thông tin chức năng";
+    private List<SettingEntity>? Entities { get; set; }
+    private SettingTenant? Tenant { get; set; }
+    private static int _page = 1;
+
+    [Parameter]
+    public Guid TenantId { get; set; }
+
+    [Inject]
+    public IMediator Mediator { get; set; } = default!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await FetchTenantAsync(TenantId);
+        await FetchEntitiesAsync(_page);
+        await base.OnInitializedAsync();
+    }
+
+    private void Open()
+    {
+        _toggleDetail = true;
+    }
+
+    private async Task FetchTenantAsync(Guid tenantId)
+    {
+        var response = await Mediator.Send(new GetTenantQuery(tenantId));
+        Tenant = response.Data;
+    }
+
+    private async Task FetchEntitiesAsync(int page = 1, int pageSize = 8)
+    {
+        var response = await Mediator.Send(new ListEntityQuery(TenantId, page, pageSize));
+        Entities = response.Data;
+    }
+
+    private async Task Next()
+    {
+        _page++;
+        await FetchEntitiesAsync(_page);
+    }
+
+    private async Task Previous()
+    {
+        _page = _page == 1 ? 1 : _page - 1;
+        await FetchEntitiesAsync(_page);
+    }
 }

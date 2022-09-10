@@ -1,13 +1,13 @@
-@page "/static/settings/tenants/{tenantId:guid}/view/list"
+@page "/static/settings/tenants/{tenantId:guid}/form/list"
 @using MediatR
 @using AioCore.Read.SettingQueries.ListFormQueries
 @using AioCore.Domain.SettingAggregate
 @layout SettingsLayout
 
-<HeaderComponent Title="Danh sách dũ liệu" Icon="table">
+<HeaderComponent Title="Biểu mẫu" Icon="rectangle-list">
     <Description>
-        <p class="text-sm text-gray-500">Tương tác với dữ liệu theo nhiều cách khác nhau</p>
-        <p class="text-sm text-gray-500">Hiển thị danh sách dữ liệu tùy biến</p>
+        <p class="text-sm text-gray-500">Tương tác với đối tượng thông qua biểu mẫu</p>
+        <p class="text-sm text-gray-500">Nhập liệu dễ dàng và linh động</p>
     </Description>
     <Action>
         <Button @onclick="@Open" class="flex justify-center items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">

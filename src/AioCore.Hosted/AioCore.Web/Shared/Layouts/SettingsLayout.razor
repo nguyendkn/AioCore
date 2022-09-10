@@ -60,12 +60,21 @@
                     </div>
                 </div>
             </NavLink>
-            <NavLink href="@SystemFeatures.Forms" class="submenu cursor-pointer">
+            <NavLink href="@string.Format(SystemFeatures.Forms, _userClaims?.TenantId)" class="submenu cursor-pointer">
                 <div class="p-1 flex">
                     <i class="fa-duotone fa-rectangle-list text-xl text-yellow-600 w-5"></i>
                     <div class="p-0 px-3">
                         <h4 class="submenu-title">Biểu mẫu</h4>
                         <div class="submenu-description">Tương tác với đối tượng thông qua biểu mẫu</div>
+                    </div>
+                </div>
+            </NavLink>
+            <NavLink href="@string.Format(SystemFeatures.Views, _userClaims?.TenantId)" class="submenu cursor-pointer">
+                <div class="p-1 flex">
+                    <i class="fa-duotone fa-table text-xl text-green-600 w-5"></i>
+                    <div class="p-0 px-3">
+                        <h4 class="submenu-title">Danh sách</h4>
+                        <div class="submenu-description">Hiển thị danh sách dữ liệu</div>
                     </div>
                 </div>
             </NavLink>

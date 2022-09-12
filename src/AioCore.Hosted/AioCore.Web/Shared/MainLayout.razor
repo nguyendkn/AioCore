@@ -1,6 +1,7 @@
-﻿@inherits LayoutComponentBase
+﻿@using AioCore.Shared.Common.Constants
+@inherits LayoutComponentBase
 @inject NavigationManager NavigationManager
-@Body
+@inject IHttpContextAccessor HttpContextAccessor
 
 <AuthorizeView>
     <Authorized>
@@ -15,8 +16,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await base.OnInitializedAsync();
-        if (AuthState != null)
+        var router = HttpContextAccessor.HttpContext?.Request.Path.ToString() ?? string.Empty;
+        if (AuthState != null && SystemFeatures.Authorized.Any(x => router.ToLower().StartsWith(x)))
         {
             var user = (await AuthState).User;
             if (user.Identity is {IsAuthenticated: false })
@@ -24,6 +25,7 @@
                 NavigationManager.NavigateTo($"Identity/Account/Login?returnUrl={Uri.EscapeDataString(NavigationManager.Uri)}");
             }
         }
+        await base.OnInitializedAsync();
     }
 
 }

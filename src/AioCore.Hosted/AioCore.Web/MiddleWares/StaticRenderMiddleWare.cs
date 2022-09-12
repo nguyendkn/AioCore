@@ -1,4 +1,8 @@
+using System.Net;
+using System.Text;
 using AioCore.Services;
+using AioCore.Shared.Common.Constants;
+using System;
 
 namespace AioCore.Web.MiddleWares;
 
@@ -14,28 +18,27 @@ public class StaticRenderMiddleWare
     public async Task Invoke(HttpContext context,
         IClientService clientService, ITemplateService templateService)
     {
-        await _next(context);
-        await BuildStaticRender(context,
-            clientService, templateService);
+        if (!SystemFeatures.Authorized.Any(x => clientService.RequestUrl().ToLower().StartsWith(x)))
+            await RenderStaticPage(context, clientService, templateService);
+        else await _next(context);
     }
 
-    private static async Task BuildStaticRender(
+    private static async Task RenderStaticPage(
         HttpContext context,
         IClientService clientService,
         ITemplateService templateService)
     {
-        if (IgnoreCase.Any(x => clientService.RequestUrl().ToLower().StartsWith(x))) return;
+        if (SystemFeatures.Authorized.Any(x => clientService.RequestUrl().ToLower().StartsWith(x))) return;
         var host = clientService.RequestUrl();
-        var template = await templateService.Render(host);
-        await context.Response.WriteAsync(template);
+        var userAgent = context.Request.Headers.UserAgent.ToString();
+        var template = await templateService.Render(host, userAgent);
+        context.Response.StatusCode = (int)HttpStatusCode.OK;
+        context.Response.ContentType = "text/html";
+        context.Response.ContentLength = template.Length;
+        await using var stream = context.Response.Body;
+        await stream.WriteAsync(Encoding.UTF8.GetBytes(template).AsMemory(0, template.Length));
+        await stream.FlushAsync();
     }
-
-    private static List<string> IgnoreCase => new()
-    {
-        "/_blazor",
-        "/identity",
-        "/static"
-    };
 }
 
 public static class StaticRenderMiddleWareExtension

@@ -1,6 +1,7 @@
 using AioCore.Domain.DatabaseContexts;
 using AioCore.Domain.SettingAggregate;
 using AioCore.Services.NotionService;
+using AioCore.Shared.Common.Constants;
 using AioCore.Shared.Extensions;
 using AioCore.Shared.SeedWorks;
 using AioCore.Shared.ValueObjects;
@@ -13,7 +14,7 @@ namespace AioCore.Services;
 
 public interface ITemplateService
 {
-    Task<string> Render(string host);
+    Task<string> Render(string host, string userAgent);
 }
 
 public class TemplateService : ITemplateService
@@ -41,7 +42,7 @@ public class TemplateService : ITemplateService
         _clientService = clientService;
     }
 
-    public async Task<string> Render(string host)
+    public async Task<string> Render(string host, string userAgent)
     {
         if (string.IsNullOrEmpty(_clientService.Host())) return string.Empty;
         var tenant = await _settingsContext.Tenants.Include(x => x!.Codes)
@@ -51,7 +52,10 @@ public class TemplateService : ITemplateService
             x.PathType.Equals(host.Contains('/') ? "index" : host.Split('/').First()));
         if (settingCode is null) return string.Empty;
 
-        var staticCode = await GetCode(tenant, settingCode);
+        var deviceType = DeviceType.Undefined;
+        if (userAgent.ToLower().Contains("mobile")) deviceType = DeviceType.Mobile;
+        if (userAgent.ToLower().Contains("tablet")) deviceType = DeviceType.Tablet;
+        var staticCode = await GetCode(tenant, settingCode, deviceType);
 
         // Start - Build models
 
@@ -95,11 +99,18 @@ public class TemplateService : ITemplateService
         return result;
     }
 
-    private async Task<string> GetCode(Entity? tenant, SettingCode code)
+    private async Task<string> GetCode(Entity? tenant, SettingCode code, DeviceType deviceType)
     {
+        var prefix = deviceType switch
+        {
+            DeviceType.Mobile => "Mobile.",
+            DeviceType.Tablet => "Tablet.",
+            _ => string.Empty
+        };
         return code.SaveType switch
         {
-            SaveType.File => $"{_appSettings.TenantConfigs.AssemblySavedFolder}/{tenant?.Id}/{code.Name}".ReadFile(),
+            SaveType.File => $"{_appSettings.TenantConfigs.AssemblySavedFolder}/{tenant?.Id}/{prefix}{code.Name}"
+                .ReadFile(),
             SaveType.Url => await _httpClient.CreateClient().GetStringAsync(code.Code),
             SaveType.Inline => code.Code,
             _ => string.Empty

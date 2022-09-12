@@ -2,7 +2,6 @@ using System.Net;
 using System.Text;
 using AioCore.Services;
 using AioCore.Shared.Common.Constants;
-using System;
 
 namespace AioCore.Web.MiddleWares;
 

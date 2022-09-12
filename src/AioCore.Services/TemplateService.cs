@@ -5,7 +5,6 @@ using AioCore.Shared.Common.Constants;
 using AioCore.Shared.Extensions;
 using AioCore.Shared.SeedWorks;
 using AioCore.Shared.ValueObjects;
-using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
 using RazorEngineCore;

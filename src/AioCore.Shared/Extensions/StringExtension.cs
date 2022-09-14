@@ -10,8 +10,13 @@ public static class StringExtension
     {
         return Guid.TryParse(str, out var guid) ? guid : Guid.Empty;
     }
-    
-    public static string JoinString(this IEnumerable<string>? arr, string character)
+
+    public static string WithTenant(this string input, Guid tenantId)
+    {
+        return $"{tenantId}_{input}";
+    }
+
+    private static string JoinString(this IEnumerable<string>? arr, string character)
     {
         if (arr is null) return string.Empty;
         var enumerable = arr as string[] ?? arr.ToArray();

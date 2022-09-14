@@ -1,5 +1,7 @@
 using AioCore.Domain.DatabaseContexts;
+using AioCore.Domain.DynamicAggregate;
 using AioCore.Domain.SettingAggregate;
+using AioCore.Mongo;
 using AioCore.Services.NotionService;
 using AioCore.Shared.Common.Constants;
 using AioCore.Shared.Extensions;
@@ -47,55 +49,64 @@ public class TemplateService : ITemplateService
         var tenant = await _settingsContext.Tenants.Include(x => x!.Codes)
             .ThenInclude(x => x.EntityCodes).ThenInclude(x => x.Entity)
             .FirstOrDefaultAsync(y => y.Domain.Equals(_clientService.Host()));
-        var settingCode = tenant?.Codes.FirstOrDefault(x =>
-            x.PathType.Equals(host.Contains('/') ? "index" : host.Split('/').First()));
-        if (settingCode is null) return string.Empty;
-
-        var deviceType = DeviceType.Undefined;
-        if (userAgent.ToLower().Contains("mobile")) deviceType = DeviceType.Mobile;
-        if (userAgent.ToLower().Contains("tablet")) deviceType = DeviceType.Tablet;
-        var staticCode = await GetCode(tenant, settingCode, deviceType);
-
-        // Start - Build models
-
-        var entities = settingCode.EntityCodes.Select(x => x.Entity).ToList();
-        var entityIds = entities.Select(x => x.Id);
-        var entitiesData = await _dynamicContext.Entities.Where(
-                x => entityIds.Contains(x.EntityId))
-            .ToListAsync();
-        var modelBinding = new Dictionary<string, List<Dictionary<string, object>>>();
-
-        var singleRecord = entitiesData.FirstOrDefault(x => x.Data
-            .Select(y => y.Value.ToString())
-            .Any(z => !string.IsNullOrEmpty(z) && z.Equals(host.Split('/')[1])));
-        if (singleRecord?.Data != null)
+        if (tenant is null) return string.Empty;
         {
-            var id = singleRecord.Data.FirstOrDefault(x => x.Key.Equals("Id")).Value.ToString();
-            if (string.IsNullOrEmpty(id)) return default!;
-            var settingEntity = entities.FirstOrDefault(x => x.Id.Equals(singleRecord.EntityId));
-            var page = await _notionClient.GetPageAsync(settingEntity?.SourcePath?.Split('|').Last(), id);
-            if (page is null) return default!;
-            singleRecord.Data["StaticHtml"] = page.ToHtml();
-            modelBinding.Add("SingleValue", new List<Dictionary<string, object>> { singleRecord.Data });
-        }
+            var settingCode = tenant.Codes.FirstOrDefault(x =>
+                x.PathType.Equals(host.Contains('/') ? "index" : host.Split('/').First()));
+            if (settingCode is null) return string.Empty;
 
-        foreach (var group in entitiesData.GroupBy(x => x.EntityId))
-        {
-            var entity = entities.FirstOrDefault(x => x.Id.Equals(group.Key));
-            var dictionary = group.OrderByDescending(x => x.CreatedAt).ToList()
-                .Select(x => x.Data!).ToList();
-            if (entity is not null && dictionary.Any())
+            var deviceType = DeviceType.Undefined;
+            if (userAgent.ToLower().Contains("mobile")) deviceType = DeviceType.Mobile;
+            if (userAgent.ToLower().Contains("tablet")) deviceType = DeviceType.Tablet;
+            var staticCode = await GetCode(tenant, settingCode, deviceType);
+
+            // Start - Build models
+
+            var entities = settingCode.EntityCodes.Select(x => x.Entity).ToList();
+            var entityIds = entities.Select(x => x.Id);
+            var entitiesData = new List<DynamicEntity>();
+            foreach (var entity in entities)
             {
-                modelBinding.TryAdd(entity.Name, dictionary.ToList());
+                var dynamicEntities = await _dynamicContext.Entities.Collection(entity.Name.WithTenant(tenant.Id))
+                    .Where(y => entityIds.Contains(y.EntityId) && y.TenantId.Equals(tenant.Id))
+                    .ToListAsync();
+                entitiesData.AddRange(dynamicEntities);
             }
-        }
 
-        // End - Build models
-        var razorEngine = new RazorEngine();
-        var compiledTemplate = await razorEngine.CompileAsync(staticCode,
-            builder => { builder.AddAssemblyReferenceByName("System.Collections"); });
-        var result = await compiledTemplate.RunAsync(modelBinding);
-        return result;
+            var modelBinding = new Dictionary<string, List<Dictionary<string, object>>>();
+
+            var singleRecord = entitiesData.FirstOrDefault(x => x.Data
+                .Select(y => y.Value.ToString())
+                .Any(z => !string.IsNullOrEmpty(z) && z.Equals(host.Split('/')[1])));
+            if (singleRecord?.Data != null)
+            {
+                var id = singleRecord.Data.FirstOrDefault(x => x.Key.Equals("Id")).Value.ToString();
+                if (string.IsNullOrEmpty(id)) return default!;
+                var settingEntity = entities.FirstOrDefault(x => x.Id.Equals(singleRecord.EntityId));
+                var page = await _notionClient.GetPageAsync(settingEntity?.SourcePath?.Split('|').Last(), id);
+                if (page is null) return default!;
+                singleRecord.Data["StaticHtml"] = page.ToHtml();
+                modelBinding.Add("SingleValue", new List<Dictionary<string, object>> { singleRecord.Data });
+            }
+
+            foreach (var group in entitiesData.GroupBy(x => x.EntityId))
+            {
+                var entity = entities.FirstOrDefault(x => x.Id.Equals(group.Key));
+                var dictionary = group.OrderByDescending(x => x.CreatedAt).ToList()
+                    .Select(x => x.Data!).ToList();
+                if (entity is not null && dictionary.Any())
+                {
+                    modelBinding.TryAdd(entity.Name, dictionary.ToList());
+                }
+            }
+
+            // End - Build models
+            var razorEngine = new RazorEngine();
+            var compiledTemplate = await razorEngine.CompileAsync(staticCode,
+                builder => { builder.AddAssemblyReferenceByName("System.Collections"); });
+            var result = await compiledTemplate.RunAsync(modelBinding);
+            return result;
+        }
     }
 
     private async Task<string> GetCode(Entity? tenant, SettingCode code, DeviceType deviceType)

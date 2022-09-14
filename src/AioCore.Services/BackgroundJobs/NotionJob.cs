@@ -35,7 +35,8 @@ public class NotionJob : ICronJob
         _logger.LogInformation("Starting job: {Job}", nameof(NotionJob));
         // Start Code
 
-        var entities = await _settingsContext.Entities.Where(x => x.DataSource.Equals(DataSource.Notion)).ToListAsync();
+        var entities = await _settingsContext.Entities
+            .Where(x => x.DataSource.Equals(DataSource.Notion)).ToListAsync();
         foreach (var entity in entities)
         {
             if (string.IsNullOrEmpty(entity.SourcePath)) return default!;
@@ -47,20 +48,23 @@ public class NotionJob : ICronJob
             foreach (var dictionary in data)
             {
                 var id = dictionary.FirstOrDefault(x => x.Key.Equals("Id")).Value.ToString();
-                if (!string.IsNullOrEmpty(id) && await _dynamicContext.Entities.AnyAsync(x => x.Id.Equals(id)))
+                var any = await _dynamicContext.Entities.Collection(entity.Name.WithTenant(entity.TenantId))
+                    .AnyAsync(x => x.Id.Equals(id!.ToGuid()));
+                if (!string.IsNullOrEmpty(id) && any)
                 {
-                    var dynamicEntity = await _dynamicContext.Entities.Collection(entity.Name)
+                    var dynamicEntity = await _dynamicContext.Entities
+                        .Collection(entity.Name.WithTenant(entity.TenantId))
                         .FirstOrDefaultAsync(x => x.Id.Equals(id));
                     if (dynamicEntity is null) continue;
                     dynamicEntity.Data = dictionary;
-                    await _dynamicContext.Entities.Collection(entity.Name)
+                    await _dynamicContext.Entities.Collection(entity.Name.WithTenant(entity.TenantId))
                         .UpdateAsync(id.ToGuid(), dynamicEntity);
                     _logger.LogInformation("Modified entity: {EntityId}", id);
                 }
                 else
                 {
                     if (id == null) continue;
-                    await _dynamicContext.Entities.Collection(entity.Name)
+                    await _dynamicContext.Entities.Collection(entity.Name.WithTenant(entity.TenantId))
                         .AddAsync(new DynamicEntity
                         {
                             Id = id.ToGuid(),

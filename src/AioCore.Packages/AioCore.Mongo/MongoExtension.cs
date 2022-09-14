@@ -81,6 +81,39 @@ public static class MongoExtension
         var document = await collection.FindAsync(expression);
         return await document.FirstOrDefaultAsync();
     }
+    
+    public static IFindFluent<TEntity, TEntity> Where<TEntity>(this IMongoCollection<TEntity> collection,
+        Expression<Func<TEntity, bool>> expression, string? keyword = null) where TEntity : MongoDocument
+    {
+        var builder = Builders<TEntity>.Filter;
+        var text = Builders<TEntity>.Filter.Text(keyword ?? string.Empty);
+        var where = Builders<TEntity>.Filter.Where(expression);
+        if (string.IsNullOrEmpty(keyword))
+        {
+            var findFluent = collection.Find(where);
+            Console.WriteLine(findFluent.ToString());
+            return findFluent;
+        }
+        else
+        {
+            var filters = builder.And(text, where);
+            var findFluent = collection.Find(filters);
+            Console.WriteLine(findFluent.ToString());
+            return findFluent;
+        }
+    }
+    
+    public static async Task<long> CountAsync<TEntity>(this IMongoCollection<TEntity> collection, 
+        Expression<Func<TEntity, bool>> expression, CountOptions? options = null)
+    {
+        return await collection.CountDocumentsAsync(expression, options);
+    }
+    
+    public static async Task<bool> AnyAsync<TEntity>(this IMongoCollection<TEntity> collection, 
+        Expression<Func<TEntity, bool>> expression)
+    {
+        return (await CountAsync(collection, expression) > 0);
+    }
 
     public static async Task<TEntity> AddAsync<TEntity>(
         this IMongoCollection<TEntity> collection, TEntity entity)

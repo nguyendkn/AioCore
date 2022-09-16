@@ -75,9 +75,16 @@ public class TemplateService : ITemplateService
 
             var modelBinding = new Dictionary<string, List<Dictionary<string, object>>>();
 
+            var parentValue = entitiesData.FirstOrDefault(x => x.Data
+                .Select(y => y.Value.ToString())
+                .Any(z => !string.IsNullOrEmpty(z) && z.Equals(host.Split('/')[0])));
             var singleRecord = entitiesData.FirstOrDefault(x => x.Data
                 .Select(y => y.Value.ToString())
                 .Any(z => !string.IsNullOrEmpty(z) && z.Equals(host.Split('/')[1])));
+            if (parentValue?.Data != null)
+            {
+                modelBinding.Add("ParentValue", new List<Dictionary<string, object>> { parentValue.Data });
+            }
             if (singleRecord?.Data != null)
             {
                 var id = singleRecord.Data.FirstOrDefault(x => x.Key.Equals("Id")).Value.ToString();

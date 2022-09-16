@@ -52,7 +52,7 @@ public class TemplateService : ITemplateService
         if (tenant is null) return string.Empty;
         {
             var settingCode = tenant.Codes.FirstOrDefault(x =>
-                x.PathType.Equals(host.Contains('/') ? "index" : host.Split('/').First()));
+                x.PathType.Equals(host.Equals("/") == true ? "index" : host.Split('/')[1]));
             if (settingCode is null) return string.Empty;
 
             var deviceType = DeviceType.Undefined;
@@ -75,16 +75,23 @@ public class TemplateService : ITemplateService
 
             var modelBinding = new Dictionary<string, List<Dictionary<string, object>>>();
 
-            var parentValue = entitiesData.FirstOrDefault(x => x.Data
-                .Select(y => y.Value.ToString())
-                .Any(z => !string.IsNullOrEmpty(z) && z.Equals(host.Split('/')[0])));
-            var singleRecord = entitiesData.FirstOrDefault(x => x.Data
-                .Select(y => y.Value.ToString())
-                .Any(z => !string.IsNullOrEmpty(z) && z.Equals(host.Split('/')[1])));
+            var parentValue = new DynamicEntity();
+            var singleRecord = new DynamicEntity();
+
+            if (host.Split('/').Length > 2)
+                parentValue = entitiesData.FirstOrDefault(x => x.Data
+                    .Select(y => y.Value.ToString())
+                    .Any(z => !string.IsNullOrEmpty(z) && z.Equals(host.Split('/')[2])));
+
+            if (host.Split('/').Length > 3)
+                singleRecord = entitiesData.FirstOrDefault(x => x.Data
+                    .Select(y => y.Value.ToString())
+                    .Any(z => !string.IsNullOrEmpty(z) && z.Equals(host.Split('/')[3])));
             if (parentValue?.Data != null)
             {
                 modelBinding.Add("ParentValue", new List<Dictionary<string, object>> { parentValue.Data });
             }
+
             if (singleRecord?.Data != null)
             {
                 var id = singleRecord.Data.FirstOrDefault(x => x.Key.Equals("Id")).Value.ToString();

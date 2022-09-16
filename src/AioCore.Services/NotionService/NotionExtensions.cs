@@ -66,8 +66,6 @@ public static class NotionExtensions
                         .AppendLine("</div>");
                 break;
         }
-
-        Append(block.Heading2.RichText, sb).AppendLine("</h2>");
     }
 
     private static StringBuilder AppendImage(this StringBuilder sb, string imageUrl)

@@ -78,15 +78,20 @@ public class TemplateService : ITemplateService
             var parentValue = new DynamicEntity();
             var singleRecord = new DynamicEntity();
 
-            if (host.Split('/').Length > 2)
+            if (host.Split('/').Length > 2 && !settingCode.Singled)
                 parentValue = entitiesData.FirstOrDefault(x => x.Data
                     .Select(y => y.Value.ToString())
                     .Any(z => !string.IsNullOrEmpty(z) && z.Equals(host.Split('/')[2])));
-
-            if (host.Split('/').Length > 3)
+            if (host.Split('/').Length > 2 && settingCode.Singled)
+            {
+                parentValue = entitiesData.FirstOrDefault(x => x.Data
+                    .Select(y => y.Value.ToString())
+                    .Any(z => !string.IsNullOrEmpty(z) && z.Equals(host.Split('/')[2])));
                 singleRecord = entitiesData.FirstOrDefault(x => x.Data
                     .Select(y => y.Value.ToString())
                     .Any(z => !string.IsNullOrEmpty(z) && z.Equals(host.Split('/')[3])));
+            }
+
             if (parentValue?.Data != null)
             {
                 modelBinding.Add("ParentValue", new List<Dictionary<string, object>> { parentValue.Data });

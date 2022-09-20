@@ -10,10 +10,16 @@ public static class SystemFeatures
     public const string Features = "/static/settings/feature/list";
     public const string Builder = "/static/settings/builder/{0}";
 
-    public static List<string> Authorized = new()
+    public static readonly List<string> Authorized = new()
     {
         "/_blazor",
         "/identity",
-        "/static"
+        
+    };
+
+    public static readonly List<string> Anonymous = new()
+    {
+        "/static",
+        "/pixel"
     };
 }

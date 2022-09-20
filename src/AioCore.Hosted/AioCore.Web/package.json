@@ -1,8 +1,8 @@
 {
   "name": "aioc",
   "scripts": {
-    "buildcss:dev": "postcss --config ./wwwroot/js/app.dev.js ./wwwroot/css/app.scss -o ./wwwroot/css/app.css && tailwindcss --config ./wwwroot/js/app.dev.js -i ./wwwroot/css/app.css -o ./wwwroot/css/app.min.css",
-    "buildcss:prod": "postcss --config ./wwwroot/js/app.prod.js ./wwwroot/css/app.scss -o ./wwwroot/css/app.css"
+    "buildcss:dev": "postcss --config ./wwwroot/js/configs/app.dev.js ./wwwroot/css/app.scss -o ./wwwroot/css/app.css && tailwindcss --config ./wwwroot/js/app.dev.js -i ./wwwroot/css/app.css -o ./wwwroot/css/app.min.css",
+    "buildcss:prod": "postcss --config ./wwwroot/js/configs/app.prod.js ./wwwroot/css/app.scss -o ./wwwroot/css/app.css"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.2",

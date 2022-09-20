@@ -25,6 +25,7 @@ services.AddScopedAioCore();
 services.AddBackgroundServicesAioCore(appSettings);
 services.AddMediatR(typeof(AioCore.Read.Assembly));
 services.AddMediatR(typeof(AioCore.Write.Assembly));
+services.AddMediatR(typeof(AioCore.Request.Assembly));
 var app = builder.Build();
 app.UseAioCoreDatabase(appSettings);
 app.UseStaticFiles();

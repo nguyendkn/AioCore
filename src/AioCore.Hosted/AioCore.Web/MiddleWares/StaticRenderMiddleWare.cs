@@ -17,7 +17,8 @@ public class StaticRenderMiddleWare
     public async Task Invoke(HttpContext context,
         IClientService clientService, ITemplateService templateService)
     {
-        if (!SystemFeatures.Authorized.Any(x => clientService.RequestUrl().ToLower().StartsWith(x)))
+        if (!SystemFeatures.Authorized.Any(x => clientService.RequestUrl().ToLower().StartsWith(x)) &&
+            !SystemFeatures.Anonymous.Any(x => clientService.RequestUrl().ToLower().StartsWith(x)))
             await RenderStaticPage(context, clientService, templateService);
         else await _next(context);
     }

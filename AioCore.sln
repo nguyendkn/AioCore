@@ -22,6 +22,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AioCore.Packages", "AioCore
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AioCore.Mongo", "src\AioCore.Packages\AioCore.Mongo\AioCore.Mongo.csproj", "{2EEC4296-E997-4141-8072-2BB02DCC96B4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AioCore.Request", "src\AioCore.MediatR\AioCore.Request\AioCore.Request.csproj", "{5BC0744E-7EEF-45CA-A2BA-12A715D7BF3E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +40,7 @@ Global
 		{0903F688-0840-4201-B0B2-89D4FA90DF30} = {79E28929-E669-4A7B-B8AE-A2CF63ABE89E}
 		{980AAD2A-E14C-4A12-B187-0CEA758D793A} = {79E28929-E669-4A7B-B8AE-A2CF63ABE89E}
 		{2EEC4296-E997-4141-8072-2BB02DCC96B4} = {980AAD2A-E14C-4A12-B187-0CEA758D793A}
+		{5BC0744E-7EEF-45CA-A2BA-12A715D7BF3E} = {3200E6E0-759F-45F0-8B9F-02DBFA4C4A6F}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{A50B9B9B-3065-4954-B063-C19A7D50E764}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -68,5 +71,9 @@ Global
 		{2EEC4296-E997-4141-8072-2BB02DCC96B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2EEC4296-E997-4141-8072-2BB02DCC96B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2EEC4296-E997-4141-8072-2BB02DCC96B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BC0744E-7EEF-45CA-A2BA-12A715D7BF3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BC0744E-7EEF-45CA-A2BA-12A715D7BF3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BC0744E-7EEF-45CA-A2BA-12A715D7BF3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BC0744E-7EEF-45CA-A2BA-12A715D7BF3E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

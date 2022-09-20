@@ -1,4 +1,5 @@
-﻿using AioCore.Domain.DatabaseContexts;
+﻿using AioCore.Domain;
+using AioCore.Domain.DatabaseContexts;
 using AioCore.Domain.DatabaseDataSeeds;
 using AioCore.Domain.IdentityAggregate;
 using AioCore.Mongo;
@@ -6,6 +7,7 @@ using AioCore.Services;
 using AioCore.Services.BackgroundJobs;
 using AioCore.Services.GraphQueries;
 using AioCore.Services.NotionService;
+using AioCore.Services.RedisService;
 using AioCore.Shared.Extensions;
 using AioCore.Shared.Hangfire;
 using AioCore.Shared.ValueObjects;
@@ -80,6 +82,8 @@ public static class StartupHelper
         services.AddAiocNotionClient();
         services.AddSingleton<IAvatarService, AvatarService>();
         services.AddSingleton<IClientService, ClientService>();
+        services.AddSingleton<IRedisCacheService, RedisCacheService>();
+        services.AddSingleton<IIPService, IPService>();
     }
 
     public static void AddBackgroundServicesAioCore(this IServiceCollection services, AppSettings appSettings)
@@ -98,7 +102,7 @@ public static class StartupHelper
 
     public static void UseAioCoreDatabase(this WebApplication app, AppSettings appSettings)
     {
-        app.MigrateDatabase<IdentityContext>((context, appServices) =>
+        app.MigrateDatabase<IdentityContext>((_, appServices) =>
         {
             var logger = appServices.GetService<ILogger<IdentityContextSeed>>();
             var userManager = appServices.GetRequiredService<UserManager<User>>();
@@ -109,6 +113,11 @@ public static class StartupHelper
         {
             var logger = appServices.GetService<ILogger<SettingsContextSeed>>();
             SettingsContextSeed.SeedAsync(context, logger).Wait();
+        });
+        app.MigrateMongoDatabase<SharingContext>((context, appServices) =>
+        {
+            var logger = appServices.GetService<ILogger<SharingContextSeed>>();
+            SharingContextSeed.SeedAsync(context, logger).Wait();
         });
     }
 }

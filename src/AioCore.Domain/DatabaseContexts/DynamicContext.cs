@@ -10,5 +10,7 @@ public class DynamicContext : MongoContext
     {
     }
 
+    public MongoSet<DynamicRequest> Requests { get; set; } = default!;
+    
     public MongoSet<DynamicEntity> Entities { get; set; } = default!;
 }

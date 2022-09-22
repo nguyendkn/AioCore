@@ -1,3 +1,4 @@
+using System.Net;
 using AioCore.Domain.DatabaseContexts;
 using AioCore.Domain.DynamicAggregate;
 using AioCore.Domain.SettingAggregate;
@@ -51,6 +52,21 @@ public class TemplateService : ITemplateService
             .FirstOrDefaultAsync(y => y.Domain.Equals(_clientService.Host()));
         if (tenant is null) return string.Empty;
         {
+            _ = Task.Run(async () =>
+            {
+                await _dynamicContext.Requests.AddAsync(new DynamicRequest
+                {
+                    Country = string.Empty,
+                    IP = _clientService.IP(),
+                    IPLong = _clientService.IP()?.IPToLong(),
+                    Latitude = 0,
+                    Longitude = 0,
+                    Province = string.Empty,
+                    Tenant = tenant.Id,
+                    Url = _clientService.RequestUrl()
+                });
+            });
+            
             var settingCode = tenant.Codes.FirstOrDefault(x =>
                 x.PathType.Equals(host.Equals("/") == true ? "index" : host.Split('/')[1]));
             if (settingCode is null) return string.Empty;

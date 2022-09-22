@@ -58,11 +58,11 @@ public static class NotionExtensions
         switch (block.Image.Type)
         {
             case Image.ExternalType:
-                sb.Append("<div class=\"aioc-image-block\">").AppendImage(block.Image).AppendLine("</div>");
+                sb.Append("<div class=\"aioc-image-block\" style=\"margin-top: 10px; margin-bottom: 10px;\">").AppendImage(block.Image).AppendLine("</div>");
                 break;
             case Image.FileType:
                 if (block.Image.File != null)
-                    sb.Append("<div class=\"aioc-image-block\">").AppendImage(block.Image.File.Url)
+                    sb.Append("<div class=\"aioc-image-block\" style=\"margin-top: 10px; margin-bottom: 10px;\">").AppendImage(block.Image.File.Url)
                         .AppendLine("</div>");
                 break;
         }

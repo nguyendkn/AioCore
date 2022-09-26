@@ -20,7 +20,7 @@ services.AddAioController();
 services.AddAntDesign();
 services.AddAioContext(appSettings);
 services.AddMapper<MappingProfile>();
-services.AddSingletonAioCore();
+services.AddSingletonAioCore(appSettings);
 services.AddScopedAioCore();
 services.AddBackgroundServicesAioCore(appSettings);
 services.AddMediatR(typeof(AioCore.Read.Assembly));

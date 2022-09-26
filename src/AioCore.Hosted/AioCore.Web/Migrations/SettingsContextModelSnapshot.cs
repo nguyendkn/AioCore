@@ -18,7 +18,7 @@ namespace AioCore.Web.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("Settings")
-                .HasAnnotation("ProductVersion", "6.0.8")
+                .HasAnnotation("ProductVersion", "6.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -106,6 +106,25 @@ namespace AioCore.Web.Migrations
                     b.HasIndex("TenantId");
 
                     b.ToTable("Codes", "Settings");
+                });
+
+            modelBuilder.Entity("AioCore.Domain.SettingAggregate.SettingComponent", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Query")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Template")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Components", "Settings");
                 });
 
             modelBuilder.Entity("AioCore.Domain.SettingAggregate.SettingEntity", b =>
@@ -242,6 +261,55 @@ namespace AioCore.Web.Migrations
                     b.HasIndex("FormId");
 
                     b.ToTable("FormAttributes", "Settings");
+                });
+
+            modelBuilder.Entity("AioCore.Domain.SettingAggregate.SettingLayout", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("GridColumn")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GridGap")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PathType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Layouts", "Settings");
+                });
+
+            modelBuilder.Entity("AioCore.Domain.SettingAggregate.SettingLayoutRow", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("ColumnSpan")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("ComponentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("LayoutId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ComponentId");
+
+                    b.HasIndex("LayoutId");
+
+                    b.ToTable("Rows", "Settings");
                 });
 
             modelBuilder.Entity("AioCore.Domain.SettingAggregate.SettingTenant", b =>
@@ -419,6 +487,25 @@ namespace AioCore.Web.Migrations
                     b.Navigation("Form");
                 });
 
+            modelBuilder.Entity("AioCore.Domain.SettingAggregate.SettingLayoutRow", b =>
+                {
+                    b.HasOne("AioCore.Domain.SettingAggregate.SettingComponent", "Component")
+                        .WithMany()
+                        .HasForeignKey("ComponentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("AioCore.Domain.SettingAggregate.SettingLayout", "Layout")
+                        .WithMany("Rows")
+                        .HasForeignKey("LayoutId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Component");
+
+                    b.Navigation("Layout");
+                });
+
             modelBuilder.Entity("AioCore.Domain.SettingAggregate.SettingTenant", b =>
                 {
                     b.HasOne("AioCore.Domain.SettingAggregate.SettingTenantGroup", "Group")
@@ -456,6 +543,11 @@ namespace AioCore.Web.Migrations
             modelBuilder.Entity("AioCore.Domain.SettingAggregate.SettingForm", b =>
                 {
                     b.Navigation("Attributes");
+                });
+
+            modelBuilder.Entity("AioCore.Domain.SettingAggregate.SettingLayout", b =>
+                {
+                    b.Navigation("Rows");
                 });
 
             modelBuilder.Entity("AioCore.Domain.SettingAggregate.SettingTenant", b =>

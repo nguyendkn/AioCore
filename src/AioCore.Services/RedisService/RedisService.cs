@@ -4,14 +4,14 @@ using RedisKey = AioCore.Services.RedisService.Models.RedisKey;
 
 namespace AioCore.Services.RedisService;
 
-public class RedisCacheService : IRedisCacheService
+public class RedisService : IRedisRequestService, IRedisReportService
 {
     private readonly Lazy<ConnectionMultiplexer> _lazyConnection;
 
     private ConnectionMultiplexer Connection() => _lazyConnection.Value;
     private IDatabase Database(int id) => Connection().GetDatabase(id);
     
-    public RedisCacheService(string connection)
+    public RedisService(string connection)
     {
         _lazyConnection = new Lazy<ConnectionMultiplexer>(() => ConnectionMultiplexer.Connect(connection));
     }

@@ -77,12 +77,13 @@ public static class StartupHelper
         services.AddScoped<AuthenticationStateProvider, StateProvider<User>>();
     }
 
-    public static void AddSingletonAioCore(this IServiceCollection services)
+    public static void AddSingletonAioCore(this IServiceCollection services, AppSettings appSettings)
     {
         services.AddAiocNotionClient();
         services.AddSingleton<IAvatarService, AvatarService>();
         services.AddSingleton<IClientService, ClientService>();
-        services.AddSingleton<IRedisCacheService, RedisCacheService>();
+        services.AddSingleton<IRedisRequestService>(new RedisService(appSettings.RegisConfigs.Request));
+        services.AddSingleton<IRedisReportService>(new RedisService(appSettings.RegisConfigs.Report));
         services.AddSingleton<IIPService, IPService>();
     }
 

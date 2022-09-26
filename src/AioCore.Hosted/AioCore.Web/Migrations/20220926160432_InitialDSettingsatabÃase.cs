@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AioCore.Web.Migrations
 {
-    public partial class InitialSettingsDatabase : Migration
+    public partial class InitialDSettingsatabÃase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,6 +15,20 @@ namespace AioCore.Web.Migrations
             migrationBuilder.CreateSequence<int>(
                 name: "Sequence_D14134D2B12E52CA5E1278F73D12928F",
                 schema: "Settings");
+
+            migrationBuilder.CreateTable(
+                name: "Components",
+                schema: "Settings",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Template = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Query = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Components", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "Features",
@@ -33,6 +47,22 @@ namespace AioCore.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Layouts",
+                schema: "Settings",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PathType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    GridColumn = table.Column<int>(type: "int", nullable: false),
+                    GridGap = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Layouts", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TenantGroups",
                 schema: "Settings",
                 columns: table => new
@@ -45,6 +75,35 @@ namespace AioCore.Web.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TenantGroups", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Rows",
+                schema: "Settings",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    LayoutId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ColumnSpan = table.Column<int>(type: "int", nullable: false),
+                    ComponentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Rows", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Rows_Components_ComponentId",
+                        column: x => x.ComponentId,
+                        principalSchema: "Settings",
+                        principalTable: "Components",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Rows_Layouts_LayoutId",
+                        column: x => x.LayoutId,
+                        principalSchema: "Settings",
+                        principalTable: "Layouts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -85,6 +144,7 @@ namespace AioCore.Web.Migrations
                     PathType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SaveType = table.Column<int>(type: "int", nullable: false),
                     Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Singled = table.Column<bool>(type: "bit", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -324,6 +384,18 @@ namespace AioCore.Web.Migrations
                 column: "EntityId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Rows_ComponentId",
+                schema: "Settings",
+                table: "Rows",
+                column: "ComponentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Rows_LayoutId",
+                schema: "Settings",
+                table: "Rows",
+                column: "LayoutId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TenantDomains_TenantId",
                 schema: "Settings",
                 table: "TenantDomains",
@@ -351,6 +423,10 @@ namespace AioCore.Web.Migrations
                 schema: "Settings");
 
             migrationBuilder.DropTable(
+                name: "Rows",
+                schema: "Settings");
+
+            migrationBuilder.DropTable(
                 name: "TenantDomains",
                 schema: "Settings");
 
@@ -364,6 +440,14 @@ namespace AioCore.Web.Migrations
 
             migrationBuilder.DropTable(
                 name: "Forms",
+                schema: "Settings");
+
+            migrationBuilder.DropTable(
+                name: "Components",
+                schema: "Settings");
+
+            migrationBuilder.DropTable(
+                name: "Layouts",
                 schema: "Settings");
 
             migrationBuilder.DropTable(

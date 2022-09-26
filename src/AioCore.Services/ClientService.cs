@@ -5,6 +5,8 @@ namespace AioCore.Services;
 
 public interface IClientService
 {
+    string? IP();
+    
     string? Host();
 
     string RequestUrl();
@@ -18,6 +20,8 @@ public class ClientService : IClientService
     {
         _contextAccessor = contextAccessor;
     }
+
+    public string? IP() => _contextAccessor.HttpContext?.Request.Headers[RequestHeaders.XForwardedFor].ToString();
 
     public string? Host() => _contextAccessor.HttpContext?.Request.Headers[RequestHeaders.Host].ToString();
 

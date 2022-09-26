@@ -40,8 +40,6 @@ public class PixelRequest : IRequest<byte[]>
                     IPLong = httpRequest?.Headers[RequestHeader.XForwardedFor].ToString().IpToLong(),
                     Country = string.Empty,
                     Province = string.Empty,
-                    Latitude = 0,
-                    Longitude = 0
                 });
             }, cancellationToken);
             return await Task.FromResult(Pixel());

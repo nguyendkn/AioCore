@@ -12,10 +12,6 @@ public class DynamicRequest : MongoDocument
 
     public long? IPLong { get; set; }
 
-    public int Latitude { get; set; }
-
-    public int Longitude { get; set; }
-
     public string? Country { get; set; }
 
     public string? Province { get; set; }

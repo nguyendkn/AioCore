@@ -16,6 +16,17 @@ public class SharingContextSeed
 
         await policy.ExecuteAsync(async () =>
         {
+            if (!await context.IPBlocks.AnyAsync())
+            {
+            }
+
+            if (!await context.IPLocations.AnyAsync())
+            {
+            }
+
+            if (!await context.Locations.AnyAsync())
+            {
+            }
         });
     }
 

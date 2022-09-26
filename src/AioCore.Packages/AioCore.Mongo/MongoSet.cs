@@ -78,9 +78,19 @@ public class MongoSet<TEntity> : IQueryable<TEntity>, IMongoSet<TEntity>
         return await document.FirstOrDefaultAsync();
     }
 
+    public async Task<long> CountAsync(CountOptions? options = null)
+    {
+        return await _collection.CountDocumentsAsync(x => true, options);
+    }
+
     public async Task<long> CountAsync(Expression<Func<TEntity, bool>> expression, CountOptions? options = null)
     {
         return await _collection.CountDocumentsAsync(expression, options);
+    }
+
+    public async Task<bool> AnyAsync()
+    {
+        return (await CountAsync() > 0);
     }
 
     public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> expression)
